@@ -20,9 +20,13 @@ jobs:
           cache: 'npm'
 
       - name: Extract ffmpeg from zip
-        run: |
-          Expand-Archive -Path bin/ffmpeg.zip -DestinationPath bin/ -Force
         shell: pwsh
+        run: |
+          Write-Host "Extracting ffmpeg..."
+          Add-Type -AssemblyName System.IO.Compression.FileSystem
+          [System.IO.Compression.ZipFile]::ExtractToDirectory("$PWD\bin\ffmpeg.zip", "$PWD\bin")
+          Write-Host "ffmpeg extracted successfully"
+          Get-ChildItem bin/
 
       - name: Install dependencies
         run: npm ci
