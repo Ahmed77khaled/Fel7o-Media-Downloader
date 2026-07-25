@@ -3,24 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fel7o Media Downloader — Produced by Mohamed Ahmed</title>
+<title>Fel7o Media Downloader — Ultra Interactive Trailer by Mohamed Ahmed</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;700;900&display=swap');
 
   *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 
   :root{
     --cyan:#00f0ff;
-    --cyan-dim: rgba(0,240,255,.25);
+    --cyan-glow: rgba(0, 240, 255, 0.45);
+    --cyan-dim: rgba(0,240,255,.2);
     --violet:#8b5cf6;
-    --violet-dim: rgba(139,92,246,.25);
+    --violet-glow: rgba(139, 92, 246, 0.45);
+    --violet-dim: rgba(139,92,246,.2);
     --white:#eef2f6;
     --dim:#8a99b5;
-    --bg:#070913;
-    --bg2:#0d1120;
-    --card-bg: rgba(16, 22, 38, 0.82);
+    --bg:#04060f;
+    --card-bg: rgba(13, 19, 36, 0.85);
     --green:#3ce89b;
-    --font-display:'Inter', sans-serif;
+    --green-glow: rgba(60, 232, 155, 0.4);
+    --font-display:'Space Grotesk', 'Inter', sans-serif;
     --font-body:'Inter', system-ui, sans-serif;
     --font-mono:'JetBrains Mono', monospace;
   }
@@ -31,9 +33,18 @@
     overflow:hidden;
     font-family:var(--font-body);
     color:var(--white);
+    cursor: default;
   }
 
-  /* ── CANVAS & VIDEO BACKGROUND LAYERS ───────────────────── */
+  /* ── MOUSE LIGHT FOLLOWER ────────────────────── */
+  #cursor-glow {
+    position: fixed; width: 350px; height: 350px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(0, 240, 255, 0.15), transparent 70%);
+    pointer-events: none; transform: translate(-50%, -50%); z-index: 2;
+    transition: transform 0.08s ease-out, opacity 0.3s ease;
+  }
+
+  /* ── CANVAS & VIDEO BACKGROUND LAYERS ────────── */
   #bg-canvas {
     position: fixed; inset: 0; z-index: 0; pointer-events: none;
     width: 100vw; height: 100vh;
@@ -44,30 +55,40 @@
   }
   .bg-video {
     position: absolute; inset: 0; width: 100vw; height: 100vh;
-    object-fit: cover; opacity: 0; transition: opacity 0.8s ease-in-out;
-    filter: brightness(0.55) contrast(1.15);
+    object-fit: cover; opacity: 0; transition: opacity 0.8s ease-in-out, transform 1s ease;
+    filter: brightness(0.55) contrast(1.15) saturate(1.1);
+    transform: scale(1.02);
   }
   .bg-video.active-video {
-    opacity: 0.5;
+    opacity: 0.55; transform: scale(1);
   }
+
+  /* ── GLITCH TRANSITION OVERLAY ───────────────── */
+  #glitch-overlay {
+    position: fixed; inset: 0; z-index: 99; pointer-events: none;
+    background: rgba(0, 240, 255, 0.08); opacity: 0;
+    mix-blend-mode: color-dodge; transition: opacity 0.15s ease;
+  }
+  #glitch-overlay.flash { opacity: 1; }
 
   /* ── BACKGROUND AURORA & GRID ────────────────── */
   #aurora{ position:fixed; inset:0; z-index:1; overflow:hidden; pointer-events:none; }
   .aurora-blob{
-    position:absolute; border-radius:50%; filter:blur(110px);
-    opacity:.25; mix-blend-mode:screen;
+    position:absolute; border-radius:50%; filter:blur(120px);
+    opacity:.28; mix-blend-mode:screen; animation: blobPulse 8s ease-in-out infinite alternate;
   }
-  .ab1{ width:55vw; height:55vw; top:-15%; left:-10%; background:radial-gradient(circle, var(--cyan), transparent 70%); }
-  .ab2{ width:50vw; height:50vw; bottom:-20%; right:-10%; background:radial-gradient(circle, var(--violet), transparent 70%); }
-  .ab3{ width:45vw; height:45vw; top:25%; left:30%; background:radial-gradient(circle, #1d4ed8, transparent 70%); opacity:.15; }
+  .ab1{ width:60vw; height:60vw; top:-15%; left:-10%; background:radial-gradient(circle, var(--cyan), transparent 70%); }
+  .ab2{ width:55vw; height:55vw; bottom:-20%; right:-10%; background:radial-gradient(circle, var(--violet), transparent 70%); animation-delay: -4s; }
+  .ab3{ width:45vw; height:45vw; top:25%; left:30%; background:radial-gradient(circle, #1d4ed8, transparent 70%); opacity:.18; }
+  @keyframes blobPulse { 0% { transform: scale(1) translate(0, 0); } 100% { transform: scale(1.1) translate(30px, -20px); } }
 
   #grid{
     position:fixed; inset:0; z-index:1; pointer-events:none;
     background-image:
-      linear-gradient(rgba(0,240,255,.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,240,255,.04) 1px, transparent 1px);
-    background-size:48px 48px;
-    opacity:.4;
+      linear-gradient(rgba(0,240,255,.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,240,255,.05) 1px, transparent 1px);
+    background-size:50px 50px;
+    opacity:.45;
     -webkit-mask-image:radial-gradient(ellipse at 50% 50%, black 20%, transparent 80%);
             mask-image:radial-gradient(ellipse at 50% 50%, black 20%, transparent 80%);
   }
@@ -76,8 +97,8 @@
   .particle{ position:absolute; border-radius:50%; animation:floatUp linear infinite; opacity:0; }
   @keyframes floatUp{
     0%{ transform:translateY(105vh) scale(0); opacity:0; }
-    15%{ opacity:.4; }
-    85%{ opacity:.3; }
+    15%{ opacity:.5; }
+    85%{ opacity:.4; }
     100%{ transform:translateY(-5vh) scale(1); opacity:0; }
   }
 
@@ -85,242 +106,265 @@
   #stage{
     position:fixed; inset:0; z-index:5;
     display:flex; align-items:center; justify-content:center;
-    padding:20px;
+    padding:20px; perspective: 1000px;
   }
   .scene{
     position:absolute; inset:0; z-index:10;
     display:flex; align-items:center; justify-content:center; flex-direction:column;
     opacity:0; pointer-events:none;
-    transition:opacity 0.4s ease, transform 0.4s ease;
-    transform:scale(0.98);
+    transition:opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    transform:scale(0.96) translateZ(-20px);
   }
-  .scene.active{ opacity:1; pointer-events:auto; transform:scale(1); }
+  .scene.active{ opacity:1; pointer-events:auto; transform:scale(1) translateZ(0); }
 
-  /* ── HUD ────────────────────────────────── */
+  /* ── HUD HEADER ─────────────────────────── */
   #hud{
     position:fixed; top:24px; left:0; right:0; z-index:99990;
     display:flex; align-items:center; justify-content:space-between;
-    padding:0 32px; font-family:var(--font-mono); font-size:11px; letter-spacing:.12em;
+    padding:0 36px; font-family:var(--font-mono); font-size:11px; letter-spacing:.12em;
     color:var(--dim); pointer-events:none;
   }
-  #hud .tag{ display:flex; align-items:center; gap:8px; }
-  #hud .dot{ width:7px; height:7px; border-radius:50%; background:var(--cyan); box-shadow:0 0 8px var(--cyan); }
-  #hud .creator-tag{ color:var(--cyan); font-weight:700; background:rgba(0,240,255,.1); padding:4px 12px; border-radius:100px; border:1px solid rgba(0,240,255,.3); }
+  #hud .tag{ display:flex; align-items:center; gap:10px; }
+  #hud .dot{ width:8px; height:8px; border-radius:50%; background:var(--cyan); box-shadow:0 0 12px var(--cyan); animation: dotBlink 1.5s ease-in-out infinite; }
+  @keyframes dotBlink { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.85); } }
+  #hud .creator-tag{
+    color:var(--cyan); font-weight:700; background:rgba(0,240,255,.1);
+    padding:6px 16px; border-radius:100px; border:1px solid rgba(0,240,255,.3);
+    box-shadow: 0 0 15px rgba(0,240,255,.15); backdrop-filter: blur(8px);
+  }
 
   /* ── PROGRESS & CONTROLS ────────────────── */
   #progress-track{
-    position:fixed; bottom:0; left:0; right:0; height:3px; z-index:99990;
+    position:fixed; bottom:0; left:0; right:0; height:4px; z-index:99990;
     background:rgba(255,255,255,.06);
   }
   #progress-fill{
     height:100%; width:0%;
     background:linear-gradient(90deg, var(--cyan), var(--violet));
+    box-shadow: 0 0 12px var(--cyan);
   }
 
   #controls{
-    position:fixed; bottom:24px; right:28px; z-index:99991;
-    display:flex; gap:10px; pointer-events:auto;
+    position:fixed; bottom:24px; right:32px; z-index:99991;
+    display:flex; gap:12px; pointer-events:auto;
   }
   .ctl-btn{
-    font-family:var(--font-mono); font-size:11px; letter-spacing:.08em;
-    color:var(--white); background:rgba(255,255,255,.06);
-    border:1px solid rgba(255,255,255,.14); border-radius:100px;
-    padding:10px 18px; cursor:pointer; backdrop-filter:blur(10px);
-    transition:all .2s ease; text-transform:uppercase;
+    font-family:var(--font-mono); font-size:11px; letter-spacing:.1em;
+    color:var(--white); background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.18); border-radius:100px;
+    padding:10px 20px; cursor:pointer; backdrop-filter:blur(12px);
+    transition:all .25s ease; text-transform:uppercase; font-weight:700;
   }
-  .ctl-btn:hover{ background:rgba(0,240,255,.15); border-color:var(--cyan); color:var(--cyan); }
+  .ctl-btn:hover{ background:rgba(0,240,255,.2); border-color:var(--cyan); color:var(--cyan); transform:translateY(-2px); box-shadow:0 6px 20px rgba(0,240,255,.2); }
 
   /* ── REPLAY & ACTION OVERLAY SCREEN ─────── */
   #replay-screen{
     position:fixed; inset:0; z-index:99992; display:flex; align-items:center; justify-content:center;
-    flex-direction:column; gap:20px; background:rgba(7,9,19,.88); backdrop-filter:blur(16px);
+    flex-direction:column; gap:22px; background:rgba(4,6,15,.92); backdrop-filter:blur(20px);
     opacity:0; pointer-events:none; transition:opacity .4s ease;
   }
   #replay-screen.show{ opacity:1; pointer-events:auto; }
-  #replay-screen .rp-logo{ font-family:var(--font-display); font-weight:900; font-size:clamp(3.5rem,10vw,7rem); letter-spacing:.04em; color:var(--white); text-shadow:0 0 40px var(--cyan-dim); line-height:1; }
-  #replay-screen .rp-subtitle{ font-size:clamp(14px, 1.8vw, 18px); color:var(--dim); font-weight:500; margin-bottom:10px; }
+  #replay-screen .rp-logo{
+    font-family:var(--font-display); font-weight:900; font-size:clamp(4rem,12vw,8rem);
+    letter-spacing:.04em; color:var(--white); text-shadow:0 0 50px var(--cyan-glow); line-height:1;
+  }
+  #replay-screen .rp-subtitle{ font-size:clamp(15px, 2vw, 20px); color:var(--dim); font-weight:500; margin-bottom:10px; }
   
   .action-buttons-group{
-    display:flex; flex-wrap:wrap; gap:14px; align-items:center; justify-content:center; margin-top:10px;
+    display:flex; flex-wrap:wrap; gap:16px; align-items:center; justify-content:center; margin-top:10px;
   }
 
   .btn-primary-action{
     font-family:var(--font-body); font-weight:800; font-size:14px; letter-spacing:.08em; text-transform:uppercase;
     color:var(--bg); background:linear-gradient(90deg, var(--cyan), var(--violet)); border:none; border-radius:100px;
-    padding:16px 36px; cursor:pointer; display:flex; align-items:center; gap:10px;
-    transition:transform .2s ease, box-shadow .2s ease;
+    padding:18px 40px; cursor:pointer; display:flex; align-items:center; gap:10px;
+    transition:transform .25s ease, box-shadow .25s ease;
   }
-  .btn-primary-action:hover{ transform:translateY(-2px) scale(1.03); box-shadow:0 10px 30px var(--cyan-dim); }
+  .btn-primary-action:hover{ transform:translateY(-3px) scale(1.04); box-shadow:0 12px 35px var(--cyan-glow); }
 
   .btn-secondary-action{
     font-family:var(--font-body); font-weight:700; font-size:14px; letter-spacing:.08em; text-transform:uppercase;
-    color:var(--white); background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); border-radius:100px;
-    padding:16px 32px; cursor:pointer; display:flex; align-items:center; gap:10px;
-    transition:all .2s ease; backdrop-filter:blur(8px);
+    color:var(--white); background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.2); border-radius:100px;
+    padding:18px 36px; cursor:pointer; display:flex; align-items:center; gap:10px;
+    transition:all .25s ease; backdrop-filter:blur(10px);
   }
-  .btn-secondary-action:hover{ background:rgba(255,255,255,.16); border-color:var(--cyan); color:var(--cyan); transform:translateY(-2px); }
+  .btn-secondary-action:hover{ background:rgba(255,255,255,.18); border-color:var(--cyan); color:var(--cyan); transform:translateY(-3px); }
 
   .btn-replay-action{
     font-family:var(--font-mono); font-size:12px; letter-spacing:.12em; text-transform:uppercase;
-    color:var(--dim); background:transparent; border:1px solid rgba(255,255,255,.1); border-radius:100px;
-    padding:12px 26px; cursor:pointer; margin-top:12px;
-    transition:all .2s ease;
+    color:var(--dim); background:transparent; border:1px solid rgba(255,255,255,.14); border-radius:100px;
+    padding:12px 28px; cursor:pointer; margin-top:14px;
+    transition:all .25s ease;
   }
-  .btn-replay-action:hover{ color:var(--white); border-color:rgba(255,255,255,.3); }
+  .btn-replay-action:hover{ color:var(--white); border-color:rgba(255,255,255,.35); background:rgba(255,255,255,.05); }
 
   /* ═══════════════════════════════════════════
-     SCENE 1 — BOOT SEQUENCE
+     SCENE 1 — BOOT TERMINAL SEQUENCE
      ═══════════════════════════════════════════ */
   #s1{ align-items:flex-start; justify-content:center; padding-left:12vw; }
   #boot-lines{
-    font-family:var(--font-mono); font-size:clamp(14px,1.8vw,19px);
-    color:var(--cyan); line-height:2.2; text-shadow:0 0 10px var(--cyan-dim);
+    font-family:var(--font-mono); font-size:clamp(15px,2vw,21px);
+    color:var(--cyan); line-height:2.3; text-shadow:0 0 12px var(--cyan-dim);
+    background: rgba(0, 0, 0, 0.35); padding: 30px 40px; border-radius: 20px;
+    border: 1px solid rgba(0, 240, 255, 0.2); backdrop-filter: blur(14px);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
   }
-  #boot-lines .line{ opacity:0; white-space:pre; }
-  #boot-lines .line.show{ opacity:1; }
-  .boot-ok{ color:var(--green); }
-  .boot-num{ color:var(--white); font-weight:700; }
+  #boot-lines .line{ opacity:0; white-space:pre; transform: translateY(6px); transition: all 0.3s ease; }
+  #boot-lines .line.show{ opacity:1; transform: translateY(0); }
+  .boot-ok{ color:var(--green); font-weight: 700; text-shadow: 0 0 10px var(--green-glow); }
+  .boot-num{ color:var(--white); font-weight:800; }
 
   /* ═══════════════════════════════════════════
      SCENE 2 — BRAND REVEAL & EQUALIZER
      ═══════════════════════════════════════════ */
   #s2{ text-align:center; }
   #big-logo{
-    font-family:var(--font-display); font-weight:900; font-size:clamp(5rem,18vw,13rem);
-    letter-spacing:.04em; color:var(--white); line-height:.9;
-    text-shadow:0 0 50px var(--cyan-dim), 0 0 100px var(--violet-dim);
+    font-family:var(--font-display); font-weight:900; font-size:clamp(5.5rem,19vw,14rem);
+    letter-spacing:.04em; color:var(--white); line-height:.88;
+    text-shadow:0 0 60px var(--cyan-glow), 0 0 120px var(--violet-glow);
+    background: linear-gradient(135deg, #ffffff 40%, var(--cyan) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   }
   #s2 .tagline{
-    margin-top:24px; font-family:var(--font-body); font-weight:700; letter-spacing:.3em;
-    font-size:clamp(12px,1.8vw,16px); color:var(--dim); text-transform:uppercase;
+    margin-top:24px; font-family:var(--font-body); font-weight:800; letter-spacing:.3em;
+    font-size:clamp(13px,1.9vw,17px); color:var(--dim); text-transform:uppercase;
     opacity:0;
   }
-  #s2 .tagline b{ color:var(--cyan); font-weight:900; }
+  #s2 .tagline b{ color:var(--cyan); font-weight:900; text-shadow: 0 0 15px var(--cyan-glow); }
   #s2.reveal-tag .tagline{ animation:fadeUp .5s ease forwards; }
-  @keyframes fadeUp{ from{opacity:0; transform:translateY(12px);} to{opacity:1; transform:translateY(0);} }
+  @keyframes fadeUp{ from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:translateY(0);} }
 
-  .eq-bars{ display:flex; align-items:flex-end; justify-content:center; gap:5px; height:50px; margin-top:20px; }
-  .eq-bar{ width:5px; background:linear-gradient(to top, var(--cyan), var(--violet)); border-radius:4px; animation:eqAnim 0.7s ease-in-out infinite alternate; }
-  @keyframes eqAnim { 0%{ height:8px; } 100%{ height:45px; } }
+  .eq-bars{ display:flex; align-items:flex-end; justify-content:center; gap:6px; height:60px; margin-top:24px; }
+  .eq-bar{ width:6px; background:linear-gradient(to top, var(--cyan), var(--violet)); border-radius:4px; animation:eqAnim 0.75s ease-in-out infinite alternate; }
+  @keyframes eqAnim { 0%{ height:8px; opacity: 0.4; } 100%{ height:55px; opacity: 1; box-shadow: 0 0 12px var(--cyan); } }
 
   /* ═══════════════════════════════════════════
-     SCENE 3 — REAL UI DEMO
+     SCENE 3 — INTERACTIVE REAL APP UI
      ═══════════════════════════════════════════ */
   #s3{ display:flex; align-items:center; justify-content:center; }
   .app-window{
-    width:min(680px, 90vw); border-radius:18px; overflow:hidden;
+    width:min(720px, 92vw); border-radius:20px; overflow:hidden;
     background:var(--card-bg);
-    border:1px solid rgba(255,255,255,.12);
-    box-shadow:0 30px 80px rgba(0,0,0,.6), 0 0 40px rgba(0,240,255,.08);
-    backdrop-filter:blur(24px);
-    margin:auto;
+    border:1px solid rgba(0,240,255,.25);
+    box-shadow:0 35px 90px rgba(0,0,0,.7), 0 0 50px rgba(0,240,255,.15);
+    backdrop-filter:blur(28px);
+    margin:auto; transition: transform 0.3s ease;
   }
-  .app-titlebar{ display:flex; align-items:center; gap:8px; padding:14px 18px; border-bottom:1px solid rgba(255,255,255,.08); background:rgba(255,255,255,.02); }
-  .app-dot{ width:11px; height:11px; border-radius:50%; }
+  .app-window:hover{ transform: translateY(-4px) scale(1.01); }
+  .app-titlebar{ display:flex; align-items:center; gap:8px; padding:16px 20px; border-bottom:1px solid rgba(255,255,255,.08); background:rgba(255,255,255,.03); }
+  .app-dot{ width:12px; height:12px; border-radius:50%; }
   .app-dot.r{background:#ff5f57} .app-dot.y{background:#febc2e} .app-dot.g{background:#28c840}
-  .app-title{ margin-left:10px; font-family:var(--font-body); font-size:12px; font-weight:600; color:var(--dim); letter-spacing:.06em; }
-  .app-body{ padding:24px 28px 28px; }
+  .app-title{ margin-left:12px; font-family:var(--font-body); font-size:13px; font-weight:600; color:var(--dim); letter-spacing:.06em; }
+  .app-body{ padding:26px 30px 30px; }
   .url-row{
-    display:flex; align-items:center; gap:12px; background:rgba(255,255,255,.05);
-    border:1px solid rgba(255,255,255,.1); border-radius:12px; padding:14px 18px;
+    display:flex; align-items:center; gap:14px; background:rgba(255,255,255,.05);
+    border:1px solid rgba(0,240,255,.3); border-radius:14px; padding:16px 20px;
+    box-shadow: inset 0 0 15px rgba(0,240,255,0.05);
   }
   .url-row svg{ flex-shrink:0; stroke:var(--cyan); }
-  #url-text{ font-family:var(--font-mono); font-size:13px; color:var(--white); white-space:nowrap; overflow:hidden; }
+  #url-text{ font-family:var(--font-mono); font-size:14px; color:var(--white); white-space:nowrap; overflow:hidden; }
   .preview-card{
-    display:flex; gap:18px; margin-top:20px; opacity:0; transform:translateY(10px);
+    display:flex; gap:20px; margin-top:22px; opacity:0; transform:translateY(12px);
     transition:all .4s ease;
   }
   .preview-card.show{ opacity:1; transform:translateY(0); }
   .thumb{
-    width:135px; height:80px; border-radius:10px; flex-shrink:0;
-    background:linear-gradient(135deg, #1e293b, #0f172a);
-    position:relative; overflow:hidden; border:1px solid rgba(255,255,255,.1);
+    width:145px; height:85px; border-radius:12px; flex-shrink:0;
+    background:linear-gradient(135deg, #00f0ff22, #8b5cf633);
+    position:relative; overflow:hidden; border:1px solid rgba(0,240,255,.4);
     display:flex; align-items:center; justify-content:center;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
   }
   .thumb .play-tri{
-    width:0; height:0; border-style:solid; border-width:9px 0 9px 15px;
-    border-color:transparent transparent transparent var(--cyan);
+    width:0; height:0; border-style:solid; border-width:10px 0 10px 16px;
+    border-color:transparent transparent transparent var(--cyan); filter: drop-shadow(0 0 8px var(--cyan));
   }
-  .meta-col{ display:flex; flex-direction:column; gap:6px; justify-content:center; }
-  .meta-title{ font-size:15px; font-weight:700; color:var(--white); }
-  .meta-sub{ font-family:var(--font-mono); font-size:11px; color:var(--dim); display:flex; gap:12px; }
-  .quality-row{ display:flex; gap:10px; margin-top:18px; opacity:0; transition:opacity .4s ease; }
+  .meta-col{ display:flex; flex-direction:column; gap:8px; justify-content:center; }
+  .meta-title{ font-size:16px; font-weight:700; color:var(--white); }
+  .meta-sub{ font-family:var(--font-mono); font-size:12px; color:var(--dim); display:flex; gap:14px; }
+  .quality-row{ display:flex; gap:12px; margin-top:20px; opacity:0; transition:opacity .4s ease; }
   .quality-row.show{ opacity:1; }
   .qchip{
-    font-family:var(--font-body); font-weight:600; font-size:12px; padding:7px 14px; border-radius:100px;
-    border:1px solid rgba(255,255,255,.12); color:var(--dim); cursor:pointer; background:rgba(255,255,255,.03);
+    font-family:var(--font-body); font-weight:700; font-size:13px; padding:8px 16px; border-radius:100px;
+    border:1px solid rgba(255,255,255,.14); color:var(--dim); cursor:pointer; background:rgba(255,255,255,.04);
+    transition: all 0.2s ease;
   }
-  .qchip.active{ border-color:var(--cyan); color:var(--cyan); background:rgba(0,240,255,.1); }
+  .qchip.active{ border-color:var(--cyan); color:var(--cyan); background:rgba(0,240,255,.15); box-shadow:0 0 15px rgba(0,240,255,.2); }
   .dl-btn{
-    margin-top:22px; width:100%; padding:15px; border-radius:12px; border:none;
-    font-family:var(--font-body); font-weight:800; font-size:13px; letter-spacing:.08em;
+    margin-top:24px; width:100%; padding:16px; border-radius:14px; border:none;
+    font-family:var(--font-body); font-weight:800; font-size:14px; letter-spacing:.08em;
     text-transform:uppercase; color:var(--bg); cursor:pointer;
     background:linear-gradient(90deg, var(--cyan), var(--violet));
-    opacity:0; transform:translateY(8px); transition:all .4s ease;
+    opacity:0; transform:translateY(10px); transition:all .4s ease;
+    box-shadow: 0 8px 25px rgba(0,240,255,0.25);
   }
   .dl-btn.show{ opacity:1; transform:translateY(0); }
   .queue-strip{
-    margin-top:14px; height:0; overflow:hidden; opacity:0; transition:all .4s ease;
-    font-family:var(--font-body); font-weight:600; font-size:12px; color:var(--green);
-    display:flex; align-items:center; gap:8px;
+    margin-top:16px; height:0; overflow:hidden; opacity:0; transition:all .4s ease;
+    font-family:var(--font-body); font-weight:700; font-size:13px; color:var(--green);
+    display:flex; align-items:center; gap:10px; text-shadow: 0 0 10px var(--green-glow);
   }
-  .queue-strip.show{ height:24px; opacity:1; }
+  .queue-strip.show{ height:26px; opacity:1; }
 
   /* ═══════════════════════════════════════════
-     SCENE 4 — SUPPORTED CONTENT CARDS
+     SCENE 4 — SUPPORTED MEDIA MONTAGE
      ═══════════════════════════════════════════ */
   #s4{ flex-direction:column; gap:40px; text-align:center; }
-  #s4 .headline{ font-family:var(--font-display); font-weight:900; font-size:clamp(2rem,4.5vw,3.2rem); letter-spacing:.03em; color:var(--white); opacity:0; }
+  #s4 .headline{ font-family:var(--font-display); font-weight:900; font-size:clamp(2.2rem,5vw,3.6rem); letter-spacing:.03em; color:var(--white); opacity:0; }
   #s4.in .headline{ animation:fadeUp .5s ease forwards; }
-  .content-grid{ display:flex; flex-wrap:wrap; justify-content:center; gap:16px; max-width:860px; }
+  .content-grid{ display:flex; flex-wrap:wrap; justify-content:center; gap:18px; max-width:900px; }
   .ccard{
-    width:145px; padding:22px 14px; border-radius:16px; text-align:center;
-    background:var(--card-bg); border:1px solid rgba(255,255,255,.1);
-    backdrop-filter:blur(12px);
-    opacity:0; transform:translateY(24px);
-    transition:all .4s ease;
+    width:155px; padding:24px 16px; border-radius:18px; text-align:center;
+    background:var(--card-bg); border:1px solid rgba(255,255,255,.14);
+    backdrop-filter:blur(14px);
+    opacity:0; transform:translateY(26px);
+    transition:all .35s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .ccard.show{ opacity:1; transform:translateY(0); border-color:rgba(0,240,255,.3); }
-  .ccard .cicon{ font-size:28px; margin-bottom:10px; }
-  .ccard .clabel{ font-family:var(--font-body); font-weight:700; font-size:12px; letter-spacing:.06em; color:var(--white); text-transform:uppercase; }
+  .ccard.show{ opacity:1; transform:translateY(0); border-color:var(--cyan); box-shadow:0 12px 30px rgba(0,240,255,.15); }
+  .ccard:hover{ transform: translateY(-8px) scale(1.05); border-color: var(--violet); box-shadow: 0 15px 35px var(--violet-dim); }
+  .ccard .cicon{ font-size:32px; margin-bottom:12px; }
+  .ccard .clabel{ font-family:var(--font-body); font-weight:800; font-size:13px; letter-spacing:.06em; color:var(--white); text-transform:uppercase; }
 
   /* ═══════════════════════════════════════════
-     SCENE 5 — EXTREME SPEED
+     SCENE 5 — HYPER SPEED SPEEDOMETER HUD
      ═══════════════════════════════════════════ */
   #s5{ text-align:center; }
-  .speed-core{ text-align:center; }
+  .speed-core{ text-align:center; position: relative; }
   #speed-num{
-    font-family:var(--font-display); font-weight:900; font-size:clamp(6rem,16vw,12rem); color:var(--white);
-    text-shadow:0 0 40px var(--cyan-dim); line-height:1; letter-spacing:.02em;
+    font-family:var(--font-display); font-weight:900; font-size:clamp(6.5rem,18vw,13rem); color:var(--white);
+    text-shadow:0 0 60px var(--cyan-glow), 0 0 100px var(--violet-glow); line-height:1; letter-spacing:.02em;
+    background: linear-gradient(180deg, #ffffff, var(--cyan));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   }
-  #speed-unit{ font-family:var(--font-mono); font-size:clamp(1rem,2.2vw,1.5rem); color:var(--cyan); letter-spacing:.2em; margin-top:8px; }
+  #speed-unit{ font-family:var(--font-mono); font-size:clamp(1.1rem,2.5vw,1.8rem); color:var(--cyan); letter-spacing:.25em; margin-top:10px; font-weight: 700; }
   .speed-done{
-    margin-top:24px; font-family:var(--font-body); font-weight:700; font-size:15px; letter-spacing:.15em;
-    color:var(--green); opacity:0; text-transform:uppercase;
+    margin-top:26px; font-family:var(--font-body); font-weight:800; font-size:17px; letter-spacing:.15em;
+    color:var(--green); opacity:0; text-transform:uppercase; text-shadow: 0 0 15px var(--green-glow);
   }
   .speed-done.show{ animation:fadeUp .4s ease forwards; }
 
   /* ═══════════════════════════════════════════
-     SCENE 6 — SMART QUEUE
+     SCENE 6 — SMART QUEUE NODES
      ═══════════════════════════════════════════ */
   #s6{ flex-direction:column; gap:32px; text-align:center; }
-  #s6 .headline{ font-family:var(--font-display); font-weight:900; font-size:clamp(2rem,4.5vw,3.2rem); letter-spacing:.03em; color:var(--white); opacity:0; }
+  #s6 .headline{ font-family:var(--font-display); font-weight:900; font-size:clamp(2.2rem,5vw,3.6rem); letter-spacing:.03em; color:var(--white); opacity:0; }
   #s6.in .headline{ animation:fadeUp .5s ease forwards; }
-  .queue-list{ display:flex; flex-direction:column; gap:12px; width:min(500px, 90vw); }
+  .queue-list{ display:flex; flex-direction:column; gap:14px; width:min(520px, 92vw); }
   .qitem{
-    display:flex; align-items:center; gap:14px; padding:15px 20px; border-radius:14px;
-    background:var(--card-bg); border:1px solid rgba(255,255,255,.1);
-    opacity:0; transform:translateX(-20px); transition:all .4s ease;
+    display:flex; align-items:center; gap:16px; padding:16px 22px; border-radius:16px;
+    background:var(--card-bg); border:1px solid rgba(255,255,255,.12);
+    opacity:0; transform:translateX(-24px); transition:all .4s ease;
+    backdrop-filter: blur(12px);
   }
   .qitem.show{ opacity:1; transform:translateX(0); }
   .qcheck{
-    width:22px; height:22px; border-radius:50%; border:2px solid rgba(255,255,255,.2);
+    width:24px; height:24px; border-radius:50%; border:2px solid rgba(255,255,255,.2);
     display:flex; align-items:center; justify-content:center; flex-shrink:0;
-    font-size:11px; color:transparent; transition:all .3s ease;
+    font-size:12px; color:transparent; transition:all .3s ease;
   }
-  .qitem.done .qcheck{ background:var(--green); border-color:var(--green); color:var(--bg); }
-  .qname{ font-family:var(--font-body); font-weight:600; font-size:13px; color:var(--white); flex:1; text-align:left; }
-  .qbar{ width:80px; height:5px; border-radius:4px; background:rgba(255,255,255,.1); overflow:hidden; flex-shrink:0; }
+  .qitem.done .qcheck{ background:var(--green); border-color:var(--green); color:var(--bg); box-shadow: 0 0 12px var(--green-glow); }
+  .qname{ font-family:var(--font-body); font-weight:700; font-size:14px; color:var(--white); flex:1; text-align:left; }
+  .qbar{ width:90px; height:6px; border-radius:6px; background:rgba(255,255,255,.12); overflow:hidden; flex-shrink:0; }
   .qbar-fill{ height:100%; width:0%; background:linear-gradient(90deg,var(--cyan),var(--green)); transition:width .8s ease; }
   .qitem.done .qbar-fill{ width:100%; }
 
@@ -328,51 +372,61 @@
      SCENE 7 — FEATURE SHOWCASE
      ═══════════════════════════════════════════ */
   #s7{ flex-direction:column; text-align:center; }
-  .feat-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:16px; width:min(860px,90vw); }
+  .feat-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:18px; width:min(880px,92vw); }
   @media (max-width:768px){ .feat-grid{ grid-template-columns:repeat(2,1fr); } }
   .fcard{
-    padding:22px 16px; border-radius:16px; text-align:center;
-    background:var(--card-bg); border:1px solid rgba(255,255,255,.1);
-    opacity:0; transform:translateY(20px); transition:all .4s ease;
+    padding:24px 18px; border-radius:18px; text-align:center;
+    background:var(--card-bg); border:1px solid rgba(255,255,255,.12);
+    opacity:0; transform:translateY(20px); transition:all .35s ease;
+    backdrop-filter: blur(12px);
   }
-  .fcard.show{ opacity:1; transform:translateY(0); border-color:var(--violet); }
-  .fcard .ficon{ font-size:26px; margin-bottom:10px; }
-  .fcard .flabel{ font-family:var(--font-body); font-weight:700; font-size:12px; letter-spacing:.06em; color:var(--white); text-transform:uppercase; }
+  .fcard.show{ opacity:1; transform:translateY(0); border-color:var(--violet); box-shadow:0 10px 25px var(--violet-dim); }
+  .fcard:hover{ transform: translateY(-6px); border-color: var(--cyan); box-shadow: 0 15px 30px var(--cyan-dim); }
+  .fcard .ficon{ font-size:30px; margin-bottom:12px; }
+  .fcard .flabel{ font-family:var(--font-body); font-weight:800; font-size:13px; letter-spacing:.06em; color:var(--white); text-transform:uppercase; }
 
   /* ═══════════════════════════════════════════
-     SCENE 8 — FINAL HERO
+     SCENE 8 — FINAL HERO CTA
      ═══════════════════════════════════════════ */
   #s8{ text-align:center; flex-direction:column; }
   #s8 .final-logo{
-    font-family:var(--font-display); font-weight:900; font-size:clamp(4.5rem,15vw,10rem); color:var(--white);
-    letter-spacing:.04em; text-shadow:0 0 60px var(--cyan-dim), 0 0 100px var(--violet-dim);
+    font-family:var(--font-display); font-weight:900; font-size:clamp(4.5rem,16vw,11rem); color:var(--white);
+    letter-spacing:.04em; text-shadow:0 0 60px var(--cyan-glow), 0 0 120px var(--violet-glow);
     opacity:0; transform:scale(.95);
+    background: linear-gradient(135deg, #ffffff 30%, var(--cyan) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   }
   #s8.in .final-logo{ animation:heroLogoIn .8s ease forwards; }
   @keyframes heroLogoIn{ to{ opacity:1; transform:scale(1);} }
   #s8 .final-sub{
-    margin-top:18px; font-size:clamp(1rem,2.2vw,1.5rem); color:var(--dim); font-weight:500;
+    margin-top:20px; font-size:clamp(1.1rem,2.4vw,1.6rem); color:var(--dim); font-weight:600;
     opacity:0;
   }
   #s8.sub .final-sub{ animation:fadeUp .5s ease forwards; }
   #s8 .final-words{
-    margin-top:24px; display:flex; gap:20px; font-family:var(--font-body); font-weight:700;
-    letter-spacing:.2em; font-size:clamp(11px,1.6vw,14px); color:var(--cyan);
-    opacity:0;
+    margin-top:24px; display:flex; gap:20px; font-family:var(--font-body); font-weight:800;
+    letter-spacing:.2em; font-size:clamp(12px,1.8vw,15px); color:var(--cyan);
+    opacity:0; text-transform: uppercase;
   }
   #s8.words .final-words{ animation:fadeUp .5s ease forwards; }
   #s8 .final-words span::after{ content:'•'; margin-left:20px; color:var(--dim); }
   #s8 .final-words span:last-child::after{ content:''; }
   
   #s8 .hero-actions{
-    margin-top:32px; display:flex; flex-wrap:wrap; gap:14px; align-items:center; justify-content:center;
-    opacity:0; transform:translateY(16px);
+    margin-top:36px; display:flex; flex-wrap:wrap; gap:16px; align-items:center; justify-content:center;
+    opacity:0; transform:translateY(18px);
   }
   #s8.cta .hero-actions{ animation:ctaIn .5s ease forwards; }
   @keyframes ctaIn{ to{ opacity:1; transform:translateY(0); } }
 </style>
 </head>
 <body>
+
+<!-- Dynamic Cursor Glow Trail -->
+<div id="cursor-glow"></div>
+
+<!-- Glitch Transition Flash Layer -->
+<div id="glitch-overlay"></div>
 
 <!-- Dynamic Canvas Background Visualizer Layer -->
 <canvas id="bg-canvas"></canvas>
@@ -402,23 +456,23 @@
 <div id="particles"></div>
 
 <div id="hud">
-  <div class="tag"><span class="dot"></span> FEL7O // OFFICIAL TRAILER</div>
+  <div class="tag"><span class="dot"></span> FEL7O // OFFICIAL INTERACTIVE TRAILER</div>
   <div class="creator-tag">PRODUCED BY MOHAMED AHMED</div>
   <div class="tag" id="scene-counter">SCENE 01 / 08</div>
 </div>
 
 <div id="stage">
-  <!-- SCENE 1 — BOOT SEQUENCE -->
+  <!-- SCENE 1 — BOOT SEQUENCE TERMINAL -->
   <div class="scene active" id="s1">
     <div id="boot-lines">
       <div class="line" data-l="0">&gt; SYSTEM ONLINE</div>
       <div class="line" data-l="1">&gt; Searching the internet...</div>
-      <div class="line" data-l="2">&gt; <span class="boot-num">10,547,832</span> videos found</div>
-      <div class="line" data-l="3"><span class="boot-ok">✓</span> Download engine ready</div>
+      <div class="line" data-l="2">&gt; <span class="boot-num">10,547,832</span> media files indexed</div>
+      <div class="line" data-l="3"><span class="boot-ok">✓</span> High-Speed Engine Ready</div>
     </div>
   </div>
 
-  <!-- SCENE 2 — BRAND REVEAL -->
+  <!-- SCENE 2 — BRAND REVEAL & EQUALIZER -->
   <div class="scene" id="s2">
     <div id="logo-wrap"><div id="big-logo">FEL7O</div></div>
     <div class="tagline">STOP STREAMING. <b>START OWNING.</b></div>
@@ -433,7 +487,7 @@
     </div>
   </div>
 
-  <!-- SCENE 3 — REAL UI DEMO -->
+  <!-- SCENE 3 — INTERACTIVE REAL APP UI -->
   <div class="scene" id="s3">
     <div class="app-window">
       <div class="app-titlebar">
@@ -442,7 +496,7 @@
       </div>
       <div class="app-body">
         <div class="url-row">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
           <span id="url-text"></span>
         </div>
         <div class="preview-card" id="preview-card">
@@ -453,20 +507,20 @@
           </div>
         </div>
         <div class="quality-row" id="quality-row">
-          <div class="qchip">720p</div><div class="qchip">1080p</div><div class="qchip active">4K</div><div class="qchip">MP3</div>
+          <div class="qchip">720p</div><div class="qchip">1080p</div><div class="qchip active">4K</div><div class="qchip">MP3 (320kbps)</div>
         </div>
-        <button class="dl-btn" id="dl-btn">Download Now</button>
+        <button class="dl-btn" id="dl-btn">⚡ Download Now</button>
         <div class="queue-strip" id="queue-strip">✓ Added to queue — starting download…</div>
       </div>
     </div>
   </div>
 
-  <!-- SCENE 4 — SUPPORTED CONTENT -->
+  <!-- SCENE 4 — SUPPORTED MEDIA MONTAGE -->
   <div class="scene" id="s4">
     <div class="headline">Anything. Anywhere.</div>
     <div class="content-grid" id="content-grid">
-      <div class="ccard"><div class="cicon">🎬</div><div class="clabel">Video</div></div>
-      <div class="ccard"><div class="cicon">🎵</div><div class="clabel">Audio</div></div>
+      <div class="ccard"><div class="cicon">🎬</div><div class="clabel">Video 4K</div></div>
+      <div class="ccard"><div class="cicon">🎵</div><div class="clabel">Audio MP3</div></div>
       <div class="ccard"><div class="cicon">📋</div><div class="clabel">Playlist</div></div>
       <div class="ccard"><div class="cicon">📡</div><div class="clabel">Channel</div></div>
       <div class="ccard"><div class="cicon">🎙️</div><div class="clabel">Podcast</div></div>
@@ -475,7 +529,7 @@
     </div>
   </div>
 
-  <!-- SCENE 5 — EXTREME SPEED -->
+  <!-- SCENE 5 — HYPER SPEED (SKYLINE TUNNEL) -->
   <div class="scene" id="s5">
     <div class="speed-core">
       <div id="speed-num">0</div>
@@ -484,14 +538,13 @@
     </div>
   </div>
 
-  <!-- SCENE 6 — SMART QUEUE -->
+  <!-- SCENE 6 — SMART QUEUE NODES -->
   <div class="scene" id="s6">
     <div class="headline">One queue. Zero waiting.</div>
     <div class="queue-list" id="queue-list">
-      <div class="qitem" data-name="Song.mp3"><div class="qcheck">✓</div><div class="qname">Song.mp3</div><div class="qbar"><div class="qbar-fill"></div></div></div>
-      <div class="qitem" data-name="Tutorial.mp4"><div class="qcheck">✓</div><div class="qname">Tutorial.mp4</div><div class="qbar"><div class="qbar-fill"></div></div></div>
-      <div class="qitem" data-name="Playlist (42)"><div class="qcheck">✓</div><div class="qname">Playlist (42)</div><div class="qbar"><div class="qbar-fill"></div></div></div>
-      <div class="qitem" data-name="Podcast.mp3"><div class="qcheck">✓</div><div class="qname">Podcast.mp3</div><div class="qbar"><div class="qbar-fill"></div></div></div>
+      <div class="qitem" data-name="Song Track.mp3"><div class="qcheck">✓</div><div class="qname">Song Track.mp3</div><div class="qbar"><div class="qbar-fill"></div></div></div>
+      <div class="qitem" data-name="4K Video Concert.mp4"><div class="qcheck">✓</div><div class="qname">4K Video Concert.mp4</div><div class="qbar"><div class="qbar-fill"></div></div></div>
+      <div class="qitem" data-name="Full Album Playlist (42 Tracks)"><div class="qcheck">✓</div><div class="qname">Full Album Playlist (42 Tracks)</div><div class="qbar"><div class="qbar-fill"></div></div></div>
     </div>
   </div>
 
@@ -500,16 +553,16 @@
     <div class="feat-grid" id="feat-grid">
       <div class="fcard"><div class="ficon">🚫</div><div class="flabel">No Ads</div></div>
       <div class="fcard"><div class="ficon">🧠</div><div class="flabel">Smart Queue</div></div>
-      <div class="fcard"><div class="ficon">🔗</div><div class="flabel">Auto Detect</div></div>
-      <div class="fcard"><div class="ficon">👆</div><div class="flabel">One Click</div></div>
+      <div class="fcard"><div class="ficon">🔊</div><div class="flabel">Audio Normalize</div></div>
+      <div class="fcard"><div class="ficon">⚡</div><div class="flabel">Extreme Speed</div></div>
       <div class="fcard"><div class="ficon">💎</div><div class="flabel">Best Quality</div></div>
       <div class="fcard"><div class="ficon">📦</div><div class="flabel">Batch Download</div></div>
-      <div class="fcard"><div class="ficon">🔊</div><div class="flabel">Audio Normalize</div></div>
+      <div class="fcard"><div class="ficon">🎧</div><div class="flabel">Built-in Player</div></div>
       <div class="fcard"><div class="ficon">🔒</div><div class="flabel">100% Free</div></div>
     </div>
   </div>
 
-  <!-- SCENE 8 — FINAL HERO -->
+  <!-- SCENE 8 — FINAL HERO CTA -->
   <div class="scene" id="s8">
     <div class="final-logo">FEL7O</div>
     <div class="final-sub">Download anything. Keep it forever.</div>
@@ -532,7 +585,7 @@
 
 <div id="replay-screen">
   <div class="rp-logo">FEL7O</div>
-  <div class="rp-subtitle">Free YouTube Downloader for Windows — Produced by Mohamed Ahmed</div>
+  <div class="rp-subtitle">Free Media Downloader for Windows — Produced by Mohamed Ahmed</div>
   
   <div class="action-buttons-group">
     <button class="btn-primary-action" id="cta-btn-overlay">⚡ Download Fel7o (.exe)</button>
@@ -545,6 +598,13 @@
 <script>
 (function(){
   'use strict';
+
+  /* ── MOUSE LIGHT & PARALLAX EFFECT ───────── */
+  const cursorGlow = document.getElementById('cursor-glow');
+  window.addEventListener('mousemove', e => {
+    cursorGlow.style.left = e.clientX + 'px';
+    cursorGlow.style.top = e.clientY + 'px';
+  });
 
   /* ── DYNAMIC CANVAS BACKGROUND ENGINE ─────── */
   const canvas = document.getElementById('bg-canvas');
@@ -559,12 +619,12 @@
   window.addEventListener('resize', resize);
   resize();
 
-  const particles = Array.from({length: 50}, ()=>({
+  const particles = Array.from({length: 60}, ()=>({
     x: Math.random() * width,
     y: Math.random() * height,
-    size: Math.random() * 2.5 + 1,
-    speedX: (Math.random() - 0.5) * 1.5,
-    speedY: (Math.random() - 0.5) * 1.5,
+    size: Math.random() * 2.8 + 1,
+    speedX: (Math.random() - 0.5) * 1.6,
+    speedY: (Math.random() - 0.5) * 1.6,
     color: Math.random() > 0.5 ? '#00f0ff' : '#8b5cf6'
   }));
 
@@ -572,12 +632,12 @@
     ctx.clearRect(0, 0, width, height);
 
     if(currentMode === 0 || currentMode === 4){
-      ctx.strokeStyle = 'rgba(0, 240, 255, 0.12)';
+      ctx.strokeStyle = 'rgba(0, 240, 255, 0.14)';
       ctx.lineWidth = 1.5;
       const time = Date.now() * 0.002;
-      for(let i = 0; i < 18; i++){
+      for(let i = 0; i < 20; i++){
         ctx.beginPath();
-        const r = (i * 45 + time * 120) % (width * 0.65);
+        const r = (i * 45 + time * 130) % (width * 0.65);
         ctx.arc(width / 2, height / 2, r, 0, Math.PI * 2);
         ctx.stroke();
       }
@@ -590,7 +650,7 @@
       if(p.y < 0 || p.y > height) p.speedY *= -1;
 
       ctx.fillStyle = p.color;
-      ctx.globalAlpha = 0.35;
+      ctx.globalAlpha = 0.4;
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
       ctx.fill();
@@ -611,10 +671,10 @@
   /* ── BACKGROUND PARTICLES ──────────────────*/
   const pField = document.getElementById('particles');
   const colors = ['#00f0ff','#8b5cf6','#eef2f6'];
-  for(let i=0;i<30;i++){
+  for(let i=0;i<35;i++){
     const p = document.createElement('div');
     p.className='particle';
-    const size = Math.random()*2+1;
+    const size = Math.random()*2.5+1;
     p.style.width=size+'px'; p.style.height=size+'px';
     p.style.left=(Math.random()*100)+'vw';
     p.style.background=colors[Math.floor(Math.random()*colors.length)];
@@ -629,6 +689,12 @@
   /* ── TIMELINE & VIDEO ENGINE ─────────────────── */
   const scenes = ['s1','s2','s3','s4','s5','s6','s7','s8'].map(id=>document.getElementById(id));
   const bgVideos = ['vid-0','vid-1','vid-2','vid-3','vid-4','vid-5','vid-6','vid-7'].map(id=>document.getElementById(id));
+  const glitchOverlay = document.getElementById('glitch-overlay');
+
+  function triggerGlitch(){
+    glitchOverlay.classList.add('flash');
+    setTimeout(()=> glitchOverlay.classList.remove('flash'), 150);
+  }
 
   function setBgVideo(idx){
     bgVideos.forEach((v, i)=>{
@@ -644,6 +710,7 @@
   }
 
   function showScene(idx){
+    triggerGlitch();
     scenes.forEach((s,i)=> s.classList.toggle('active', i===idx));
     currentMode = idx;
     setBgVideo(idx);
@@ -653,7 +720,7 @@
   function typeBoot(){
     const lines = document.querySelectorAll('#boot-lines .line');
     lines.forEach((l,i)=>{
-      setTimeout(()=> l.classList.add('show'), i*550);
+      setTimeout(()=> l.classList.add('show'), i*500);
     });
   }
 
@@ -704,7 +771,7 @@
 
   function typeUrl(){
     const el = document.getElementById('url-text');
-    const full = 'youtube.com/watch?v=studio-session-live';
+    const full = 'youtube.com/watch?v=live-music-session-4k';
     let i=0;
     const iv = setInterval(()=>{
       el.textContent = full.slice(0,i);
@@ -726,14 +793,14 @@
   function animateSpeed(){
     const numEl = document.getElementById('speed-num');
     const doneEl = document.getElementById('speed-done');
-    const steps = [15,43,82,124];
+    const steps = [18,52,94,124];
     steps.forEach((v,i)=>{
       setTimeout(()=>{
         numEl.textContent = v;
       }, i*750);
     });
     setTimeout(()=>{
-      document.getElementById('speed-unit').textContent='DONE';
+      document.getElementById('speed-unit').textContent='HYPER SPEED REACHED';
       doneEl.classList.add('show');
     }, steps.length*750 + 200);
   }
@@ -783,7 +850,7 @@
     document.querySelectorAll('#boot-lines .line').forEach(l=> l.classList.remove('show'));
     document.getElementById('url-text').textContent='';
     document.getElementById('speed-num').textContent='0';
-    document.getElementById('speed-unit').textContent='MB/S';
+    document.getElementById('speed-unit').textContent='MB/S — HYPER SPEED';
     progressFill.style.width='0%';
     startTime = performance.now();
     scheduleCues();
