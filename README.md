@@ -48,7 +48,7 @@ A production-ready Electron desktop app for Windows that lets you **download You
 ### Option A — Download the Installer (Recommended)
 
 1. Go to [**Releases**](https://github.com/Ahmed77khaled/Fel7o-Media-Downloader/releases)
-2. Download `Fel7o Setup x.x.x.exe`
+2. Download `Fel7o.Setup.5.0.1.exe`
 3. Run the installer and follow the setup wizard
 
 ### Option B — Run from Source
