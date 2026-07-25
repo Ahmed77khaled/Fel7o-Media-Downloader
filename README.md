@@ -6,14 +6,14 @@
 
 **Download • Organize • Enjoy**
 
-[![Version](https://img.shields.io/badge/version-5.0.1-blue?style=flat-square)](https://github.com/Ahmed77khaled/Fel7o-Music-Downloader-import/releases)
-[![Platform](https://img.shields.io/badge/platform-Windows-lightgrey?style=flat-square&logo=windows)](https://github.com/Ahmed77khaled/Fel7o-Music-Downloader-import)
+[![Version](https://img.shields.io/badge/version-5.0.1-blue?style=flat-square)](https://github.com/Ahmed77khaled/Fel7o-Media-Downloader/releases)
+[![Platform](https://img.shields.io/badge/platform-Windows-lightgrey?style=flat-square&logo=windows)](https://github.com/Ahmed77khaled/Fel7o-Media-Downloader)
 [![Electron](https://img.shields.io/badge/Electron-31-47848F?style=flat-square&logo=electron)](https://www.electronjs.org/)
 [![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](LICENSE)
 
 A production-ready Electron desktop app for Windows that lets you **download YouTube videos and audio**, manage a download queue, and play your media — all in one place.
 
-[📥 Download Installer](https://github.com/Ahmed77khaled/Fel7o-Music-Downloader-import/releases/latest) · [🚀 Run from Source](#development) · [📋 Changelog](CHANGELOG.md)
+[📥 Download Installer](https://github.com/Ahmed77khaled/Fel7o-Media-Downloader/releases/latest) · [🚀 Run from Source](#development) · [📋 Changelog](CHANGELOG.md)
 
 </div>
 
@@ -47,7 +47,7 @@ A production-ready Electron desktop app for Windows that lets you **download You
 
 ### Option A — Download the Installer (Recommended)
 
-1. Go to [**Releases**](https://github.com/Ahmed77khaled/Fel7o-Music-Downloader-import/releases)
+1. Go to [**Releases**](https://github.com/Ahmed77khaled/Fel7o-Media-Downloader/releases)
 2. Download `Fel7o Setup x.x.x.exe`
 3. Run the installer and follow the setup wizard
 
@@ -73,8 +73,8 @@ See the [Development](#development) section below.
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/Ahmed77khaled/Fel7o-Music-Downloader-import.git
-cd Fel7o-Music-Downloader-import
+git clone https://github.com/Ahmed77khaled/Fel7o-Media-Downloader.git
+cd Fel7o-Media-Downloader
 
 # 2. Install dependencies (also extracts ffmpeg automatically)
 npm install
@@ -101,7 +101,7 @@ Requires `bin/ffmpeg.exe` and `bin/yt-dlp.exe` to be present.
 ## 🗂️ Folder Structure
 
 ```
-Fel7o-Music-Downloader-import/
+Fel7o-Media-Downloader/
 │
 ├── main.js              # Electron main process
 ├── preload.js           # IPC bridge (contextBridge)

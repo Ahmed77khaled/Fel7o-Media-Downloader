@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fel7o Downloader — Official Trailer</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+  :root{
+    --cyan:#00f0ff;
+    --cyan-dim: rgba(0,240,255,.25);
+    --violet:#8b5cf6;
+    --violet-dim: rgba(139,92,246,.25);
+    --white:#eef2f6;
+    --dim:#8a99b5;
+    --bg:#070913;
+    --bg2:#0d1120;
+    --card-bg: rgba(16, 22, 38, 0.75);
+    --green:#3ce89b;
+    --font-display:'Inter', sans-serif;
+    --font-body:'Inter', system-ui, sans-serif;
+    --font-mono:'JetBrains Mono', monospace;
+  }
+
+  html,body{
+    width:100%; height:100%;
+    background:var(--bg);
+    overflow:hidden;
+    font-family:var(--font-body);
+    color:var(--white);
+  }
+
+  /* ── BACKGROUND AURORA & GRID ────────────────── */
+  #aurora{ position:fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none; }
+  .aurora-blob{
+    position:absolute; border-radius:50%; filter:blur(110px);
+    opacity:.25; mix-blend-mode:screen;
+  }
+  .ab1{ width:55vw; height:55vw; top:-15%; left:-10%; background:radial-gradient(circle, var(--cyan), transparent 70%); }
+  .ab2{ width:50vw; height:50vw; bottom:-20%; right:-10%; background:radial-gradient(circle, var(--violet), transparent 70%); }
+  .ab3{ width:45vw; height:45vw; top:25%; left:30%; background:radial-gradient(circle, #1d4ed8, transparent 70%); opacity:.15; }
+
+  #grid{
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background-image:
+      linear-gradient(rgba(0,240,255,.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,240,255,.04) 1px, transparent 1px);
+    background-size:48px 48px;
+    opacity:.4;
+    -webkit-mask-image:radial-gradient(ellipse at 50% 50%, black 20%, transparent 80%);
+            mask-image:radial-gradient(ellipse at 50% 50%, black 20%, transparent 80%);
+  }
+
+  #particles{ position:fixed; inset:0; z-index:1; overflow:hidden; pointer-events:none; }
+  .particle{ position:absolute; border-radius:50%; animation:floatUp linear infinite; opacity:0; }
+  @keyframes floatUp{
+    0%{ transform:translateY(105vh) scale(0); opacity:0; }
+    15%{ opacity:.4; }
+    85%{ opacity:.3; }
+    100%{ transform:translateY(-5vh) scale(1); opacity:0; }
+  }
+
+  /* ── STAGE / SCENES ─────────────────────── */
+  #stage{
+    position:fixed; inset:0; z-index:5;
+    display:flex; align-items:center; justify-content:center;
+    padding:20px;
+  }
+  .scene{
+    position:absolute; inset:0; z-index:10;
+    display:flex; align-items:center; justify-content:center; flex-direction:column;
+    opacity:0; pointer-events:none;
+    transition:opacity 0.4s ease, transform 0.4s ease;
+    transform:scale(0.98);
+  }
+  .scene.active{ opacity:1; pointer-events:auto; transform:scale(1); }
+
+  /* ── HUD ────────────────────────────────── */
+  #hud{
+    position:fixed; top:24px; left:0; right:0; z-index:99990;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0 32px; font-family:var(--font-mono); font-size:11px; letter-spacing:.12em;
+    color:var(--dim); pointer-events:none;
+  }
+  #hud .tag{ display:flex; align-items:center; gap:8px; }
+  #hud .dot{ width:7px; height:7px; border-radius:50%; background:var(--cyan); box-shadow:0 0 8px var(--cyan); }
+
+  /* ── PROGRESS & CONTROLS ────────────────── */
+  #progress-track{
+    position:fixed; bottom:0; left:0; right:0; height:3px; z-index:99990;
+    background:rgba(255,255,255,.06);
+  }
+  #progress-fill{
+    height:100%; width:0%;
+    background:linear-gradient(90deg, var(--cyan), var(--violet));
+  }
+
+  #controls{
+    position:fixed; bottom:24px; right:28px; z-index:99991;
+    display:flex; gap:10px; pointer-events:auto;
+  }
+  .ctl-btn{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:.08em;
+    color:var(--white); background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.14); border-radius:100px;
+    padding:10px 18px; cursor:pointer; backdrop-filter:blur(10px);
+    transition:all .2s ease; text-transform:uppercase;
+  }
+  .ctl-btn:hover{ background:rgba(0,240,255,.15); border-color:var(--cyan); color:var(--cyan); }
+
+  /* ── REPLAY & ACTION OVERLAY SCREEN ─────── */
+  #replay-screen{
+    position:fixed; inset:0; z-index:99992; display:flex; align-items:center; justify-content:center;
+    flex-direction:column; gap:20px; background:rgba(7,9,19,.88); backdrop-filter:blur(16px);
+    opacity:0; pointer-events:none; transition:opacity .4s ease;
+  }
+  #replay-screen.show{ opacity:1; pointer-events:auto; }
+  #replay-screen .rp-logo{ font-family:var(--font-display); font-weight:900; font-size:clamp(3.5rem,10vw,7rem); letter-spacing:.04em; color:var(--white); text-shadow:0 0 40px var(--cyan-dim); line-height:1; }
+  #replay-screen .rp-subtitle{ font-size:clamp(14px, 1.8vw, 18px); color:var(--dim); font-weight:500; margin-bottom:10px; }
+  
+  .action-buttons-group{
+    display:flex; flex-wrap:wrap; gap:14px; align-items:center; justify-content:center; margin-top:10px;
+  }
+
+  .btn-primary-action{
+    font-family:var(--font-body); font-weight:800; font-size:14px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--bg); background:linear-gradient(90deg, var(--cyan), var(--violet)); border:none; border-radius:100px;
+    padding:16px 36px; cursor:pointer; display:flex; align-items:center; gap:10px;
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .btn-primary-action:hover{ transform:translateY(-2px) scale(1.03); box-shadow:0 10px 30px var(--cyan-dim); }
+
+  .btn-secondary-action{
+    font-family:var(--font-body); font-weight:700; font-size:14px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--white); background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.18); border-radius:100px;
+    padding:16px 32px; cursor:pointer; display:flex; align-items:center; gap:10px;
+    transition:all .2s ease; backdrop-filter:blur(8px);
+  }
+  .btn-secondary-action:hover{ background:rgba(255,255,255,.16); border-color:var(--cyan); color:var(--cyan); transform:translateY(-2px); }
+
+  .btn-replay-action{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--dim); background:transparent; border:1px solid rgba(255,255,255,.1); border-radius:100px;
+    padding:12px 26px; cursor:pointer; margin-top:12px;
+    transition:all .2s ease;
+  }
+  .btn-replay-action:hover{ color:var(--white); border-color:rgba(255,255,255,.3); }
+
+  /* ═══════════════════════════════════════════
+     SCENE 1 — BOOT SEQUENCE
+     ═══════════════════════════════════════════ */
+  #s1{ align-items:flex-start; justify-content:center; padding-left:12vw; }
+  #boot-lines{
+    font-family:var(--font-mono); font-size:clamp(14px,1.8vw,19px);
+    color:var(--cyan); line-height:2.2; text-shadow:0 0 10px var(--cyan-dim);
+  }
+  #boot-lines .line{ opacity:0; white-space:pre; }
+  #boot-lines .line.show{ opacity:1; }
+  .boot-ok{ color:var(--green); }
+  .boot-num{ color:var(--white); font-weight:700; }
+
+  /* ═══════════════════════════════════════════
+     SCENE 2 — BRAND REVEAL
+     ═══════════════════════════════════════════ */
+  #s2{ text-align:center; }
+  #big-logo{
+    font-family:var(--font-display); font-weight:900; font-size:clamp(5rem,18vw,13rem);
+    letter-spacing:.04em; color:var(--white); line-height:.9;
+    text-shadow:0 0 50px var(--cyan-dim), 0 0 100px var(--violet-dim);
+  }
+  #s2 .tagline{
+    margin-top:24px; font-family:var(--font-body); font-weight:700; letter-spacing:.3em;
+    font-size:clamp(12px,1.8vw,16px); color:var(--dim); text-transform:uppercase;
+    opacity:0;
+  }
+  #s2 .tagline b{ color:var(--white); font-weight:900; }
+  #s2.reveal-tag .tagline{ animation:fadeUp .5s ease forwards; }
+  @keyframes fadeUp{ from{opacity:0; transform:translateY(12px);} to{opacity:1; transform:translateY(0);} }
+
+  /* ═══════════════════════════════════════════
+     SCENE 3 — REAL UI DEMO
+     ═══════════════════════════════════════════ */
+  #s3{ display:flex; align-items:center; justify-content:center; }
+  .app-window{
+    width:min(680px, 90vw); border-radius:18px; overflow:hidden;
+    background:var(--card-bg);
+    border:1px solid rgba(255,255,255,.12);
+    box-shadow:0 30px 80px rgba(0,0,0,.6), 0 0 40px rgba(0,240,255,.08);
+    backdrop-filter:blur(24px);
+    margin:auto;
+  }
+  .app-titlebar{ display:flex; align-items:center; gap:8px; padding:14px 18px; border-bottom:1px solid rgba(255,255,255,.08); background:rgba(255,255,255,.02); }
+  .app-dot{ width:11px; height:11px; border-radius:50%; }
+  .app-dot.r{background:#ff5f57} .app-dot.y{background:#febc2e} .app-dot.g{background:#28c840}
+  .app-title{ margin-left:10px; font-family:var(--font-body); font-size:12px; font-weight:600; color:var(--dim); letter-spacing:.06em; }
+  .app-body{ padding:24px 28px 28px; }
+  .url-row{
+    display:flex; align-items:center; gap:12px; background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.1); border-radius:12px; padding:14px 18px;
+  }
+  .url-row svg{ flex-shrink:0; stroke:var(--cyan); }
+  #url-text{ font-family:var(--font-mono); font-size:13px; color:var(--white); white-space:nowrap; overflow:hidden; }
+  .preview-card{
+    display:flex; gap:18px; margin-top:20px; opacity:0; transform:translateY(10px);
+    transition:all .4s ease;
+  }
+  .preview-card.show{ opacity:1; transform:translateY(0); }
+  .thumb{
+    width:135px; height:80px; border-radius:10px; flex-shrink:0;
+    background:linear-gradient(135deg, #1e293b, #0f172a);
+    position:relative; overflow:hidden; border:1px solid rgba(255,255,255,.1);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .thumb .play-tri{
+    width:0; height:0; border-style:solid; border-width:9px 0 9px 15px;
+    border-color:transparent transparent transparent var(--cyan);
+  }
+  .meta-col{ display:flex; flex-direction:column; gap:6px; justify-content:center; }
+  .meta-title{ font-size:15px; font-weight:700; color:var(--white); }
+  .meta-sub{ font-family:var(--font-mono); font-size:11px; color:var(--dim); display:flex; gap:12px; }
+  .quality-row{ display:flex; gap:10px; margin-top:18px; opacity:0; transition:opacity .4s ease; }
+  .quality-row.show{ opacity:1; }
+  .qchip{
+    font-family:var(--font-body); font-weight:600; font-size:12px; padding:7px 14px; border-radius:100px;
+    border:1px solid rgba(255,255,255,.12); color:var(--dim); cursor:pointer; background:rgba(255,255,255,.03);
+  }
+  .qchip.active{ border-color:var(--cyan); color:var(--cyan); background:rgba(0,240,255,.1); }
+  .dl-btn{
+    margin-top:22px; width:100%; padding:15px; border-radius:12px; border:none;
+    font-family:var(--font-body); font-weight:800; font-size:13px; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--bg); cursor:pointer;
+    background:linear-gradient(90deg, var(--cyan), var(--violet));
+    opacity:0; transform:translateY(8px); transition:all .4s ease;
+  }
+  .dl-btn.show{ opacity:1; transform:translateY(0); }
+  .queue-strip{
+    margin-top:14px; height:0; overflow:hidden; opacity:0; transition:all .4s ease;
+    font-family:var(--font-body); font-weight:600; font-size:12px; color:var(--green);
+    display:flex; align-items:center; gap:8px;
+  }
+  .queue-strip.show{ height:24px; opacity:1; }
+
+  /* ═══════════════════════════════════════════
+     SCENE 4 — SUPPORTED CONTENT CARDS
+     ═══════════════════════════════════════════ */
+  #s4{ flex-direction:column; gap:40px; text-align:center; }
+  #s4 .headline{ font-family:var(--font-display); font-weight:900; font-size:clamp(2rem,4.5vw,3.2rem); letter-spacing:.03em; color:var(--white); opacity:0; }
+  #s4.in .headline{ animation:fadeUp .5s ease forwards; }
+  .content-grid{ display:flex; flex-wrap:wrap; justify-content:center; gap:16px; max-width:860px; }
+  .ccard{
+    width:145px; padding:22px 14px; border-radius:16px; text-align:center;
+    background:var(--card-bg); border:1px solid rgba(255,255,255,.1);
+    backdrop-filter:blur(12px);
+    opacity:0; transform:translateY(24px);
+    transition:all .4s ease;
+  }
+  .ccard.show{ opacity:1; transform:translateY(0); border-color:rgba(0,240,255,.3); }
+  .ccard .cicon{ font-size:28px; margin-bottom:10px; }
+  .ccard .clabel{ font-family:var(--font-body); font-weight:700; font-size:12px; letter-spacing:.06em; color:var(--white); text-transform:uppercase; }
+
+  /* ═══════════════════════════════════════════
+     SCENE 5 — EXTREME SPEED
+     ═══════════════════════════════════════════ */
+  #s5{ text-align:center; }
+  .speed-core{ text-align:center; }
+  #speed-num{
+    font-family:var(--font-display); font-weight:900; font-size:clamp(6rem,16vw,12rem); color:var(--white);
+    text-shadow:0 0 40px var(--cyan-dim); line-height:1; letter-spacing:.02em;
+  }
+  #speed-unit{ font-family:var(--font-mono); font-size:clamp(1rem,2.2vw,1.5rem); color:var(--cyan); letter-spacing:.2em; margin-top:8px; }
+  .speed-done{
+    margin-top:24px; font-family:var(--font-body); font-weight:700; font-size:15px; letter-spacing:.15em;
+    color:var(--green); opacity:0; text-transform:uppercase;
+  }
+  .speed-done.show{ animation:fadeUp .4s ease forwards; }
+
+  /* ═══════════════════════════════════════════
+     SCENE 6 — SMART QUEUE
+     ═══════════════════════════════════════════ */
+  #s6{ flex-direction:column; gap:32px; text-align:center; }
+  #s6 .headline{ font-family:var(--font-display); font-weight:900; font-size:clamp(2rem,4.5vw,3.2rem); letter-spacing:.03em; color:var(--white); opacity:0; }
+  #s6.in .headline{ animation:fadeUp .5s ease forwards; }
+  .queue-list{ display:flex; flex-direction:column; gap:12px; width:min(500px, 90vw); }
+  .qitem{
+    display:flex; align-items:center; gap:14px; padding:15px 20px; border-radius:14px;
+    background:var(--card-bg); border:1px solid rgba(255,255,255,.1);
+    opacity:0; transform:translateX(-20px); transition:all .4s ease;
+  }
+  .qitem.show{ opacity:1; transform:translateX(0); }
+  .qcheck{
+    width:22px; height:22px; border-radius:50%; border:2px solid rgba(255,255,255,.2);
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+    font-size:11px; color:transparent; transition:all .3s ease;
+  }
+  .qitem.done .qcheck{ background:var(--green); border-color:var(--green); color:var(--bg); }
+  .qname{ font-family:var(--font-body); font-weight:600; font-size:13px; color:var(--white); flex:1; text-align:left; }
+  .qbar{ width:80px; height:5px; border-radius:4px; background:rgba(255,255,255,.1); overflow:hidden; flex-shrink:0; }
+  .qbar-fill{ height:100%; width:0%; background:linear-gradient(90deg,var(--cyan),var(--green)); transition:width .8s ease; }
+  .qitem.done .qbar-fill{ width:100%; }
+
+  /* ═══════════════════════════════════════════
+     SCENE 7 — FEATURE SHOWCASE
+     ═══════════════════════════════════════════ */
+  #s7{ flex-direction:column; text-align:center; }
+  .feat-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:16px; width:min(860px,90vw); }
+  @media (max-width:768px){ .feat-grid{ grid-template-columns:repeat(2,1fr); } }
+  .fcard{
+    padding:22px 16px; border-radius:16px; text-align:center;
+    background:var(--card-bg); border:1px solid rgba(255,255,255,.1);
+    opacity:0; transform:translateY(20px); transition:all .4s ease;
+  }
+  .fcard.show{ opacity:1; transform:translateY(0); border-color:var(--violet); }
+  .fcard .ficon{ font-size:26px; margin-bottom:10px; }
+  .fcard .flabel{ font-family:var(--font-body); font-weight:700; font-size:12px; letter-spacing:.06em; color:var(--white); text-transform:uppercase; }
+
+  /* ═══════════════════════════════════════════
+     SCENE 8 — FINAL HERO
+     ═══════════════════════════════════════════ */
+  #s8{ text-align:center; flex-direction:column; }
+  #s8 .final-logo{
+    font-family:var(--font-display); font-weight:900; font-size:clamp(4.5rem,15vw,10rem); color:var(--white);
+    letter-spacing:.04em; text-shadow:0 0 60px var(--cyan-dim), 0 0 100px var(--violet-dim);
+    opacity:0; transform:scale(.95);
+  }
+  #s8.in .final-logo{ animation:heroLogoIn .8s ease forwards; }
+  @keyframes heroLogoIn{ to{ opacity:1; transform:scale(1);} }
+  #s8 .final-sub{
+    margin-top:18px; font-size:clamp(1rem,2.2vw,1.5rem); color:var(--dim); font-weight:500;
+    opacity:0;
+  }
+  #s8.sub .final-sub{ animation:fadeUp .5s ease forwards; }
+  #s8 .final-words{
+    margin-top:24px; display:flex; gap:20px; font-family:var(--font-body); font-weight:700;
+    letter-spacing:.2em; font-size:clamp(11px,1.6vw,14px); color:var(--cyan);
+    opacity:0;
+  }
+  #s8.words .final-words{ animation:fadeUp .5s ease forwards; }
+  #s8 .final-words span::after{ content:'•'; margin-left:20px; color:var(--dim); }
+  #s8 .final-words span:last-child::after{ content:''; }
+  
+  #s8 .hero-actions{
+    margin-top:32px; display:flex; flex-wrap:wrap; gap:14px; align-items:center; justify-content:center;
+    opacity:0; transform:translateY(16px);
+  }
+  #s8.cta .hero-actions{ animation:ctaIn .5s ease forwards; }
+  @keyframes ctaIn{ to{ opacity:1; transform:translateY(0); } }
+</style>
+</head>
+<body>
+
+<audio id="bg-audio" loop preload="auto">
+  <source src="phonk.mp3" type="audio/mpeg">
+</audio>
+
+<div id="aurora">
+  <div class="aurora-blob ab1"></div>
+  <div class="aurora-blob ab2"></div>
+  <div class="aurora-blob ab3"></div>
+</div>
+<div id="grid"></div>
+<div id="particles"></div>
+
+<div id="hud">
+  <div class="tag"><span class="dot"></span> FEL7O // OFFICIAL TRAILER</div>
+  <div class="tag" id="scene-counter">SCENE 01 / 08</div>
+</div>
+
+<div id="stage">
+  <!-- SCENE 1 — BOOT SEQUENCE -->
+  <div class="scene active" id="s1">
+    <div id="boot-lines">
+      <div class="line" data-l="0">&gt; SYSTEM ONLINE</div>
+      <div class="line" data-l="1">&gt; Searching the internet...</div>
+      <div class="line" data-l="2">&gt; <span class="boot-num">10,547,832</span> videos found</div>
+      <div class="line" data-l="3"><span class="boot-ok">✓</span> Download engine ready</div>
+    </div>
+  </div>
+
+  <!-- SCENE 2 — BRAND REVEAL -->
+  <div class="scene" id="s2">
+    <div id="logo-wrap"><div id="big-logo">FEL7O</div></div>
+    <div class="tagline">STOP STREAMING. <b>START OWNING.</b></div>
+  </div>
+
+  <!-- SCENE 3 — REAL UI DEMO -->
+  <div class="scene" id="s3">
+    <div class="app-window">
+      <div class="app-titlebar">
+        <div class="app-dot r"></div><div class="app-dot y"></div><div class="app-dot g"></div>
+        <div class="app-title">Fel7o Downloader</div>
+      </div>
+      <div class="app-body">
+        <div class="url-row">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          <span id="url-text"></span>
+        </div>
+        <div class="preview-card" id="preview-card">
+          <div class="thumb"><div class="play-tri"></div></div>
+          <div class="meta-col">
+            <div class="meta-title">Late Night Studio Session</div>
+            <div class="meta-sub"><span>12:47</span><span>4K UHD</span></div>
+          </div>
+        </div>
+        <div class="quality-row" id="quality-row">
+          <div class="qchip">720p</div><div class="qchip">1080p</div><div class="qchip active">4K</div><div class="qchip">MP3</div>
+        </div>
+        <button class="dl-btn" id="dl-btn">Download Now</button>
+        <div class="queue-strip" id="queue-strip">✓ Added to queue — starting download…</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCENE 4 — SUPPORTED CONTENT -->
+  <div class="scene" id="s4">
+    <div class="headline">Anything. Anywhere.</div>
+    <div class="content-grid" id="content-grid">
+      <div class="ccard"><div class="cicon">🎬</div><div class="clabel">Video</div></div>
+      <div class="ccard"><div class="cicon">🎵</div><div class="clabel">Audio</div></div>
+      <div class="ccard"><div class="cicon">📋</div><div class="clabel">Playlist</div></div>
+      <div class="ccard"><div class="cicon">📡</div><div class="clabel">Channel</div></div>
+      <div class="ccard"><div class="cicon">🎙️</div><div class="clabel">Podcast</div></div>
+      <div class="ccard"><div class="cicon">🎞️</div><div class="clabel">Reels</div></div>
+      <div class="ccard"><div class="cicon">⚡</div><div class="clabel">Shorts</div></div>
+    </div>
+  </div>
+
+  <!-- SCENE 5 — EXTREME SPEED -->
+  <div class="scene" id="s5">
+    <div class="speed-core">
+      <div id="speed-num">0</div>
+      <div id="speed-unit">MB/S</div>
+      <div class="speed-done" id="speed-done">✓ Download Complete</div>
+    </div>
+  </div>
+
+  <!-- SCENE 6 — SMART QUEUE -->
+  <div class="scene" id="s6">
+    <div class="headline">One queue. Zero waiting.</div>
+    <div class="queue-list" id="queue-list">
+      <div class="qitem" data-name="Song.mp3"><div class="qcheck">✓</div><div class="qname">Song.mp3</div><div class="qbar"><div class="qbar-fill"></div></div></div>
+      <div class="qitem" data-name="Tutorial.mp4"><div class="qcheck">✓</div><div class="qname">Tutorial.mp4</div><div class="qbar"><div class="qbar-fill"></div></div></div>
+      <div class="qitem" data-name="Playlist (42)"><div class="qcheck">✓</div><div class="qname">Playlist (42)</div><div class="qbar"><div class="qbar-fill"></div></div></div>
+      <div class="qitem" data-name="Podcast.mp3"><div class="qcheck">✓</div><div class="qname">Podcast.mp3</div><div class="qbar"><div class="qbar-fill"></div></div></div>
+    </div>
+  </div>
+
+  <!-- SCENE 7 — FEATURE SHOWCASE -->
+  <div class="scene" id="s7">
+    <div class="feat-grid" id="feat-grid">
+      <div class="fcard"><div class="ficon">🚫</div><div class="flabel">No Ads</div></div>
+      <div class="fcard"><div class="ficon">🧠</div><div class="flabel">Smart Queue</div></div>
+      <div class="fcard"><div class="ficon">🔗</div><div class="flabel">Auto Detect</div></div>
+      <div class="fcard"><div class="ficon">👆</div><div class="flabel">One Click</div></div>
+      <div class="fcard"><div class="ficon">💎</div><div class="flabel">Best Quality</div></div>
+      <div class="fcard"><div class="ficon">📦</div><div class="flabel">Batch Download</div></div>
+      <div class="fcard"><div class="ficon">🔊</div><div class="flabel">Audio Normalize</div></div>
+      <div class="fcard"><div class="ficon">🔒</div><div class="flabel">100% Free</div></div>
+    </div>
+  </div>
+
+  <!-- SCENE 8 — FINAL HERO -->
+  <div class="scene" id="s8">
+    <div class="final-logo">FEL7O</div>
+    <div class="final-sub">Download anything. Keep it forever.</div>
+    <div class="final-words"><span>FAST</span><span>POWERFUL</span><span>FREE</span></div>
+    
+    <div class="hero-actions">
+      <button class="btn-primary-action" id="cta-btn-hero">⚡ Download Fel7o (.exe)</button>
+      <button class="btn-secondary-action" id="readme-btn-hero">📖 View GitHub / README</button>
+    </div>
+  </div>
+
+</div>
+
+<div id="progress-track"><div id="progress-fill"></div></div>
+
+<div id="controls">
+  <button class="ctl-btn" id="skip-btn">Skip ⏭</button>
+  <button class="ctl-btn" id="mute-btn">Fullscreen ⛶</button>
+</div>
+
+<div id="replay-screen">
+  <div class="rp-logo">FEL7O</div>
+  <div class="rp-subtitle">Free YouTube Downloader for Windows</div>
+  
+  <div class="action-buttons-group">
+    <button class="btn-primary-action" id="cta-btn-overlay">⚡ Download Fel7o (.exe)</button>
+    <button class="btn-secondary-action" id="readme-btn-overlay">📖 View Project / README</button>
+  </div>
+  
+  <button class="btn-replay-action" id="replay-btn">▶ Replay Trailer</button>
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ── AUDIO CONTROL ───────────────────────── */
+  const bgAudio = document.getElementById('bg-audio');
+  function playAudio(){
+    if(bgAudio && bgAudio.src){
+      bgAudio.play().catch(()=>{/* Autoplay policy fallback */});
+    }
+  }
+
+  /* ── BACKGROUND PARTICLES ──────────────────*/
+  const pField = document.getElementById('particles');
+  const colors = ['#00f0ff','#8b5cf6','#eef2f6'];
+  for(let i=0;i<30;i++){
+    const p = document.createElement('div');
+    p.className='particle';
+    const size = Math.random()*2+1;
+    p.style.width=size+'px'; p.style.height=size+'px';
+    p.style.left=(Math.random()*100)+'vw';
+    p.style.background=colors[Math.floor(Math.random()*colors.length)];
+    p.style.animationDuration=(Math.random()*12+10)+'s';
+    p.style.animationDelay=(Math.random()*8)+'s';
+    pField.appendChild(p);
+  }
+
+  const counterEl = document.getElementById('scene-counter');
+  function setCounter(n){ counterEl.textContent = `SCENE ${String(n).padStart(2,'0')} / 08`; }
+
+  /* ── TIMELINE ENGINE ─────────────────────── */
+  const scenes = ['s1','s2','s3','s4','s5','s6','s7','s8'].map(id=>document.getElementById(id));
+  function showScene(idx){
+    scenes.forEach((s,i)=> s.classList.toggle('active', i===idx));
+    setCounter(idx+1);
+  }
+
+  function typeBoot(){
+    const lines = document.querySelectorAll('#boot-lines .line');
+    lines.forEach((l,i)=>{
+      setTimeout(()=> l.classList.add('show'), i*550);
+    });
+  }
+
+  const progressFill = document.getElementById('progress-fill');
+  const TOTAL = 33; // seconds
+
+  const cues = [
+    // SCENE 1 — Boot (0–3s)
+    { t:0.0, fn: ()=>{ showScene(0); typeBoot(); playAudio(); } },
+
+    // SCENE 2 — Brand reveal (3–6.5s)
+    { t:3.0, fn: ()=>{ showScene(1);
+        const s2=document.getElementById('s2');
+        s2.classList.add('reveal-logo');
+      } },
+    { t:4.1, fn: ()=>{ document.getElementById('s2').classList.add('reveal-tag'); } },
+
+    // SCENE 3 — Real UI DEMO (6.5–11s)
+    { t:6.5, fn: ()=>{ showScene(2); document.getElementById('s3').classList.add('in'); } },
+    { t:7.1, fn: ()=>{ typeUrl(); } },
+    { t:8.3, fn: ()=>{ document.getElementById('preview-card').classList.add('show'); } },
+    { t:8.9, fn: ()=>{ document.getElementById('quality-row').classList.add('show'); } },
+    { t:9.4, fn: ()=>{ document.getElementById('dl-btn').classList.add('show'); } },
+    { t:10.2, fn: ()=>{ document.getElementById('queue-strip').classList.add('show'); } },
+
+    // SCENE 4 — Supported content (11–15s)
+    { t:11.0, fn: ()=>{ showScene(3); document.getElementById('s4').classList.add('in'); } },
+    { t:11.4, fn: ()=>{ staggerShow('#content-grid .ccard', 120); } },
+
+    // SCENE 5 — Extreme speed (15–19.5s)
+    { t:15.0, fn: ()=>{ showScene(4); document.getElementById('s5').classList.add('in'); animateSpeed(); } },
+
+    // SCENE 6 — Smart queue (19.5–23.5s)
+    { t:19.5, fn: ()=>{ showScene(5); document.getElementById('s6').classList.add('in'); } },
+    { t:19.9, fn: ()=>{ staggerShow('#queue-list .qitem', 220, true); } },
+
+    // SCENE 7 — Feature showcase (23.5–29s)
+    { t:23.5, fn: ()=>{ showScene(6); } },
+    { t:23.9, fn: ()=>{ staggerShow('#feat-grid .fcard', 140); } },
+
+    // SCENE 8 — Final hero (29–35s)
+    { t:29.0, fn: ()=>{ showScene(7); document.getElementById('s8').classList.add('in'); } },
+    { t:29.8, fn: ()=>{ document.getElementById('s8').classList.add('sub'); } },
+    { t:30.4, fn: ()=>{ document.getElementById('s8').classList.add('words'); } },
+    { t:31.0, fn: ()=>{ document.getElementById('s8').classList.add('cta'); } },
+    { t:33.0, fn: ()=> endTrailer() },
+  ];
+
+  function typeUrl(){
+    const el = document.getElementById('url-text');
+    const full = 'youtube.com/watch?v=studio-session-live';
+    let i=0;
+    const iv = setInterval(()=>{
+      el.textContent = full.slice(0,i);
+      i++;
+      if(i>full.length) clearInterval(iv);
+    }, 22);
+  }
+
+  function staggerShow(selector, gap, markDone){
+    const els = document.querySelectorAll(selector);
+    els.forEach((el,i)=>{
+      setTimeout(()=>{
+        el.classList.add('show');
+        if(markDone) setTimeout(()=> el.classList.add('done'), 350);
+      }, i*gap);
+    });
+  }
+
+  function animateSpeed(){
+    const numEl = document.getElementById('speed-num');
+    const doneEl = document.getElementById('speed-done');
+    const steps = [15,43,82,124];
+    steps.forEach((v,i)=>{
+      setTimeout(()=>{
+        numEl.textContent = v;
+      }, i*750);
+    });
+    setTimeout(()=>{
+      document.getElementById('speed-unit').textContent='DONE';
+      doneEl.classList.add('show');
+    }, steps.length*750 + 200);
+  }
+
+  /* ── PLAYBACK CONTROL ──────────────────────*/
+  let timers = [];
+  let startTime = null;
+  let rafId = null;
+  let ended = false;
+
+  function clearTimers(){ timers.forEach(t=>clearTimeout(t)); timers=[]; }
+
+  function scheduleCues(){
+    cues.forEach(c=>{
+      timers.push(setTimeout(c.fn, c.t*1000));
+    });
+  }
+
+  function progressLoop(){
+    if(ended) return;
+    const elapsed = (performance.now()-startTime)/1000;
+    const pct = Math.min(100, (elapsed/TOTAL)*100);
+    progressFill.style.width = pct+'%';
+    if(elapsed < TOTAL){ rafId = requestAnimationFrame(progressLoop); }
+  }
+
+  function endTrailer(){
+    ended = true;
+    document.getElementById('replay-screen').classList.add('show');
+  }
+
+  function openDownloadLink(){
+    window.open('https://github.com/Ahmed77khaled/Fel7o-Media-Downloader/releases/latest', '_blank');
+  }
+
+  function openReadmeLink(){
+    window.open('https://github.com/Ahmed77khaled/Fel7o-Media-Downloader#readme', '_blank');
+  }
+
+  function play(){
+    ended = false;
+    clearTimers();
+    if(rafId) cancelAnimationFrame(rafId);
+    document.getElementById('replay-screen').classList.remove('show');
+    scenes.forEach(s=> s.classList.remove('active','in','reveal-logo','reveal-tag','sub','words','cta'));
+    document.querySelectorAll('.show,.done').forEach(el=> el.classList.remove('show','done'));
+    document.querySelectorAll('#boot-lines .line').forEach(l=> l.classList.remove('show'));
+    document.getElementById('url-text').textContent='';
+    document.getElementById('speed-num').textContent='0';
+    document.getElementById('speed-unit').textContent='MB/S';
+    progressFill.style.width='0%';
+    startTime = performance.now();
+    scheduleCues();
+    progressLoop();
+  }
+
+  /* ── CONTROLS & LISTENERS ───────────────── */
+  document.getElementById('skip-btn').addEventListener('click', ()=>{
+    clearTimers();
+    if(rafId) cancelAnimationFrame(rafId);
+    endTrailer();
+  });
+  document.getElementById('replay-btn').addEventListener('click', play);
+
+  // Download buttons
+  document.getElementById('cta-btn-hero').addEventListener('click', openDownloadLink);
+  document.getElementById('cta-btn-overlay').addEventListener('click', openDownloadLink);
+
+  // README / GitHub buttons
+  document.getElementById('readme-btn-hero').addEventListener('click', openReadmeLink);
+  document.getElementById('readme-btn-overlay').addEventListener('click', openReadmeLink);
+
+  document.getElementById('mute-btn').addEventListener('click', ()=>{
+    if(!document.fullscreenElement){ document.documentElement.requestFullscreen().catch(()=>{}); }
+    else { document.exitFullscreen(); }
+  });
+
+  window.addEventListener('keydown', e=>{
+    if(e.code==='Space'){ e.preventDefault(); document.getElementById('skip-btn').click(); }
+    if(e.code==='KeyR'){ play(); }
+    if(e.code==='KeyF'){ document.getElementById('mute-btn').click(); }
+  });
+
+  /* ── BOOT ───────────────────────────────── */
+  play();
+})();
+</script>
+
+</body>
+</html>
