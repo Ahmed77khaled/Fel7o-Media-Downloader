@@ -1037,7 +1037,7 @@ async function buildArgs(job, settings) {
   if (job.mode === 'mp3') {
     args.push('-x', '--audio-format', job.audioFormat || settings.audioFormat,
                '--audio-quality', `${job.audioQuality || settings.audioQuality}K`,
-               '--postprocessor-args', 'ffmpeg:-af loudnorm');
+               '--postprocessor-args', 'ffmpeg:-af loudnorm=I=-14:TP=-1.5:LRA=11:linear=true');
   } else {
     const q = job.videoQuality || settings.videoQuality;
     const heightFilter = q === 'best' ? '' : `[height<=${q}]`;
