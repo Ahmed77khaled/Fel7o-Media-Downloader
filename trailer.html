@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fel7o Downloader — Official Trailer</title>
+<title>Fel7o Media Downloader — Official Interactive Trailer</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
 
@@ -18,7 +18,7 @@
     --dim:#8a99b5;
     --bg:#070913;
     --bg2:#0d1120;
-    --card-bg: rgba(16, 22, 38, 0.75);
+    --card-bg: rgba(16, 22, 38, 0.82);
     --green:#3ce89b;
     --font-display:'Inter', sans-serif;
     --font-body:'Inter', system-ui, sans-serif;
@@ -33,8 +33,21 @@
     color:var(--white);
   }
 
+  /* ── BACKGROUND VIDEO LAYERS ───────────────────── */
+  #video-bg-container {
+    position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none;
+  }
+  .bg-video {
+    position: absolute; inset: 0; width: 100vw; height: 100vh;
+    object-fit: cover; opacity: 0; transition: opacity 0.8s ease-in-out;
+    filter: brightness(0.65) contrast(1.1);
+  }
+  .bg-video.active-video {
+    opacity: 0.45;
+  }
+
   /* ── BACKGROUND AURORA & GRID ────────────────── */
-  #aurora{ position:fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none; }
+  #aurora{ position:fixed; inset:0; z-index:1; overflow:hidden; pointer-events:none; }
   .aurora-blob{
     position:absolute; border-radius:50%; filter:blur(110px);
     opacity:.25; mix-blend-mode:screen;
@@ -44,7 +57,7 @@
   .ab3{ width:45vw; height:45vw; top:25%; left:30%; background:radial-gradient(circle, #1d4ed8, transparent 70%); opacity:.15; }
 
   #grid{
-    position:fixed; inset:0; z-index:0; pointer-events:none;
+    position:fixed; inset:0; z-index:1; pointer-events:none;
     background-image:
       linear-gradient(rgba(0,240,255,.04) 1px, transparent 1px),
       linear-gradient(90deg, rgba(0,240,255,.04) 1px, transparent 1px);
@@ -54,7 +67,7 @@
             mask-image:radial-gradient(ellipse at 50% 50%, black 20%, transparent 80%);
   }
 
-  #particles{ position:fixed; inset:0; z-index:1; overflow:hidden; pointer-events:none; }
+  #particles{ position:fixed; inset:0; z-index:2; overflow:hidden; pointer-events:none; }
   .particle{ position:absolute; border-radius:50%; animation:floatUp linear infinite; opacity:0; }
   @keyframes floatUp{
     0%{ transform:translateY(105vh) scale(0); opacity:0; }
@@ -351,6 +364,18 @@
 </head>
 <body>
 
+<!-- Dynamic Video Backgrounds mapped to demo/*.mp4 -->
+<div id="video-bg-container">
+  <video id="vid-0" class="bg-video" autoplay loop muted playsinline src="../demo/12518453_3840_2160_25fps.mp4"></video>
+  <video id="vid-1" class="bg-video" autoplay loop muted playsinline src="../demo/13190440_3840_2160_24fps.mp4"></video>
+  <video id="vid-2" class="bg-video" autoplay loop muted playsinline src="../demo/4707185-hd_1920_1080_24fps.mp4"></video>
+  <video id="vid-3" class="bg-video" autoplay loop muted playsinline src="../demo/853969-hd_1920_1080_25fps.mp4"></video>
+  <video id="vid-4" class="bg-video" autoplay loop muted playsinline src="../demo/12518453_3840_2160_25fps.mp4"></video>
+  <video id="vid-5" class="bg-video" autoplay loop muted playsinline src="../demo/15722036-uhd_3840_2160_24fps.mp4"></video>
+  <video id="vid-6" class="bg-video" autoplay loop muted playsinline src="../demo/6606215-uhd_4096_2160_24fps.mp4"></video>
+  <video id="vid-7" class="bg-video" autoplay loop muted playsinline src="../demo/6606218-uhd_4096_2160_24fps.mp4"></video>
+</div>
+
 <audio id="bg-audio" loop preload="auto">
   <source src="phonk.mp3" type="audio/mpeg">
 </audio>
@@ -390,7 +415,7 @@
     <div class="app-window">
       <div class="app-titlebar">
         <div class="app-dot r"></div><div class="app-dot y"></div><div class="app-dot g"></div>
-        <div class="app-title">Fel7o Downloader</div>
+        <div class="app-title">Fel7o Media Downloader</div>
       </div>
       <div class="app-body">
         <div class="url-row">
@@ -524,10 +549,26 @@
   const counterEl = document.getElementById('scene-counter');
   function setCounter(n){ counterEl.textContent = `SCENE ${String(n).padStart(2,'0')} / 08`; }
 
-  /* ── TIMELINE ENGINE ─────────────────────── */
+  /* ── TIMELINE & VIDEO ENGINE ─────────────────── */
   const scenes = ['s1','s2','s3','s4','s5','s6','s7','s8'].map(id=>document.getElementById(id));
+  const bgVideos = ['vid-0','vid-1','vid-2','vid-3','vid-4','vid-5','vid-6','vid-7'].map(id=>document.getElementById(id));
+
+  function setBgVideo(idx){
+    bgVideos.forEach((v, i)=>{
+      if(v){
+        if(i === idx){
+          v.classList.add('active-video');
+          v.play().catch(()=>{});
+        } else {
+          v.classList.remove('active-video');
+        }
+      }
+    });
+  }
+
   function showScene(idx){
     scenes.forEach((s,i)=> s.classList.toggle('active', i===idx));
+    setBgVideo(idx);
     setCounter(idx+1);
   }
 
