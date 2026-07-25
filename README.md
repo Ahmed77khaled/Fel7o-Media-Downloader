@@ -2,7 +2,7 @@
 
 <img src="assets/logo.png" alt="Fel7o Logo" width="120" />
 
-# Fel7o — Music & Video Downloader
+# Fel7o — Audio & Video Downloader
 
 **Download • Organize • Enjoy**
 
@@ -11,7 +11,7 @@
 [![Electron](https://img.shields.io/badge/Electron-31-47848F?style=flat-square&logo=electron)](https://www.electronjs.org/)
 [![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](LICENSE)
 
-A production-ready Electron desktop app for Windows that lets you **download YouTube videos and music**, manage a download queue, and play your media — all in one place.
+A production-ready Electron desktop app for Windows that lets you **download YouTube videos and audio**, manage a download queue, and play your media — all in one place.
 
 [📥 Download Installer](https://github.com/Ahmed77khaled/Fel7o-Music-Downloader-import/releases/latest) · [🚀 Run from Source](#development) · [📋 Changelog](CHANGELOG.md)
 
@@ -24,6 +24,7 @@ A production-ready Electron desktop app for Windows that lets you **download You
 | Feature | Description |
 |---|---|
 | 🎵 **MP3 / Video Download** | Download audio (128/192/320 kbps) or video (480p → 4K) from YouTube |
+| 🎚️ **Audio Normalization** | Built-in EBU R128 loudnorm processing to prevent audio clipping and distortion |
 | 📋 **Playlist Support** | Paste a playlist URL and select individual tracks to download |
 | ⚡ **Concurrent Queue** | Run multiple downloads simultaneously with a configurable limit |
 | ⏸ **Pause & Resume** | Pause, resume, or cancel any download individually or all at once |
