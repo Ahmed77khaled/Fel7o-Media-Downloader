@@ -892,6 +892,65 @@
     to   { opacity:1; transform:translateY(0); }
   }
   @keyframes ctaIn { to { opacity:1; transform:translateY(0); } }
+
+  /* ══════════════════════════════════════════════════
+     MOBILE & RESPONSIVE DESIGN SYSTEM
+  ══════════════════════════════════════════════════ */
+  @media (max-width: 768px) {
+    #hud { top:14px; left:14px; right:14px; }
+    #hud .tag { padding:4px 10px; font-size:10px; }
+
+    .scene { padding: 80px 16px 90px; }
+
+    /* Scene 1 — Terminal */
+    .term-box { width:94vw; max-width:100%; padding:18px; }
+    .term-body { font-size:12px; line-height:1.7; }
+
+    /* Scene 2 — Brand */
+    .brand-tagline { font-size:1.1rem; letter-spacing:.25em; }
+
+    /* Scene 3 — App UI */
+    .app-window { width:95vw; max-width:100%; }
+    .input-row { flex-direction:column; gap:8px; }
+    .btn-paste-mock, .btn-download-mock { width:100%; justify-content:center; }
+    .quality-chips { flex-wrap:wrap; justify-content:center; gap:6px; }
+
+    /* Scene 4 — Content Grid */
+    #content-grid { grid-template-columns:repeat(2, 1fr); gap:10px; width:95vw; }
+    .ccard { padding:14px 10px; }
+    .ccard .cicon { font-size:24px; }
+
+    /* Scene 5 — Speed Gauge */
+    #speed-gauge-wrap { transform:scale(0.82); transform-origin:center center; margin:-10px auto; }
+    .speed-unit-row { margin-top:-8px; }
+
+    /* Scene 6 — Queue */
+    #queue-list { width:95vw; gap:8px; }
+    .qitem { padding:10px 12px; font-size:12px; gap:8px; }
+
+    /* Scene 7 — Features */
+    #feat-grid { grid-template-columns:repeat(2, 1fr); gap:10px; width:95vw; }
+    .fcard { padding:16px 12px; }
+
+    /* Scene 8 — Hero CTA */
+    #s8 .hero-actions { flex-direction:column; width:100%; max-width:320px; gap:12px; }
+    .btn-primary-action, .btn-secondary-action { width:100%; justify-content:center; padding:14px 20px; font-size:14px; }
+    #s8 .trust-row { gap:12px; font-size:11px; }
+
+    /* Nav Overlay */
+    #nav-overlay { bottom:16px; padding:6px 10px; gap:8px; }
+    .nav-btn { padding:8px 12px; min-height:42px; font-size:12px; }
+    #nav-scene-indicator { font-size:11px; padding:0 8px; }
+  }
+
+  @media (max-width: 480px) {
+    .term-title { font-size:11px; }
+    .brand-tagline { font-size:0.95rem; letter-spacing:.18em; }
+    #content-grid { grid-template-columns:repeat(2, 1fr); gap:8px; }
+    #feat-grid { grid-template-columns:repeat(2, 1fr); gap:8px; }
+    #speed-gauge-wrap { transform:scale(0.72); margin:-20px auto; }
+    #s8 .final-words { font-size:11px; letter-spacing:.15em; flex-wrap:wrap; justify-content:center; }
+  }
 </style>
 </head>
 <body>
