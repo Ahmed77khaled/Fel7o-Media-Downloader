@@ -1788,41 +1788,56 @@
     export4kBtn.addEventListener('click', start4KRecording);
   }
 
-  function start4KRecording(){
-    const canvas = document.getElementById('bg-canvas');
-    if(!canvas) return;
-
-    play();
-
-    const stream = canvas.captureStream(60);
-    let recorder;
+  async function start4KRecording(){
     try {
-      recorder = new MediaRecorder(stream, {
-        mimeType: 'video/webm;codecs=vp9',
-        videoBitsPerSecond: 30000000
+      const stream = await navigator.mediaDevices.getDisplayMedia({
+        video: {
+          displaySurface: 'browser',
+          width: { ideal: 3840, max: 3840 },
+          height: { ideal: 2160, max: 2160 },
+          frameRate: { ideal: 60 }
+        },
+        audio: true
       });
-    } catch(e) {
-      recorder = new MediaRecorder(stream, { videoBitsPerSecond: 25000000 });
+
+      play();
+
+      let recorder;
+      try {
+        recorder = new MediaRecorder(stream, {
+          mimeType: 'video/webm;codecs=vp9',
+          videoBitsPerSecond: 35000000
+        });
+      } catch(e) {
+        recorder = new MediaRecorder(stream, { videoBitsPerSecond: 25000000 });
+      }
+
+      const chunks = [];
+      recorder.ondataavailable = e => { if(e.data && e.data.size > 0) chunks.push(e.data); };
+      recorder.onstop = () => {
+        const blob = new Blob(chunks, { type: 'video/webm' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'fel7o_trailer_4K.webm';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        stream.getTracks().forEach(track => track.stop());
+      };
+
+      recorder.start(100);
+
+      setTimeout(() => {
+        if(recorder.state !== 'inactive'){
+          recorder.stop();
+        }
+      }, 33500);
+
+    } catch(err) {
+      console.error('Recording cancelled or not supported', err);
     }
-
-    const chunks = [];
-    recorder.ondataavailable = e => { if(e.data && e.data.size > 0) chunks.push(e.data); };
-    recorder.onstop = () => {
-      const blob = new Blob(chunks, { type: 'video/webm' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'fel7o_trailer_4K.webm';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    };
-
-    recorder.start(100);
-    setTimeout(() => {
-      if(recorder.state !== 'inactive') recorder.stop();
-    }, 33500);
   }
 
   document.getElementById('fullscreen-btn').addEventListener('click', () => {
