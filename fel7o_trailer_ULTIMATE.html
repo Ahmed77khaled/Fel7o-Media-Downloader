@@ -1609,7 +1609,7 @@
   /* ════════════════════════════════════════════════
      TIMELINE CUES & AUTOMATIC PLAYBACK ENGINE
   ════════════════════════════════════════════════ */
-  const TOTAL = 33.0;
+  const TOTAL = 31.0;
 
   const cues = [
     { t:0.0,  sceneIdx:0, fn: () => { showScene(0); typeBoot(); playAudio(); } },
@@ -1621,17 +1621,17 @@
     { t:9.1,  fn: () => { document.getElementById('quality-row').classList.add('show'); } },
     { t:9.8,  fn: () => { animateDlProgress(); } },
     { t:13.0, sceneIdx:3, fn: () => { showScene(3); document.getElementById('s4').classList.add('in'); } },
-    { t:13.5, fn: () => { staggerShow('#content-grid .ccard', 112); } },
-    { t:17.0, sceneIdx:4, fn: () => { showScene(4); animateSpeed(); } },
-    { t:21.0, sceneIdx:5, fn: () => { showScene(5); document.getElementById('s6').classList.add('in'); } },
-    { t:21.5, fn: () => { staggerShow('#queue-list .qitem', 235, true); } },
-    { t:25.0, sceneIdx:6, fn: () => { showScene(6); document.getElementById('s7').classList.add('in'); } },
-    { t:25.5, fn: () => { staggerShow('#feat-grid .fcard', 132); } },
-    { t:29.0, sceneIdx:7, fn: () => { showScene(7); document.getElementById('s8').classList.add('in'); } },
-    { t:29.8, fn: () => { document.getElementById('s8').classList.add('sub'); } },
-    { t:30.4, fn: () => { document.getElementById('s8').classList.add('words'); } },
-    { t:31.0, fn: () => { document.getElementById('s8').classList.add('cta'); } },
-    { t:33.0, fn: () => { endTrailer(); } }
+    { t:13.4, fn: () => { staggerShow('#content-grid .ccard', 100); } },
+    { t:16.0, sceneIdx:4, fn: () => { showScene(4); animateSpeed(); } },
+    { t:20.0, sceneIdx:5, fn: () => { showScene(5); document.getElementById('s6').classList.add('in'); } },
+    { t:20.5, fn: () => { staggerShow('#queue-list .qitem', 220, true); } },
+    { t:24.0, sceneIdx:6, fn: () => { showScene(6); document.getElementById('s7').classList.add('in'); } },
+    { t:24.4, fn: () => { staggerShow('#feat-grid .fcard', 120); } },
+    { t:27.0, sceneIdx:7, fn: () => { showScene(7); document.getElementById('s8').classList.add('in'); } },
+    { t:27.8, fn: () => { document.getElementById('s8').classList.add('sub'); } },
+    { t:28.4, fn: () => { document.getElementById('s8').classList.add('words'); } },
+    { t:29.0, fn: () => { document.getElementById('s8').classList.add('cta'); } },
+    { t:31.0, fn: () => { endTrailer(); } }
   ];
 
   let timers          = [];
