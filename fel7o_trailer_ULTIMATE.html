@@ -1702,13 +1702,28 @@
   }
 
   function showScene(idx){
-    if(idx !== currentSceneIdx){
-      triggerCinematicTransition(currentSceneIdx, idx);
+    if(idx === currentSceneIdx && scenes[idx] && scenes[idx].classList.contains('active')) return;
+    const fromIdx = currentSceneIdx;
+    const toIdx = idx;
+
+    triggerCinematicTransition(fromIdx, toIdx);
+
+    const toScene = scenes[toIdx];
+    if(toScene){
+      toScene.classList.add('active');
     }
-    scenes.forEach((s,i) => s.classList.toggle('active', i===idx));
-    currentSceneIdx = idx;
-    setBgVideo(idx);
-    setCounter(idx+1);
+
+    currentSceneIdx = toIdx;
+    setBgVideo(toIdx);
+    setCounter(toIdx + 1);
+
+    setTimeout(() => {
+      scenes.forEach((s, i) => {
+        if(i !== toIdx && s){
+          s.classList.remove('active');
+        }
+      });
+    }, 600);
   }
 
   /* ════════════════════════════════════════════════
