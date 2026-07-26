@@ -6,7 +6,7 @@ const { spawn } = require('child_process');
 app.disableHardwareAcceleration();
 
 app.whenReady().then(async () => {
-  console.log('🚀 Launching 4K Video Renderer Engine (3840x2160 @ 60 FPS - 45s Extended Timeline)...');
+  console.log('🚀 Launching 4K Video Renderer Engine (3840x2160 @ 60 FPS - 68s Extended Timeline)...');
 
   const win = new BrowserWindow({
     width: 3840,
@@ -63,11 +63,11 @@ app.whenReady().then(async () => {
   });
 
   const FPS = 60;
-  const TOTAL_SECONDS = 45;
+  const TOTAL_SECONDS = 68;
   const TOTAL_FRAMES = TOTAL_SECONDS * FPS;
   let frameCount = 0;
 
-  console.log(`🎥 Capturing ${TOTAL_FRAMES} frames (45.0s @ 60 FPS)...`);
+  console.log(`🎥 Capturing ${TOTAL_FRAMES} frames (68.0s @ 60 FPS)...`);
 
   const interval = setInterval(async () => {
     if (frameCount >= TOTAL_FRAMES) {
@@ -84,7 +84,7 @@ app.whenReady().then(async () => {
         ffmpeg.stdin.write(pngBuffer);
       }
       frameCount++;
-      if (frameCount % 270 === 0) {
+      if (frameCount % 300 === 0) {
         const pct = Math.floor((frameCount / TOTAL_FRAMES) * 100);
         console.log(`⏳ Render progress: ${pct}% (${frameCount}/${TOTAL_FRAMES} frames)`);
       }
