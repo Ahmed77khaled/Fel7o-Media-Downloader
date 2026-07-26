@@ -121,6 +121,183 @@
   }
 
   /* ══════════════════════════════════════════════════
+     APPLE & FRAMER CINEMATIC TRANSITION FX ELEMENTS
+  ══════════════════════════════════════════════════ */
+  #digital-scan-line {
+    position:fixed; left:0; right:0; top:-20px; height:6px; z-index:99998; pointer-events:none;
+    background:linear-gradient(90deg, transparent 0%, #00f0ff 25%, #ffffff 50%, #00f0ff 75%, transparent 100%);
+    box-shadow:0 0 30px #00f0ff, 0 0 60px rgba(0,240,255,0.8), 0 0 100px rgba(0,240,255,0.4);
+    opacity:0; will-change:transform,opacity;
+  }
+  #digital-scan-line.active {
+    animation:digitalScanAnim 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  @keyframes digitalScanAnim {
+    0%   { opacity:1; transform:translateY(-10vh); }
+    75%  { opacity:1; }
+    100% { opacity:0; transform:translateY(110vh); }
+  }
+
+  #light-sweep-beam {
+    position:fixed; inset:-50%; z-index:99997; pointer-events:none; opacity:0;
+    background:linear-gradient(115deg, transparent 40%, rgba(255,255,255,0.75) 48%, rgba(0,240,255,0.65) 52%, transparent 60%);
+    transform:translateX(-100%) translateY(-50%) rotate(25deg);
+    will-change:transform,opacity;
+  }
+  #light-sweep-beam.active {
+    animation:lightSweepAnim 0.62s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  @keyframes lightSweepAnim {
+    0%   { opacity:1; transform:translateX(-100%) translateY(-30%) rotate(25deg); }
+    100% { opacity:0; transform:translateX(100%) translateY(30%) rotate(25deg); }
+  }
+
+  #warp-speed-streaks {
+    position:fixed; inset:0; z-index:99996; pointer-events:none; opacity:0;
+    background:radial-gradient(circle at 50% 50%, transparent 15%, rgba(0,240,255,0.45) 55%, rgba(139,92,246,0.6) 95%);
+    box-shadow:inset 0 0 120px rgba(0,240,255,0.85);
+    transform:scale(0.4); will-change:transform,opacity;
+  }
+  #warp-speed-streaks.active {
+    animation:warpSpeedAnim 0.58s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
+  }
+  @keyframes warpSpeedAnim {
+    0%   { opacity:1; transform:scale(0.35); }
+    50%  { opacity:1; transform:scale(1.4); }
+    100% { opacity:0; transform:scale(2.3); }
+  }
+
+  #energy-pulse-wave {
+    position:fixed; top:50%; left:50%; width:10px; height:10px; z-index:99995; pointer-events:none;
+    border-radius:50%; border:3px solid var(--cyan);
+    box-shadow:0 0 45px var(--cyan), inset 0 0 45px var(--cyan);
+    transform:translate(-50%,-50%) scale(0); opacity:0;
+    will-change:transform,opacity;
+  }
+  #energy-pulse-wave.active {
+    animation:pulseWaveAnim 0.6s cubic-bezier(0.08, 0.82, 0.17, 1) forwards;
+  }
+  @keyframes pulseWaveAnim {
+    0%   { opacity:1; transform:translate(-50%,-50%) scale(0); }
+    70%  { opacity:0.85; }
+    100% { opacity:0; transform:translate(-50%,-50%) scale(190); }
+  }
+
+  #rgb-flash-overlay {
+    position:fixed; inset:0; z-index:99999; pointer-events:none; opacity:0;
+    background:radial-gradient(circle at 50% 50%, rgba(255,255,255,0.95) 0%, rgba(0,240,255,0.65) 40%, rgba(139,92,246,0.45) 75%, transparent 100%);
+    mix-blend-mode:screen; will-change:opacity,filter;
+  }
+  #rgb-flash-overlay.active {
+    animation:rgbFlashAnim 0.48s cubic-bezier(0.12, 0.8, 0.2, 1) forwards;
+  }
+  @keyframes rgbFlashAnim {
+    0%   { opacity:1; filter:contrast(200%) hue-rotate(90deg); }
+    40%  { opacity:0.9; filter:contrast(150%) hue-rotate(0deg); }
+    100% { opacity:0; filter:contrast(100%); }
+  }
+
+  #stage.shake {
+    animation:impactShake 0.28s cubic-bezier(0.36, 0.07, 0.19, 0.97) forwards;
+  }
+  @keyframes impactShake {
+    0%, 100% { transform:translate(0, 0); }
+    20% { transform:translate(-6px, 4px) rotate(-0.5deg); }
+    40% { transform:translate(6px, -4px) rotate(0.5deg); }
+    60% { transform:translate(-4px, -2px); }
+    80% { transform:translate(3px, 2px); }
+  }
+
+  /* ══════════════════════════════════════════════════
+     PER-SCENE CUSTOM KEYFRAME TRANSITIONS
+  ══════════════════════════════════════════════════ */
+  /* Scene 1 → 2: Digital CRT Scan */
+  .s1-digital-exit { animation: s1DigitalExit 0.65s cubic-bezier(0.2, 1, 0.3, 1) forwards !important; }
+  .s2-digital-enter { animation: s2DigitalEnter 0.65s cubic-bezier(0.2, 1, 0.3, 1) forwards !important; }
+  @keyframes s1DigitalExit {
+    to { opacity:0; transform:scale(0.95) rotateX(4deg) translateZ(-40px); filter:blur(10px) brightness(1.5); }
+  }
+  @keyframes s2DigitalEnter {
+    from { opacity:0; transform:scale(1.06) translateZ(40px); filter:blur(10px) drop-shadow(0 0 40px rgba(0,240,255,0.6)); }
+    to   { opacity:1; transform:scale(1) translateZ(0); filter:blur(0px); }
+  }
+
+  /* Scene 2 → 3: Light Sweep & Keynote Push */
+  .s2-light-exit { animation: s2LightExit 0.62s cubic-bezier(0.16, 1, 0.3, 1) forwards !important; }
+  .s3-light-enter { animation: s3LightEnter 0.62s cubic-bezier(0.16, 1, 0.3, 1) forwards !important; }
+  @keyframes s2LightExit {
+    to { opacity:0; transform:scale(1.22) translateZ(100px); filter:brightness(2.2) blur(14px); }
+  }
+  @keyframes s3LightEnter {
+    from { opacity:0; transform:scale(0.88) translateZ(-80px); filter:brightness(1.8) blur(10px); }
+    to   { opacity:1; transform:scale(1) translateZ(0); filter:brightness(1) blur(0px); }
+  }
+
+  /* Scene 3 → 4: Glass Morph Expansion */
+  .s3-glass-exit { animation: s3GlassExit 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards !important; }
+  .s4-glass-enter { animation: s4GlassEnter 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards !important; }
+  @keyframes s3GlassExit {
+    to { opacity:0; transform:scale(1.18) rotateX(6deg) translateZ(80px); filter:blur(16px); }
+  }
+  @keyframes s4GlassEnter {
+    from { opacity:0; transform:scale(0.86) translateZ(-60px); filter:blur(12px); }
+    to   { opacity:1; transform:scale(1) translateZ(0); filter:blur(0px); }
+  }
+
+  /* Scene 4 → 5: Warp Speed Acceleration */
+  .s4-warp-exit { animation: s4WarpExit 0.58s cubic-bezier(0.1, 0.9, 0.2, 1) forwards !important; }
+  .s5-warp-enter { animation: s5WarpEnter 0.58s cubic-bezier(0.1, 0.9, 0.2, 1) forwards !important; }
+  @keyframes s4WarpExit {
+    to { opacity:0; transform:scale(1.35) translateZ(200px); filter:blur(20px); }
+  }
+  @keyframes s5WarpEnter {
+    from { opacity:0; transform:scale(0.65) translateZ(-120px); filter:blur(14px); }
+    to   { opacity:1; transform:scale(1) translateZ(0); filter:blur(0px); }
+  }
+
+  /* Scene 5 → 6: Energy Pulse Shockwave */
+  .s5-pulse-exit { animation: s5PulseExit 0.6s cubic-bezier(0.08, 0.82, 0.17, 1) forwards !important; }
+  .s6-pulse-enter { animation: s6PulseEnter 0.6s cubic-bezier(0.08, 0.82, 0.17, 1) forwards !important; }
+  @keyframes s5PulseExit {
+    to { opacity:0; transform:scale(1.25) translateZ(90px); filter:brightness(2) blur(12px); }
+  }
+  @keyframes s6PulseEnter {
+    from { opacity:0; transform:scale(0.88) translateZ(-50px); filter:blur(10px); }
+    to   { opacity:1; transform:scale(1) translateZ(0); filter:blur(0px); }
+  }
+
+  /* Scene 6 → 7: Particle Dissolve Flow */
+  .s6-dissolve-exit { animation: s6DissolveExit 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards !important; }
+  .s7-assemble-enter { animation: s7AssembleEnter 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards !important; }
+  @keyframes s6DissolveExit {
+    to { opacity:0; transform:scale(0.88) rotateX(10deg) translateY(-40px); filter:blur(14px); }
+  }
+  @keyframes s7AssembleEnter {
+    from { opacity:0; transform:scale(1.12) translateY(40px) translateZ(60px); filter:blur(12px); }
+    to   { opacity:1; transform:scale(1) translateY(0) translateZ(0); filter:blur(0px); }
+  }
+
+  /* Scene 7 → 8: RGB Flash + Camera Hero Reveal */
+  .s7-rgb-exit { animation: s7RgbExit 0.55s cubic-bezier(0.12, 0.8, 0.2, 1) forwards !important; }
+  .s8-hero-enter { animation: s8HeroEnter 0.55s cubic-bezier(0.12, 0.8, 0.2, 1) forwards !important; }
+  @keyframes s7RgbExit {
+    to { opacity:0; transform:scale(1.3) translateZ(140px); filter:blur(18px) brightness(2.5); }
+  }
+  @keyframes s8HeroEnter {
+    from { opacity:0; transform:scale(0.72) translateZ(-100px); filter:blur(14px); }
+    to   { opacity:1; transform:scale(1) translateZ(0); filter:blur(0px); }
+  }
+
+  /* Accessibility Fallback */
+  @media (prefers-reduced-motion: reduce) {
+    .scene, #stage, #digital-scan-line, #light-sweep-beam, #warp-speed-streaks, #energy-pulse-wave, #rgb-flash-overlay {
+      animation: none !important;
+      transition: opacity 0.2s ease !important;
+      transform: none !important;
+    }
+  }
+
+  /* ══════════════════════════════════════════════════
      LAYER 5 — SCANLINES
   ══════════════════════════════════════════════════ */
   #scanlines {
@@ -984,6 +1161,16 @@
 <div id="glitch-overlay"></div>
 <!-- Laser Sweep Beam -->
 <div id="laser-beam"></div>
+<!-- Digital CRT Scan Line -->
+<div id="digital-scan-line"></div>
+<!-- Light Sweep Beam -->
+<div id="light-sweep-beam"></div>
+<!-- Warp Speed Streaks -->
+<div id="warp-speed-streaks"></div>
+<!-- Energy Pulse Wave -->
+<div id="energy-pulse-wave"></div>
+<!-- RGB Flash Overlay -->
+<div id="rgb-flash-overlay"></div>
 
 <!-- Canvas Particles Background -->
 <canvas id="bg-canvas"></canvas>
@@ -1365,10 +1552,16 @@
   }
 
   /* ════════════════════════════════════════════════
-     GLITCH FLASH & LASER SWEEP TRANSITION
+     APPLE & FRAMER CINEMATIC TRANSITION DISPATCHER
   ════════════════════════════════════════════════ */
-  const glitchOverlay = document.getElementById('glitch-overlay');
-  const laserBeam     = document.getElementById('laser-beam');
+  const glitchOverlay    = document.getElementById('glitch-overlay');
+  const laserBeam        = document.getElementById('laser-beam');
+  const digitalScanLine  = document.getElementById('digital-scan-line');
+  const lightSweepBeam   = document.getElementById('light-sweep-beam');
+  const warpSpeedStreaks = document.getElementById('warp-speed-streaks');
+  const energyPulseWave  = document.getElementById('energy-pulse-wave');
+  const rgbFlashOverlay  = document.getElementById('rgb-flash-overlay');
+  const stageEl          = document.getElementById('stage');
 
   function triggerGlitch(){
     if(glitchOverlay){
@@ -1379,6 +1572,102 @@
       laserBeam.classList.remove('sweep');
       void laserBeam.offsetWidth;
       laserBeam.classList.add('sweep');
+    }
+  }
+
+  function triggerCinematicTransition(fromIdx, toIdx){
+    triggerGlitch();
+
+    const fxElements = [digitalScanLine, lightSweepBeam, warpSpeedStreaks, energyPulseWave, rgbFlashOverlay];
+    fxElements.forEach(el => { if(el) el.classList.remove('active'); });
+    if(stageEl) stageEl.classList.remove('shake');
+
+    const fromScene = scenes[fromIdx];
+    const toScene   = scenes[toIdx];
+
+    const allTransitionClasses = [
+      's1-digital-exit', 's2-digital-enter',
+      's2-light-exit', 's3-light-enter',
+      's3-glass-exit', 's4-glass-enter',
+      's4-warp-exit', 's5-warp-enter',
+      's5-pulse-exit', 's6-pulse-enter',
+      's6-dissolve-exit', 's7-assemble-enter',
+      's7-rgb-exit', 's8-hero-enter'
+    ];
+    scenes.forEach(s => {
+      if(s) s.classList.remove(...allTransitionClasses);
+    });
+
+    // 1. Scene 1 -> 2: Digital CRT Scan
+    if(fromIdx === 0 && toIdx === 1){
+      if(digitalScanLine){
+        digitalScanLine.classList.remove('active');
+        void digitalScanLine.offsetWidth;
+        digitalScanLine.classList.add('active');
+      }
+      if(fromScene) fromScene.classList.add('s1-digital-exit');
+      if(toScene)   toScene.classList.add('s2-digital-enter');
+    }
+    // 2. Scene 2 -> 3: Light Sweep & Keynote Push
+    else if(fromIdx === 1 && toIdx === 2){
+      if(lightSweepBeam){
+        lightSweepBeam.classList.remove('active');
+        void lightSweepBeam.offsetWidth;
+        lightSweepBeam.classList.add('active');
+      }
+      if(fromScene) fromScene.classList.add('s2-light-exit');
+      if(toScene)   toScene.classList.add('s3-light-enter');
+    }
+    // 3. Scene 3 -> 4: Glass Morph UI Expansion
+    else if(fromIdx === 2 && toIdx === 3){
+      if(fromScene) fromScene.classList.add('s3-glass-exit');
+      if(toScene)   toScene.classList.add('s4-glass-enter');
+    }
+    // 4. Scene 4 -> 5: Warp Speed Acceleration
+    else if(fromIdx === 3 && toIdx === 4){
+      if(warpSpeedStreaks){
+        warpSpeedStreaks.classList.remove('active');
+        void warpSpeedStreaks.offsetWidth;
+        warpSpeedStreaks.classList.add('active');
+      }
+      if(pts && pts.length){
+        pts.forEach(p => { p.vx *= 3.2; p.vy *= 2.5; });
+      }
+      if(fromScene) fromScene.classList.add('s4-warp-exit');
+      if(toScene)   toScene.classList.add('s5-warp-enter');
+    }
+    // 5. Scene 5 -> 6: Energy Pulse Shockwave
+    else if(fromIdx === 4 && toIdx === 5){
+      if(energyPulseWave){
+        energyPulseWave.classList.remove('active');
+        void energyPulseWave.offsetWidth;
+        energyPulseWave.classList.add('active');
+      }
+      if(stageEl){
+        stageEl.classList.remove('shake');
+        void stageEl.offsetWidth;
+        stageEl.classList.add('shake');
+      }
+      if(fromScene) fromScene.classList.add('s5-pulse-exit');
+      if(toScene)   toScene.classList.add('s6-pulse-enter');
+    }
+    // 6. Scene 6 -> 7: Particle Dissolve Flow
+    else if(fromIdx === 5 && toIdx === 6){
+      if(pts && pts.length){
+        pts.forEach(p => { p.vx += (Math.random() * 6 + 3); });
+      }
+      if(fromScene) fromScene.classList.add('s6-dissolve-exit');
+      if(toScene)   toScene.classList.add('s7-assemble-enter');
+    }
+    // 7. Scene 7 -> 8: RGB Flash + Camera Hero Reveal
+    else if(fromIdx === 6 && toIdx === 7){
+      if(rgbFlashOverlay){
+        rgbFlashOverlay.classList.remove('active');
+        void rgbFlashOverlay.offsetWidth;
+        rgbFlashOverlay.classList.add('active');
+      }
+      if(fromScene) fromScene.classList.add('s7-rgb-exit');
+      if(toScene)   toScene.classList.add('s8-hero-enter');
     }
   }
 
@@ -1413,7 +1702,9 @@
   }
 
   function showScene(idx){
-    triggerGlitch();
+    if(idx !== currentSceneIdx){
+      triggerCinematicTransition(currentSceneIdx, idx);
+    }
     scenes.forEach((s,i) => s.classList.toggle('active', i===idx));
     currentSceneIdx = idx;
     setBgVideo(idx);
