@@ -6,23 +6,9 @@
 <meta name="theme-color" content="#04060f">
 
 <!-- Favicon & Touch Icon -->
-<link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
-<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/logo.png">
+<link rel="icon" type="image/x-icon" href="assets/icon.ico">
 <link rel="apple-touch-icon" href="assets/logo.png">
-
-<!-- Open Graph / Social Media Card Preview -->
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://Ahmed77khaled.github.io/Fel7o-Media-Downloader/">
-<meta property="og:title" content="Fel7o Media Downloader — Download Anything. Keep It Forever.">
-<meta property="og:description" content="The fastest, most powerful free media downloader for Windows. Download videos from YouTube and 1000+ sites in 4K UHD. 100% Free & No Ads.">
-<meta property="og:image" content="https://raw.githubusercontent.com/Ahmed77khaled/Fel7o-Media-Downloader/main/assets/logo.png">
-
-<!-- Twitter Card Preview -->
-<meta property="twitter:card" content="summary_large_image">
-<meta property="twitter:url" content="https://Ahmed77khaled.github.io/Fel7o-Media-Downloader/">
-<meta property="twitter:title" content="Fel7o Media Downloader — Fast. Powerful. Free.">
-<meta property="twitter:description" content="The fastest, most powerful free media downloader for Windows. Download videos in 4K UHD with zero ads.">
-<meta property="twitter:image" content="https://raw.githubusercontent.com/Ahmed77khaled/Fel7o-Media-Downloader/main/assets/logo.png">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;700;900&display=swap');
 
@@ -90,12 +76,22 @@
   }
 
   /* ══════════════════════════════════════════════════
-     LAYER 3 — VIDEO BACKGROUNDS CONTAINER
+     LAYER 3 — VIDEO BACKGROUNDS
   ══════════════════════════════════════════════════ */
   #video-bg-container {
     position:fixed; inset:0; z-index:0;
     overflow:hidden; pointer-events:none;
   }
+  .bg-video {
+    position:absolute; inset:0;
+    width:100vw; height:100vh;
+    object-fit:cover; opacity:0;
+    transition:opacity 1.1s var(--ease-in-out), transform 1.4s var(--ease-in-out);
+    filter:brightness(0.48) contrast(1.25) saturate(1.15);
+    transform:scale(1.06);
+    will-change:opacity,transform;
+  }
+  .bg-video.active-video { opacity:0.58; transform:scale(1); }
 
   /* ══════════════════════════════════════════════════
      LAYER 4 — GLITCH FLASH OVERLAY
@@ -237,6 +233,12 @@
     animation:dotBlink 1.6s ease-in-out infinite;
   }
   @keyframes dotBlink { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.3;transform:scale(0.8)} }
+  #hud .creator-tag {
+    color:var(--cyan); font-weight:700;
+    background:rgba(0,240,255,.1); padding:6px 16px; border-radius:100px;
+    border:1px solid rgba(0,240,255,.28); box-shadow:0 0 16px rgba(0,240,255,.12);
+    backdrop-filter:blur(8px);
+  }
   #scene-counter {
     transition:opacity 0.2s ease, transform 0.2s ease;
     will-change:opacity,transform;
@@ -909,8 +911,9 @@
 <!-- Vignette -->
 <div id="vignette"></div>
 
-<!-- Video Backgrounds -->
-<div id="video-bg-container"></div>
+<!-- Video Backgrounds Container (Pure Particle Canvas & Aurora Blobs Active) -->
+<div id="video-bg-container">
+</div>
 
 <!-- Background Music -->
 <audio id="bg-audio" loop preload="auto">
@@ -1032,7 +1035,7 @@
     </div>
   </div>
 
-  <!-- SCENE 5 — EXTREME SPEED (MINIMAL SPEED GAUGE) -->
+  <!-- SCENE 5 — EXTREME SPEED -->
   <div class="scene" id="s5">
     <div class="speed-core">
       <div class="speed-label-top">DOWNLOAD SPEED</div>
@@ -1133,6 +1136,7 @@
 
 <!-- Controls -->
 <div id="controls">
+  <button class="ctl-btn" id="export-4k-btn" aria-label="Export 4K Video">Export 4K 🎬</button>
   <button class="ctl-btn" id="replay-inline-btn" aria-label="Replay the trailer">Replay ↻</button>
   <button class="ctl-btn" id="skip-btn" aria-label="Skip to end">Skip ⏭</button>
   <button class="ctl-btn" id="fullscreen-btn" aria-label="Toggle fullscreen">Fullscreen ⛶</button>
@@ -1273,9 +1277,9 @@
      AUDIO
   ════════════════════════════════════════════════ */
   const bgAudio = document.getElementById('bg-audio');
-  if(bgAudio) bgAudio.volume = 0.62;
+  bgAudio.volume = 0.62;
   function playAudio(){
-    if(!isPaused && bgAudio) bgAudio.play().catch(()=>{});
+    if(!isPaused) bgAudio.play().catch(()=>{});
   }
 
   /* ════════════════════════════════════════════════
@@ -1288,9 +1292,10 @@
   }
 
   /* ════════════════════════════════════════════════
-     SCENE ENGINE
+     SCENE & VIDEO ENGINE
   ════════════════════════════════════════════════ */
   const scenes   = ['s1','s2','s3','s4','s5','s6','s7','s8'].map(id => document.getElementById(id));
+  const bgVideos = ['vid-0','vid-1','vid-2','vid-3','vid-4','vid-5','vid-6','vid-7'].map(id => document.getElementById(id));
   const counterEl = document.getElementById('scene-counter');
 
   function setCounter(n){
@@ -1304,10 +1309,23 @@
     }, 180);
   }
 
+  function setBgVideo(idx){
+    bgVideos.forEach((v,i) => {
+      if(!v) return;
+      if(i === idx){
+        v.classList.add('active-video');
+        if(!isPaused) v.play().catch(()=>{});
+      } else {
+        v.classList.remove('active-video');
+      }
+    });
+  }
+
   function showScene(idx){
     triggerGlitch();
     scenes.forEach((s,i) => s.classList.toggle('active', i===idx));
     currentSceneIdx = idx;
+    setBgVideo(idx);
     setCounter(idx+1);
   }
 
@@ -1430,6 +1448,10 @@
     dlProgressRafId = requestAnimationFrame(step);
   }
 
+  function animateDownloadStats(){
+    /* Handled synchronously inside animateDlProgress */
+  }
+
   /* ════════════════════════════════════════════════
      SPEED ANIMATION — Minimal Speed Gauge + RAF
   ════════════════════════════════════════════════ */
@@ -1466,7 +1488,7 @@
       const t       = Math.min(1, elapsed / DURATION);
       const ease    = easeOut(t);
 
-      // Number count-up
+      // Number count-up (0 -> 12 -> 27 -> 43 -> 61 -> 84 -> 103 -> 118 -> 124)
       const current = Math.round(ease * TARGET);
       numEl.textContent = current;
 
@@ -1481,7 +1503,7 @@
 
       // Dot positioning along semi-circle arc (Radius=130, Center=160,150)
       if(dot){
-        const angle = Math.PI * (1 - ease);
+        const angle = Math.PI * (1 - ease); // PI (left) to 0 (right)
         const dotX = (160 + 130 * Math.cos(angle)).toFixed(1);
         const dotY = (150 - 130 * Math.sin(angle)).toFixed(1);
         dot.setAttribute('cx', dotX);
@@ -1608,7 +1630,7 @@
     oldScene.classList.add(exitClass);
 
     newScene.classList.add(enterClass);
-    void newScene.offsetWidth;
+    void newScene.offsetWidth; // Reflow trigger
 
     setTimeout(() => {
       showScene(newIdx);
@@ -1627,6 +1649,7 @@
     clearTimers();
     if(ended) ended = false;
 
+    // Reset RAF animation loops when switching scenes manually
     if(speedRafId) cancelAnimationFrame(speedRafId);
     if(speedTimeoutId) clearTimeout(speedTimeoutId);
     if(dlProgressRafId) cancelAnimationFrame(dlProgressRafId);
@@ -1635,12 +1658,15 @@
     const primaryCue = cues.find(c => c.sceneIdx === sceneIdx);
     const targetCueTime = primaryCue ? primaryCue.t : 0;
 
+    // Synchronize global timeline start time
     startTime = performance.now() - (targetCueTime * 1000);
 
+    // Immediately trigger primary entrance function for the selected scene
     if(primaryCue && typeof primaryCue.fn === 'function'){
       primaryCue.fn();
     }
 
+    // Schedule remaining timeline cues after targetCueTime
     cues.forEach(c => {
       if(c.t > targetCueTime){
         const delayMs = (c.t - targetCueTime) * 1000;
@@ -1656,12 +1682,15 @@
       pauseStartTime = performance.now();
       clearTimers();
       if(bgAudio) bgAudio.pause();
+      bgVideos.forEach(v => { if(v && !v.paused) v.pause(); });
     } else {
       const pausedDuration = performance.now() - pauseStartTime;
       startTime += pausedDuration;
       const currentTrailerTime = (performance.now() - startTime) / 1000;
       scheduleCuesFromTime(currentTrailerTime);
       if(bgAudio && !ended) playAudio();
+      const activeVid = bgVideos[currentSceneIdx];
+      if(activeVid) activeVid.play().catch(()=>{});
     }
   }
 
@@ -1683,9 +1712,11 @@
     document.getElementById('replay-screen').classList.remove('show');
     document.getElementById('boot-cursor').classList.remove('active');
 
+    /* Reset scene classes */
     const allClasses = ['active','in','reveal-logo','reveal-tag','sub','words','cta','exit-left','exit-right','enter-left','enter-right'];
     scenes.forEach(s => s.classList.remove(...allClasses));
 
+    /* Reset element states */
     document.querySelectorAll('.show, .done').forEach(el => el.classList.remove('show','done'));
     document.querySelectorAll('#boot-lines .line').forEach(l => l.classList.remove('show'));
     document.getElementById('url-text').textContent = '';
@@ -1723,6 +1754,9 @@
     document.getElementById('queue-eta').textContent = '0:14';
     progressFill.style.width = '0%';
 
+    /* Videos off */
+    bgVideos.forEach(v => { if(v) v.classList.remove('active-video'); });
+
     startTime = performance.now();
     scheduleCuesFromTime(0);
     progressLoop();
@@ -1749,13 +1783,56 @@
   document.getElementById('readme-btn-hero').addEventListener('click', openReadme);
   document.getElementById('readme-btn-overlay').addEventListener('click', openReadme);
 
+  const export4kBtn = document.getElementById('export-4k-btn');
+  if(export4kBtn){
+    export4kBtn.addEventListener('click', start4KRecording);
+  }
+
+  function start4KRecording(){
+    const canvas = document.getElementById('bg-canvas');
+    if(!canvas) return;
+
+    play();
+
+    const stream = canvas.captureStream(60);
+    let recorder;
+    try {
+      recorder = new MediaRecorder(stream, {
+        mimeType: 'video/webm;codecs=vp9',
+        videoBitsPerSecond: 30000000
+      });
+    } catch(e) {
+      recorder = new MediaRecorder(stream, { videoBitsPerSecond: 25000000 });
+    }
+
+    const chunks = [];
+    recorder.ondataavailable = e => { if(e.data && e.data.size > 0) chunks.push(e.data); };
+    recorder.onstop = () => {
+      const blob = new Blob(chunks, { type: 'video/webm' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'fel7o_trailer_4K.webm';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    };
+
+    recorder.start(100);
+    setTimeout(() => {
+      if(recorder.state !== 'inactive') recorder.stop();
+    }, 33500);
+  }
+
   document.getElementById('fullscreen-btn').addEventListener('click', () => {
     if(!document.fullscreenElement){ document.documentElement.requestFullscreen().catch(()=>{}); }
     else { document.exitFullscreen(); }
   });
 
+  /* Keyboard Navigation & Shortcuts */
   window.addEventListener('keydown', e => {
-    if(e.repeat) return;
+    if(e.repeat) return; // Ignore repeat keys
 
     if(e.code === 'ArrowRight'){
       e.preventDefault();
@@ -1777,11 +1854,15 @@
     }
   });
 
+  /* Pause when tab hidden */
   document.addEventListener('visibilitychange', () => {
     if(document.hidden){
       if(bgAudio) bgAudio.pause();
+      bgVideos.forEach(v => { if(v && !v.paused) v.pause(); });
     } else {
       if(!isPaused && bgAudio && !ended) playAudio();
+      const active = bgVideos[currentSceneIdx];
+      if(active && !isPaused) active.play().catch(()=>{});
     }
   });
 
