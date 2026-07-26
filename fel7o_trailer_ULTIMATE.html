@@ -97,12 +97,28 @@
      LAYER 4 — GLITCH FLASH OVERLAY
   ══════════════════════════════════════════════════ */
   #glitch-overlay {
-    position:fixed; inset:0; z-index:100; pointer-events:none;
-    opacity:0; mix-blend-mode:color-dodge;
-    background:linear-gradient(135deg, rgba(0,240,255,0.07), rgba(139,92,246,0.07));
-    transition:opacity 0.12s ease;
+    position:fixed; inset:0; z-index:999; pointer-events:none;
+    opacity:0; mix-blend-mode:screen;
+    background:radial-gradient(ellipse at 50% 50%, rgba(0,240,255,0.45) 0%, rgba(139,92,246,0.3) 48%, transparent 82%);
+    transition:opacity 0.16s ease-out;
   }
   #glitch-overlay.flash { opacity:1; }
+
+  #laser-beam {
+    position:fixed; left:0; right:0; top:-10px; height:3px; z-index:99999; pointer-events:none;
+    background:linear-gradient(90deg, transparent 0%, #00f0ff 40%, #ffffff 50%, #8b5cf6 60%, transparent 100%);
+    box-shadow:0 0 24px var(--cyan), 0 0 48px var(--violet);
+    opacity:0; transform:translateY(0);
+    will-change:transform,opacity;
+  }
+  #laser-beam.sweep {
+    animation:laserSweep 0.38s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  }
+  @keyframes laserSweep {
+    0%   { opacity:1; transform:translateY(-10vh); }
+    50%  { opacity:1; }
+    100% { opacity:0; transform:translateY(110vh); }
+  }
 
   /* ══════════════════════════════════════════════════
      LAYER 5 — SCANLINES
@@ -177,44 +193,50 @@
   /* ══════════════════════════════════════════════════
      STAGE & SCENES — DIRECTION-AWARE TRANSITIONS
   ══════════════════════════════════════════════════ */
+  /* ══════════════════════════════════════════════════
+     STAGE & SCENES — 3D PERSPECTIVE WARP TRANSITIONS
+  ══════════════════════════════════════════════════ */
   #stage {
     position:fixed; inset:0; z-index:5;
     display:flex; align-items:center; justify-content:center;
-    padding:20px; perspective:1200px;
+    padding:20px; perspective:1400px;
+    transform-style:preserve-3d;
   }
   .scene {
     position:absolute; inset:0; z-index:10;
     display:flex; align-items:center; justify-content:center; flex-direction:column;
     opacity:0; pointer-events:none;
-    transform:scale(0.98) translateX(0);
-    filter:blur(4px);
-    transition:opacity 0.45s var(--ease-spring), transform 0.45s var(--ease-spring), filter 0.45s var(--ease-spring);
+    transform:scale(0.94) rotateY(0deg) translateZ(-40px);
+    filter:blur(6px);
+    transition:opacity 0.48s cubic-bezier(0.16, 1, 0.3, 1),
+               transform 0.48s cubic-bezier(0.16, 1, 0.3, 1),
+               filter 0.48s cubic-bezier(0.16, 1, 0.3, 1);
     will-change:opacity,transform,filter;
   }
   .scene.active {
     opacity:1; pointer-events:auto;
-    transform:scale(1) translateX(0);
+    transform:scale(1) rotateY(0deg) translateZ(0);
     filter:blur(0px);
   }
   .scene.exit-left {
     opacity:0; pointer-events:none;
-    transform:scale(0.98) translateX(-30px);
-    filter:blur(4px);
+    transform:scale(0.92) rotateY(-5deg) translateX(-50px) translateZ(-80px);
+    filter:blur(8px);
   }
   .scene.exit-right {
     opacity:0; pointer-events:none;
-    transform:scale(0.98) translateX(30px);
-    filter:blur(4px);
+    transform:scale(0.92) rotateY(5deg) translateX(50px) translateZ(-80px);
+    filter:blur(8px);
   }
   .scene.enter-right {
     opacity:0; pointer-events:none;
-    transform:scale(0.98) translateX(30px);
-    filter:blur(4px);
+    transform:scale(1.06) rotateY(5deg) translateX(50px) translateZ(60px);
+    filter:blur(8px);
   }
   .scene.enter-left {
     opacity:0; pointer-events:none;
-    transform:scale(0.98) translateX(-30px);
-    filter:blur(4px);
+    transform:scale(1.06) rotateY(-5deg) translateX(-50px) translateZ(60px);
+    filter:blur(8px);
   }
 
   /* ══════════════════════════════════════════════════
@@ -960,6 +982,8 @@
 
 <!-- Glitch Flash Layer -->
 <div id="glitch-overlay"></div>
+<!-- Laser Sweep Beam -->
+<div id="laser-beam"></div>
 
 <!-- Canvas Particles Background -->
 <canvas id="bg-canvas"></canvas>
@@ -1341,12 +1365,21 @@
   }
 
   /* ════════════════════════════════════════════════
-     GLITCH FLASH
+     GLITCH FLASH & LASER SWEEP TRANSITION
   ════════════════════════════════════════════════ */
   const glitchOverlay = document.getElementById('glitch-overlay');
+  const laserBeam     = document.getElementById('laser-beam');
+
   function triggerGlitch(){
-    glitchOverlay.classList.add('flash');
-    setTimeout(() => glitchOverlay.classList.remove('flash'), 145);
+    if(glitchOverlay){
+      glitchOverlay.classList.add('flash');
+      setTimeout(() => glitchOverlay.classList.remove('flash'), 220);
+    }
+    if(laserBeam){
+      laserBeam.classList.remove('sweep');
+      void laserBeam.offsetWidth;
+      laserBeam.classList.add('sweep');
+    }
   }
 
   /* ════════════════════════════════════════════════
