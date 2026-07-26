@@ -37,12 +37,16 @@
   }
 
   html, body {
-    width:100%; height:100%;
+    width:100%; height:100%; height:100dvh;
     background:var(--bg);
     overflow:hidden;
     font-family:var(--font-body);
     color:var(--white);
     cursor:default;
+    touch-action:manipulation;
+    -webkit-tap-highlight-color:transparent;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
   }
 
   /* ── ACCESSIBILITY: REDUCED MOTION ─────────────── */
@@ -1367,16 +1371,24 @@
   window.addEventListener('resize', resize);
   resize();
 
-  const pts = Array.from({length:58}, () => ({
+  const isMobile = window.innerWidth <= 768;
+  const particleCount = isMobile ? 24 : 52;
+
+  const pts = Array.from({length: particleCount}, () => ({
     x: Math.random() * w, y: Math.random() * h,
-    size: Math.random() * 2.4 + 0.8,
-    vx: (Math.random()-0.5)*0.95, vy: (Math.random()-0.5)*0.95,
+    size: Math.random() * 2.2 + 0.8,
+    vx: (Math.random()-0.5)*0.85, vy: (Math.random()-0.5)*0.85,
     color: Math.random() > 0.5 ? '#00f0ff' : '#8b5cf6'
   }));
 
   let currentSceneIdx = 0;
+  let canvasRafId = null;
 
   function drawCanvas(){
+    if(document.hidden){
+      canvasRafId = null;
+      return;
+    }
     ctx.clearRect(0, 0, w, h);
     ctx.globalAlpha = 1;
 
@@ -1385,7 +1397,7 @@
       const t = Date.now() * 0.0018;
       ctx.strokeStyle = 'rgba(0,240,255,0.1)';
       ctx.lineWidth = 1.2;
-      for(let i = 0; i < 16; i++){
+      for(let i = 0; i < 12; i++){
         const r = ((i * 55) + t * 100) % (Math.max(w,h) * 0.7);
         ctx.globalAlpha = Math.max(0, 0.12 - r/(Math.max(w,h)*6));
         ctx.beginPath();
@@ -1408,12 +1420,13 @@
 
     /* Connection lines between nearby particles */
     ctx.lineWidth = 0.6;
+    const maxDist = isMobile ? 85 : 115;
     for(let i = 0; i < pts.length; i++){
       for(let j = i+1; j < pts.length; j++){
         const dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y;
         const dist = Math.sqrt(dx*dx + dy*dy);
-        if(dist < 115){
-          ctx.globalAlpha = (1 - dist/115) * 0.17;
+        if(dist < maxDist){
+          ctx.globalAlpha = (1 - dist/maxDist) * 0.17;
           ctx.strokeStyle = pts[i].color;
           ctx.beginPath();
           ctx.moveTo(pts[i].x, pts[i].y);
@@ -1424,7 +1437,7 @@
     }
 
     ctx.globalAlpha = 1;
-    requestAnimationFrame(drawCanvas);
+    canvasRafId = requestAnimationFrame(drawCanvas);
   }
   drawCanvas();
 
@@ -1433,7 +1446,8 @@
   ════════════════════════════════════════════════ */
   const pField  = document.getElementById('particles');
   const pColors = ['#00f0ff','#8b5cf6','#eef2f6','#3ce89b'];
-  for(let i = 0; i < 34; i++){
+  const domParticleCount = isMobile ? 14 : 32;
+  for(let i = 0; i < domParticleCount; i++){
     const p = document.createElement('div');
     p.className = 'particle';
     const sz = Math.random()*2.2+0.8;
@@ -2086,12 +2100,13 @@
     }
   });
 
-  /* Pause when tab hidden */
+  /* Pause when tab hidden & resume canvas animation when visible */
   document.addEventListener('visibilitychange', () => {
     if(document.hidden){
       if(bgAudio) bgAudio.pause();
       bgVideos.forEach(v => { if(v && !v.paused) v.pause(); });
     } else {
+      if(!canvasRafId) drawCanvas();
       if(!isPaused && bgAudio && !ended) playAudio();
       const active = bgVideos[currentSceneIdx];
       if(active && !isPaused) active.play().catch(()=>{});
