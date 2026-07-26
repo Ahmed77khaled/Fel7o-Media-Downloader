@@ -1195,7 +1195,6 @@
 
 <!-- Controls -->
 <div id="controls">
-  <button class="ctl-btn" id="export-4k-btn" aria-label="Export 4K Video">Export 4K 🎬</button>
   <button class="ctl-btn" id="replay-inline-btn" aria-label="Replay the trailer">Replay ↻</button>
   <button class="ctl-btn" id="skip-btn" aria-label="Skip to end">Skip ⏭</button>
   <button class="ctl-btn" id="fullscreen-btn" aria-label="Toggle fullscreen">Fullscreen ⛶</button>
@@ -1841,64 +1840,6 @@
   document.getElementById('cta-btn-overlay').addEventListener('click', openDownload);
   document.getElementById('readme-btn-hero').addEventListener('click', openReadme);
   document.getElementById('readme-btn-overlay').addEventListener('click', openReadme);
-
-  const export4kBtn = document.getElementById('export-4k-btn');
-  if(export4kBtn){
-    export4kBtn.addEventListener('click', start4KRecording);
-  }
-
-  async function start4KRecording(){
-    try {
-      const stream = await navigator.mediaDevices.getDisplayMedia({
-        video: {
-          displaySurface: 'browser',
-          width: { ideal: 3840, max: 3840 },
-          height: { ideal: 2160, max: 2160 },
-          frameRate: { ideal: 60 }
-        },
-        audio: true
-      });
-
-      play();
-
-      let recorder;
-      try {
-        recorder = new MediaRecorder(stream, {
-          mimeType: 'video/webm;codecs=vp9',
-          videoBitsPerSecond: 35000000
-        });
-      } catch(e) {
-        recorder = new MediaRecorder(stream, { videoBitsPerSecond: 25000000 });
-      }
-
-      const chunks = [];
-      recorder.ondataavailable = e => { if(e.data && e.data.size > 0) chunks.push(e.data); };
-      recorder.onstop = () => {
-        const blob = new Blob(chunks, { type: 'video/webm' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'fel7o_trailer_4K.webm';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-        stream.getTracks().forEach(track => track.stop());
-      };
-
-      recorder.start(100);
-
-      setTimeout(() => {
-        if(recorder.state !== 'inactive'){
-          recorder.stop();
-        }
-      }, 33500);
-
-    } catch(err) {
-      console.error('Recording cancelled or not supported', err);
-    }
-  }
-
   document.getElementById('fullscreen-btn').addEventListener('click', () => {
     if(!document.fullscreenElement){ document.documentElement.requestFullscreen().catch(()=>{}); }
     else { document.exitFullscreen(); }
