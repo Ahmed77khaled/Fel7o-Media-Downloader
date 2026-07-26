@@ -1406,7 +1406,7 @@
     fill.classList.remove('completed');
     if(stripText) stripText.textContent = '✓ Added to queue — starting download…';
 
-    const DURATION = 3500; // ~3.5s natural download duration
+    const DURATION = 2600; // ~2.6s natural download duration
     let startTime = performance.now();
     let lastPct = -1;
 
@@ -1469,7 +1469,7 @@
     if(speedTimeoutId) clearTimeout(speedTimeoutId);
 
     const TARGET   = 124;   // final speed value
-    const DURATION = 3500;  // ms — matches scene duration
+    const DURATION = 2600;  // ms — matches scene duration
     const ARC_LEN  = 409;   // PI * 130 radius ≈ 408.4
     let startTime  = performance.now();
 
@@ -1550,29 +1550,29 @@
   /* ════════════════════════════════════════════════
      TIMELINE CUES & AUTOMATIC PLAYBACK ENGINE
   ════════════════════════════════════════════════ */
-  const TOTAL = 68.0;
+  const TOTAL = 45.0;
 
   const cues = [
     { t:0.0,  sceneIdx:0, fn: () => { showScene(0); typeBoot(); playAudio(); } },
-    { t:7.5,  sceneIdx:1, fn: () => { showScene(1); } },
-    { t:9.5,  fn: () => { document.getElementById('s2').classList.add('reveal-tag'); } },
-    { t:15.0, sceneIdx:2, fn: () => { showScene(2); } },
-    { t:16.5, fn: () => { typeUrl(); } },
-    { t:18.5, fn: () => { document.getElementById('preview-card').classList.add('show'); } },
-    { t:20.0, fn: () => { document.getElementById('quality-row').classList.add('show'); } },
-    { t:21.5, fn: () => { animateDlProgress(); } },
-    { t:27.0, sceneIdx:3, fn: () => { showScene(3); document.getElementById('s4').classList.add('in'); } },
-    { t:28.5, fn: () => { staggerShow('#content-grid .ccard', 180); } },
-    { t:35.0, sceneIdx:4, fn: () => { showScene(4); animateSpeed(); } },
-    { t:43.0, sceneIdx:5, fn: () => { showScene(5); document.getElementById('s6').classList.add('in'); } },
-    { t:44.5, fn: () => { staggerShow('#queue-list .qitem', 350, true); } },
-    { t:51.0, sceneIdx:6, fn: () => { showScene(6); document.getElementById('s7').classList.add('in'); } },
-    { t:52.5, fn: () => { staggerShow('#feat-grid .fcard', 200); } },
-    { t:59.0, sceneIdx:7, fn: () => { showScene(7); document.getElementById('s8').classList.add('in'); } },
-    { t:60.5, fn: () => { document.getElementById('s8').classList.add('sub'); } },
-    { t:62.0, fn: () => { document.getElementById('s8').classList.add('words'); } },
-    { t:63.5, fn: () => { document.getElementById('s8').classList.add('cta'); } },
-    { t:68.0, fn: () => { endTrailer(); } }
+    { t:4.5,  sceneIdx:1, fn: () => { showScene(1); } },
+    { t:6.0,  fn: () => { document.getElementById('s2').classList.add('reveal-tag'); } },
+    { t:9.5,  sceneIdx:2, fn: () => { showScene(2); } },
+    { t:10.5, fn: () => { typeUrl(); } },
+    { t:12.0, fn: () => { document.getElementById('preview-card').classList.add('show'); } },
+    { t:13.0, fn: () => { document.getElementById('quality-row').classList.add('show'); } },
+    { t:14.0, fn: () => { animateDlProgress(); } },
+    { t:19.5, sceneIdx:3, fn: () => { showScene(3); document.getElementById('s4').classList.add('in'); } },
+    { t:20.5, fn: () => { staggerShow('#content-grid .ccard', 140); } },
+    { t:24.5, sceneIdx:4, fn: () => { showScene(4); animateSpeed(); } },
+    { t:30.5, sceneIdx:5, fn: () => { showScene(5); document.getElementById('s6').classList.add('in'); } },
+    { t:31.5, fn: () => { staggerShow('#queue-list .qitem', 280, true); } },
+    { t:35.5, sceneIdx:6, fn: () => { showScene(6); document.getElementById('s7').classList.add('in'); } },
+    { t:36.5, fn: () => { staggerShow('#feat-grid .fcard', 160); } },
+    { t:40.5, sceneIdx:7, fn: () => { showScene(7); document.getElementById('s8').classList.add('in'); } },
+    { t:41.5, fn: () => { document.getElementById('s8').classList.add('sub'); } },
+    { t:42.5, fn: () => { document.getElementById('s8').classList.add('words'); } },
+    { t:43.2, fn: () => { document.getElementById('s8').classList.add('cta'); } },
+    { t:45.0, fn: () => { endTrailer(); } }
   ];
 
   let timers          = [];
