@@ -1011,14 +1011,23 @@
      MOBILE & RESPONSIVE DESIGN SYSTEM
   ══════════════════════════════════════════════════ */
   @media (max-width: 768px) {
-    #hud { top:14px; left:14px; right:14px; }
-    #hud .tag { padding:4px 10px; font-size:10px; }
+    #hud { top:12px; left:12px; right:12px; padding:0; }
+    #hud .tag { padding:4px 8px; font-size:10px; }
+    .hud-right { gap:8px; }
+    .hud-action-btn { padding:5px 12px; font-size:10px; }
 
-    .scene { padding: 80px 16px 90px; }
+    .scene { padding: 75px 14px 85px; }
 
-    /* Scene 1 — Terminal */
-    .term-box { width:94vw; max-width:100%; padding:18px; }
-    .term-body { font-size:12px; line-height:1.7; }
+    /* Scene 1 — Terminal Box Centering on Mobile */
+    #s1 { align-items:center !important; justify-content:center !important; padding-left:0 !important; }
+    #boot-lines {
+      width:min(520px, 92vw) !important;
+      padding:24px 20px !important;
+      font-size:12px !important;
+      line-height:2.2 !important;
+      border-radius:18px !important;
+      margin:0 auto !important;
+    }
 
     /* Scene 2 — Brand */
     .brand-tagline { font-size:1.1rem; letter-spacing:.25em; }
@@ -1058,7 +1067,7 @@
   }
 
   @media (max-width: 480px) {
-    .term-title { font-size:11px; }
+    #boot-lines { font-size:11px !important; padding:18px 14px !important; line-height:2 !important; }
     .brand-tagline { font-size:0.95rem; letter-spacing:.18em; }
     #content-grid { grid-template-columns:repeat(2, 1fr); gap:8px; }
     #feat-grid { grid-template-columns:repeat(2, 1fr); gap:8px; }
@@ -1142,16 +1151,6 @@
   <div class="scene" id="s2">
     <div id="logo-wrap"><div id="big-logo">FEL7O</div></div>
     <div class="tagline">STOP STREAMING. <b>START OWNING.</b></div>
-    <div class="eq-bars">
-      <div class="eq-bar" style="animation-delay:0.10s"></div>
-      <div class="eq-bar" style="animation-delay:0.32s"></div>
-      <div class="eq-bar" style="animation-delay:0.18s"></div>
-      <div class="eq-bar" style="animation-delay:0.54s"></div>
-      <div class="eq-bar" style="animation-delay:0.42s"></div>
-      <div class="eq-bar" style="animation-delay:0.65s"></div>
-      <div class="eq-bar" style="animation-delay:0.22s"></div>
-      <div class="eq-bar" style="animation-delay:0.08s"></div>
-    </div>
   </div>
 
   <!-- SCENE 3 — APP UI DEMO -->
