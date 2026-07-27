@@ -2004,8 +2004,13 @@
 
   /* ── EXTERNAL LINKS ─ */
   function openExternal(url){
-    const w2 = window.open(url, '_blank', 'noopener');
-    if(!w2 || w2.closed) window.location.href = url;
+    const a = document.createElement('a');
+    a.href = url;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
   }
   function openDownload(){ openExternal('https://github.com/Ahmed77khaled/Fel7o-Media-Downloader/releases/latest'); }
   function openReadme()  { openExternal('https://github.com/Ahmed77khaled/Fel7o-Media-Downloader#readme'); }
