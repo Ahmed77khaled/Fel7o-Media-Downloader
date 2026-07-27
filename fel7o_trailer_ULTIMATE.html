@@ -1575,14 +1575,14 @@
       if(!sceneEl) return;
       ALL_CLASSES.forEach(c => sceneEl.classList.remove(c,'tx-out','tx-in'));
       if(reduceMotion){ sceneEl.classList.add(styleClass); return; }
-      sceneEl.classList.add(styleClass,'tx-out');
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          sceneEl.classList.remove('tx-out');
-          sceneEl.classList.add('tx-in');
-          setTimeout(() => sceneEl.classList.remove('tx-in', styleClass), 700);
-        });
-      });
+      sceneEl.classList.add(styleClass, 'tx-out');
+      void sceneEl.offsetWidth; // Force paint reflow for PC high refresh rate displays
+
+      setTimeout(() => {
+        sceneEl.classList.remove('tx-out');
+        sceneEl.classList.add('tx-in');
+        setTimeout(() => sceneEl.classList.remove('tx-in', styleClass), 650);
+      }, 30);
     }
 
     const HANDLERS = [DigitalScan, LightSweep, GlassMorph, WarpSpeed, EnergyPulse, ParticleDissolve, RGBReveal];
@@ -1629,8 +1629,26 @@
 
   function showScene(idx){
     triggerGlitch();
-    if(scenes[idx]) TransitionEngine.run(scenes[idx], Math.max(0, idx - 1));
-    scenes.forEach((s,i) => s.classList.toggle('active', i===idx));
+    const oldScene = scenes[currentSceneIdx];
+    const newScene = scenes[idx];
+
+    if(oldScene && oldScene !== newScene){
+      oldScene.classList.remove('active');
+      oldScene.classList.add('exit-left');
+      setTimeout(() => {
+        oldScene.classList.remove('exit-left');
+      }, 480);
+    }
+
+    if(newScene){
+      newScene.classList.remove('exit-left');
+      void newScene.offsetWidth; // Force paint reflow for PC monitors
+      newScene.classList.add('active');
+      if(TransitionEngine && typeof TransitionEngine.run === 'function'){
+        TransitionEngine.run(newScene, Math.max(0, idx - 1));
+      }
+    }
+
     currentSceneIdx = idx;
     setBgVideo(idx);
     setCounter(idx+1);
