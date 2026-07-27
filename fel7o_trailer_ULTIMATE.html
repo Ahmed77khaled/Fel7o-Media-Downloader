@@ -388,6 +388,7 @@
     cursor:pointer; padding:4px 8px; border-radius:6px;
     transition:all 0.2s ease; letter-spacing:.06em;
   }
+  .nav-btn.hidden { display:none !important; }
   .nav-btn:hover {
     color:var(--white); text-shadow:0 0 10px var(--cyan);
   }
@@ -1129,7 +1130,6 @@
   <div class="hud-right">
     <div class="tag"><span id="scene-counter">SCENE 01 / 08</span></div>
     <button class="hud-action-btn" id="skip-btn" aria-label="Skip to end">Skip ⏭</button>
-    <button class="hud-action-btn hidden" id="replay-inline-btn" aria-label="Replay the trailer">Replay ↻</button>
   </div>
 </div>
 
@@ -1138,6 +1138,7 @@
   <button id="nav-prev" class="nav-btn" aria-label="Previous Scene">◀ Previous</button>
   <div id="nav-scene-indicator">Scene 01 / 08</div>
   <button id="nav-next" class="nav-btn" aria-label="Next Scene">Next ▶</button>
+  <button id="nav-replay" class="nav-btn hidden" aria-label="Replay Trailer">Replay ↻</button>
 </div>
 
 <!-- Stage -->
@@ -1631,15 +1632,17 @@
     setCounter(idx+1);
 
     const skipBtn = document.getElementById('skip-btn');
-    const replayBtn = document.getElementById('replay-inline-btn');
-    if(skipBtn && replayBtn){
-      if(idx === 7){
-        skipBtn.classList.add('hidden');
-        replayBtn.classList.remove('hidden');
-      } else {
-        skipBtn.classList.remove('hidden');
-        replayBtn.classList.add('hidden');
-      }
+    const navNextBtn = document.getElementById('nav-next');
+    const navReplayBtn = document.getElementById('nav-replay');
+
+    if(idx === 7){
+      if(skipBtn) skipBtn.classList.add('hidden');
+      if(navNextBtn) navNextBtn.classList.add('hidden');
+      if(navReplayBtn) navReplayBtn.classList.remove('hidden');
+    } else {
+      if(skipBtn) skipBtn.classList.remove('hidden');
+      if(navNextBtn) navNextBtn.classList.remove('hidden');
+      if(navReplayBtn) navReplayBtn.classList.add('hidden');
     }
   }
 
@@ -1649,6 +1652,7 @@
   const navOverlay = document.getElementById('nav-overlay');
   const navPrevBtn = document.getElementById('nav-prev');
   const navNextBtn = document.getElementById('nav-next');
+  const navReplayBtn = document.getElementById('nav-replay');
   const navIndicator = document.getElementById('nav-scene-indicator');
   let navOverlayTimer = null;
 
@@ -1664,6 +1668,7 @@
 
   if(navPrevBtn) navPrevBtn.addEventListener('click', () => navigateScene(-1));
   if(navNextBtn) navNextBtn.addEventListener('click', () => navigateScene(1));
+  if(navReplayBtn) navReplayBtn.addEventListener('click', play);
   window.addEventListener('mousemove', showNavOverlay);
 
   /* ════════════════════════════════════════════════
