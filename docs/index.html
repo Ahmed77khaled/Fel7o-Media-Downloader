@@ -51,11 +51,7 @@
 
   /* ── ACCESSIBILITY: REDUCED MOTION ─────────────── */
   @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
-      animation-duration:.001ms !important;
-      animation-iteration-count:1 !important;
-      transition-duration:.001ms !important;
-    }
+    #cursor-glow { display:none; }
   }
 
   /* ══════════════════════════════════════════════════
@@ -190,61 +186,24 @@
     position:absolute; inset:0; z-index:10;
     display:flex; align-items:center; justify-content:center; flex-direction:column;
     opacity:0; pointer-events:none;
-    transform:scale(0.98) translateX(0);
-    filter:blur(4px);
-    transition:opacity 0.45s var(--ease-spring), transform 0.45s var(--ease-spring), filter 0.45s var(--ease-spring);
+    transform:scale(0.96) translateY(20px);
+    filter:blur(6px);
+    transition:opacity 0.5s var(--ease-spring), transform 0.5s var(--ease-spring), filter 0.5s var(--ease-spring);
     will-change:opacity,transform,filter;
+    backface-visibility:hidden;
+    -webkit-backface-visibility:hidden;
   }
   .scene.active {
     opacity:1; pointer-events:auto;
-    transform:scale(1) translateX(0);
+    transform:scale(1) translateY(0);
     filter:blur(0px);
+    z-index:20;
   }
-  /* ══════════════════════════════════════════════════
-     UNIVERSAL PC & MOBILE CINEMATIC KEYFRAME ANIMATIONS
-  ══════════════════════════════════════════════════ */
-  .scene.anim-exit {
-    animation: sceneExitAnim 0.52s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
-    z-index: 10 !important;
-    pointer-events: none !important;
-  }
-  .scene.anim-enter {
-    animation: sceneEnterAnim 0.52s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
-    z-index: 20 !important;
-    pointer-events: auto !important;
-  }
-
-  @keyframes sceneExitAnim {
-    0% {
-      opacity: 1 !important;
-      transform: scale(1) translateX(0) translateZ(0) !important;
-      filter: blur(0px) !important;
-    }
-    100% {
-      opacity: 0 !important;
-      transform: scale(0.92) translateX(-40px) translateZ(-60px) !important;
-      filter: blur(12px) !important;
-    }
-  }
-
-  @keyframes sceneEnterAnim {
-    0% {
-      opacity: 0 !important;
-      transform: scale(1.08) translateX(40px) translateZ(60px) !important;
-      filter: blur(12px) !important;
-    }
-    100% {
-      opacity: 1 !important;
-      transform: scale(1) translateX(0) translateZ(0) !important;
-      filter: blur(0px) !important;
-    }
-  }
-
-  /* ── Cinematic Transition Engine v2 (extends .scene, do not replace) ── */
-  #stage { perspective:1400px; }
-  .scene {
-    transform-style:preserve-3d;
-    backface-visibility:hidden;
+  .scene.exit-left {
+    opacity:0; pointer-events:none;
+    transform:scale(0.96) translateY(-20px);
+    filter:blur(6px);
+    z-index:10;
   }
 
   /* Scene 1→2 : Digital Scan */
@@ -1648,29 +1607,19 @@
 
   function showScene(idx){
     triggerGlitch();
-    const oldScene = scenes[currentSceneIdx];
-    const newScene = scenes[idx];
-
-    if(oldScene && oldScene !== newScene){
-      oldScene.classList.remove('active', 'anim-enter');
-      void oldScene.offsetWidth; // Force paint reflow for PC monitors
-      oldScene.classList.add('anim-exit');
-      setTimeout(() => {
-        oldScene.classList.remove('anim-exit');
-      }, 520);
-    }
-
-    if(newScene){
-      newScene.classList.remove('anim-exit');
-      void newScene.offsetWidth; // Force paint reflow for PC monitors
-      newScene.classList.add('active', 'anim-enter');
-      if(TransitionEngine && typeof TransitionEngine.run === 'function'){
-        TransitionEngine.run(newScene, Math.max(0, idx - 1));
+    scenes.forEach((s, i) => {
+      if(!s) return;
+      if(i === idx){
+        s.classList.add('active');
+        s.classList.remove('exit-left');
+      } else {
+        if(s.classList.contains('active')){
+          s.classList.remove('active');
+          s.classList.add('exit-left');
+          setTimeout(() => s.classList.remove('exit-left'), 520);
+        }
       }
-      setTimeout(() => {
-        newScene.classList.remove('anim-enter');
-      }, 520);
-    }
+    });
 
     currentSceneIdx = idx;
     setBgVideo(idx);
