@@ -200,25 +200,44 @@
     transform:scale(1) translateX(0);
     filter:blur(0px);
   }
-  .scene.exit-left {
-    opacity:0; pointer-events:none;
-    transform:scale(0.98) translateX(-30px);
-    filter:blur(4px);
+  /* ══════════════════════════════════════════════════
+     UNIVERSAL PC & MOBILE CINEMATIC KEYFRAME ANIMATIONS
+  ══════════════════════════════════════════════════ */
+  .scene.anim-exit {
+    animation: sceneExitAnim 0.52s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+    z-index: 10 !important;
+    pointer-events: none !important;
   }
-  .scene.exit-right {
-    opacity:0; pointer-events:none;
-    transform:scale(0.98) translateX(30px);
-    filter:blur(4px);
+  .scene.anim-enter {
+    animation: sceneEnterAnim 0.52s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+    z-index: 20 !important;
+    pointer-events: auto !important;
   }
-  .scene.enter-right {
-    opacity:0; pointer-events:none;
-    transform:scale(0.98) translateX(30px);
-    filter:blur(4px);
+
+  @keyframes sceneExitAnim {
+    0% {
+      opacity: 1 !important;
+      transform: scale(1) translateX(0) translateZ(0) !important;
+      filter: blur(0px) !important;
+    }
+    100% {
+      opacity: 0 !important;
+      transform: scale(0.92) translateX(-40px) translateZ(-60px) !important;
+      filter: blur(12px) !important;
+    }
   }
-  .scene.enter-left {
-    opacity:0; pointer-events:none;
-    transform:scale(0.98) translateX(-30px);
-    filter:blur(4px);
+
+  @keyframes sceneEnterAnim {
+    0% {
+      opacity: 0 !important;
+      transform: scale(1.08) translateX(40px) translateZ(60px) !important;
+      filter: blur(12px) !important;
+    }
+    100% {
+      opacity: 1 !important;
+      transform: scale(1) translateX(0) translateZ(0) !important;
+      filter: blur(0px) !important;
+    }
   }
 
   /* ── Cinematic Transition Engine v2 (extends .scene, do not replace) ── */
@@ -1633,20 +1652,24 @@
     const newScene = scenes[idx];
 
     if(oldScene && oldScene !== newScene){
-      oldScene.classList.remove('active');
-      oldScene.classList.add('exit-left');
+      oldScene.classList.remove('active', 'anim-enter');
+      void oldScene.offsetWidth; // Force paint reflow for PC monitors
+      oldScene.classList.add('anim-exit');
       setTimeout(() => {
-        oldScene.classList.remove('exit-left');
-      }, 480);
+        oldScene.classList.remove('anim-exit');
+      }, 520);
     }
 
     if(newScene){
-      newScene.classList.remove('exit-left');
+      newScene.classList.remove('anim-exit');
       void newScene.offsetWidth; // Force paint reflow for PC monitors
-      newScene.classList.add('active');
+      newScene.classList.add('active', 'anim-enter');
       if(TransitionEngine && typeof TransitionEngine.run === 'function'){
         TransitionEngine.run(newScene, Math.max(0, idx - 1));
       }
+      setTimeout(() => {
+        newScene.classList.remove('anim-enter');
+      }, 520);
     }
 
     currentSceneIdx = idx;
