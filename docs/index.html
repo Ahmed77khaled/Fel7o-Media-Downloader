@@ -8,38 +8,85 @@
 <title>FEL7O Media Downloader — Official Launch Trailer</title>
 <meta name="description" content="Download 4K videos and high-bitrate MP3 audio from 1000+ sites with Fel7o Media Downloader for Windows. 100% Free & Open Source.">
 
-<!-- Favicon & Touch Icon (Brave, Chrome, Safari, Edge, Mobile) -->
+<!-- Canonical & Robots -->
+<link rel="canonical" href="/">
+<meta name="color-scheme" content="dark">
+<meta name="robots" content="index, follow">
+<meta name="author" content="FEL7O Team">
+<meta name="keywords" content="video downloader, 4K downloader, mp3 converter, open source downloader, windows media downloader, fel7o">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FEL7O">
+<meta property="og:title" content="FEL7O Media Downloader — Official Launch Trailer">
+<meta property="og:description" content="Download 4K videos and high-bitrate MP3 audio from 1000+ sites. 100% Free & Open Source for Windows.">
+<meta property="og:image" content="assets/og-cover.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="/">
+<meta property="og:locale" content="en_US">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@fel7o">
+<meta name="twitter:title" content="FEL7O Media Downloader">
+<meta name="twitter:description" content="4K video + high-bitrate MP3 from 1000+ sites. Free & Open Source.">
+<meta name="twitter:image" content="assets/og-cover.jpg">
+
+<!-- Structured Data: SoftwareApplication (JSON-LD) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "FEL7O Media Downloader",
+  "operatingSystem": "Windows",
+  "applicationCategory": "MultimediaApplication",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "Download 4K videos and high-bitrate MP3 audio from 1000+ sites. Free & Open Source for Windows.",
+  "downloadUrl": "https://github.com/Ahmed77khaled/Fel7o-Media-Downloader/releases/latest",
+  "softwareVersion": "1.0"
+}
+</script>
+
+<!-- Font Preconnect & Non-Blocking Asynchronous Load (Perf) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;700;900&display=swap" media="print" onload="this.media='all'">
+<noscript>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;700;900&display=swap">
+</noscript>
+
+<!-- Favicon & Touch Icons -->
 <link rel="icon" type="image/x-icon" href="favicon.ico?v=2">
 <link rel="shortcut icon" type="image/x-icon" href="favicon.ico?v=2">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon.png?v=2">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon.png?v=2">
 <link rel="icon" type="image/png" href="assets/logo.png?v=2">
 <link rel="apple-touch-icon" sizes="180x180" href="favicon.png?v=2">
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;700;900&display=swap');
 
+<style>
   *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 
   :root {
-    --cyan:       #00f0ff;
-    --cyan-glow:  rgba(0,240,255,0.55);
-    --cyan-dim:   rgba(0,240,255,0.2);
-    --cyan-soft:  rgba(0,240,255,0.12);
-    --violet:     #8b5cf6;
-    --violet-glow:rgba(139,92,246,0.55);
-    --violet-dim: rgba(139,92,246,0.2);
-    --violet-soft:rgba(139,92,246,0.1);
-    --white:      #eef2f6;
-    --dim:        #8a99b5;
-    --bg:         #04060f;
-    --card-bg:    rgba(11,17,33,0.9);
-    --green:      #3ce89b;
-    --green-glow: rgba(60,232,155,0.5);
-    --font-display:'Space Grotesk','Inter',sans-serif;
-    --font-body:   'Inter',system-ui,sans-serif;
-    --font-mono:   'JetBrains Mono',monospace;
-    --ease-spring: cubic-bezier(0.16,1,0.3,1);
-    --ease-in-out: cubic-bezier(0.4,0,0.2,1);
+    --cyan:          #00f0ff;
+    --cyan-glow:     rgba(0,240,255,0.55);
+    --cyan-dim:      rgba(0,240,255,0.2);
+    --cyan-soft:     rgba(0,240,255,0.12);
+    --violet:        #8b5cf6;
+    --violet-glow:   rgba(139,92,246,0.55);
+    --violet-dim:    rgba(139,92,246,0.2);
+    --violet-soft:   rgba(139,92,246,0.1);
+    --white:         #eef2f6;
+    --dim:           #9ab0d3; /* Enhanced contrast ratio > 4.5:1 for WCAG AA */
+    --bg:            #04060f;
+    --card-bg:       rgba(11,17,33,0.9);
+    --green:         #3ce89b;
+    --green-glow:    rgba(60,232,155,0.5);
+    --font-display:  'Space Grotesk','Inter',sans-serif;
+    --font-body:     'Inter',system-ui,sans-serif;
+    --font-mono:     'JetBrains Mono',monospace;
+    --ease-spring:   cubic-bezier(0.16,1,0.3,1);
+    --ease-in-out:   cubic-bezier(0.4,0,0.2,1);
   }
 
   html, body {
@@ -58,6 +105,13 @@
   /* ── ACCESSIBILITY: REDUCED MOTION ─────────────── */
   @media (prefers-reduced-motion: reduce) {
     #cursor-glow { display:none; }
+  }
+
+  /* Focus-visible for accessibility */
+  :focus-visible {
+    outline: 2px solid var(--cyan) !important;
+    outline-offset: 3px;
+    border-radius: 4px;
   }
 
   /* ══════════════════════════════════════════════════
@@ -212,7 +266,7 @@
     z-index:10;
   }
 
-  /* Scene 1→2 : Digital Scan */
+  /* Scene Transitions */
   .scene.tx-digitalscan { transition:opacity .65s var(--ease-spring), transform .65s var(--ease-spring), filter .65s var(--ease-spring), clip-path .65s var(--ease-spring); }
   .scene.tx-digitalscan.tx-out { opacity:0; filter:blur(3px) saturate(1.3); clip-path:inset(0 0 100% 0); transform:translateZ(-40px); }
   .scene.tx-digitalscan.tx-in  { clip-path:inset(0 0 0 0); transform:translateZ(0); filter:blur(0) saturate(1); }
@@ -238,7 +292,6 @@
     100% { transform:translate(0,0); filter:none; }
   }
 
-  /* Scene 2→3 : Light Sweep */
   .scene.tx-lightsweep { transition:opacity .6s var(--ease-spring), transform .6s var(--ease-spring), filter .6s var(--ease-spring); }
   .scene.tx-lightsweep.tx-out { opacity:0; transform:scale(1.05) translateZ(30px); filter:blur(4px) brightness(1.7); }
   .scene.tx-lightsweep.tx-in  { transform:scale(1) translateZ(0); filter:blur(0) brightness(1); }
@@ -254,12 +307,10 @@
     100% { transform:translateX(60%); opacity:0; }
   }
 
-  /* Scene 3→4 : Glass Morph */
   .scene.tx-glassmorph { transition:opacity .7s var(--ease-spring), transform .7s var(--ease-spring), filter .7s var(--ease-spring); }
   .scene.tx-glassmorph.tx-out { opacity:0; transform:scale(1.06) translateZ(50px); filter:blur(8px); }
   .scene.tx-glassmorph.tx-in  { transform:scale(1) translateZ(0); filter:blur(0); }
 
-  /* Scene 4→5 : Warp Speed */
   .scene.tx-warpspeed { transition:opacity .55s var(--ease-in-out), transform .55s var(--ease-in-out), filter .55s var(--ease-in-out); }
   .scene.tx-warpspeed.tx-out { opacity:0; transform:scale(1.08) translateZ(80px); filter:blur(7px); }
   .scene.tx-warpspeed.tx-in  { transform:scale(1) translateZ(0); filter:blur(0); }
@@ -275,7 +326,6 @@
     100% { opacity:0; transform:scale(1.4) rotate(6deg); }
   }
 
-  /* Scene 5→6 : Energy Pulse */
   .scene.tx-energypulse { transition:opacity .6s var(--ease-spring), transform .6s var(--ease-spring), filter .6s var(--ease-spring); }
   .scene.tx-energypulse.tx-out { opacity:0; transform:scale(0.97) translateZ(-20px); filter:blur(5px) brightness(1.4); }
   .scene.tx-energypulse.tx-in  { transform:scale(1) translateZ(0); filter:blur(0) brightness(1); }
@@ -291,12 +341,10 @@
     100% { transform:translate(-50%,-50%) scale(140); opacity:0; }
   }
 
-  /* Scene 6→7 : Particle Dissolve */
   .scene.tx-particledissolve { transition:opacity .65s var(--ease-spring), transform .65s var(--ease-spring), filter .65s var(--ease-spring); }
   .scene.tx-particledissolve.tx-out { opacity:0; transform:scale(0.985); filter:blur(6px); }
   .scene.tx-particledissolve.tx-in  { transform:scale(1); filter:blur(0); }
 
-  /* Scene 7→8 : RGB Reveal */
   .scene.tx-rgbreveal { transition:opacity .6s var(--ease-spring), transform .6s var(--ease-spring), filter .6s var(--ease-spring); }
   .scene.tx-rgbreveal.tx-out { opacity:0; transform:scale(1.04) translateZ(40px); filter:blur(4px); }
   .scene.tx-rgbreveal.tx-in  { transform:scale(1) translateZ(0); filter:blur(0); }
@@ -317,7 +365,7 @@
   }
 
   /* ══════════════════════════════════════════════════
-     HUD HEADER & SMOOTH COUNTER
+     HUD HEADER & COUNTER
   ══════════════════════════════════════════════════ */
   #hud {
     position:fixed; top:24px; left:0; right:0; z-index:99990;
@@ -332,39 +380,12 @@
     animation:dotBlink 1.6s ease-in-out infinite;
   }
   @keyframes dotBlink { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.3;transform:scale(0.8)} }
-  #hud .creator-tag {
-    color:var(--cyan); font-weight:700;
-    background:rgba(0,240,255,.1); padding:6px 16px; border-radius:100px;
-    border:1px solid rgba(0,240,255,.28); box-shadow:0 0 16px rgba(0,240,255,.12);
-    backdrop-filter:blur(8px);
-  }
   #scene-counter {
     transition:opacity 0.2s ease, transform 0.2s ease;
     will-change:opacity,transform;
     display:inline-block;
   }
   #scene-counter.flip-out { opacity:0; transform:translateY(-6px); }
-
-  .hud-right {
-    display:flex; align-items:center; gap:14px; pointer-events:auto;
-  }
-  .hud-action-btn {
-    font-family:var(--font-mono); font-size:11px; font-weight:700;
-    letter-spacing:.1em; color:var(--white);
-    background:rgba(255,255,255,0.08);
-    border:1px solid rgba(255,255,255,0.18); border-radius:100px;
-    padding:7px 18px; cursor:pointer; backdrop-filter:blur(14px);
-    transition:all 0.22s ease; text-transform:uppercase;
-    display:inline-flex; align-items:center; gap:6px;
-  }
-  .hud-action-btn:hover {
-    background:rgba(0,240,255,0.18); border-color:var(--cyan);
-    color:var(--cyan); transform:translateY(-2px);
-    box-shadow:0 6px 20px rgba(0,240,255,0.25);
-  }
-  .hud-action-btn.hidden {
-    display:none !important;
-  }
 
   /* ══════════════════════════════════════════════════
      FLOATING NAVIGATION OVERLAY (APPLE GLASSMORPHISM)
@@ -376,25 +397,80 @@
     background:rgba(11,17,33,0.85); border:1px solid rgba(0,240,255,0.24);
     backdrop-filter:blur(22px); box-shadow:0 14px 40px rgba(0,0,0,0.6), 0 0 20px rgba(0,240,255,0.12);
     opacity:0; pointer-events:none;
-    transition:opacity 0.2s ease, transform 0.2s ease;
+    transition:opacity 0.25s ease, transform 0.25s ease;
     font-family:var(--font-mono); font-size:12px; letter-spacing:.08em;
   }
   #nav-overlay.show {
     opacity:1; pointer-events:auto; transform:translateX(-50%) translateY(0);
   }
   .nav-btn {
-    background:transparent; border:none; color:var(--cyan);
+    background:transparent; border:1px solid transparent; color:var(--cyan);
     font-family:var(--font-mono); font-size:12px; font-weight:700;
-    cursor:pointer; padding:4px 8px; border-radius:6px;
-    transition:all 0.2s ease; letter-spacing:.06em;
+    cursor:pointer; padding:6px 14px; border-radius:100px;
+    transition:all 0.22s var(--ease-spring); letter-spacing:.06em;
+    display:inline-flex; align-items:center; gap:6px;
+    position:relative; overflow:hidden;
+    outline:none;
   }
-  .nav-btn.hidden { display:none !important; }
-  .nav-btn:hover {
+  .nav-btn:hover:not(:disabled) {
     color:var(--white); text-shadow:0 0 10px var(--cyan);
+    background:rgba(0,240,255,0.12); border-color:rgba(0,240,255,0.35);
+    transform:translateY(-2px) scale(1.04);
+    box-shadow:0 4px 16px rgba(0,240,255,0.2);
+  }
+  .nav-btn:active:not(:disabled) {
+    transform:translateY(0) scale(0.96);
+  }
+  .nav-btn:disabled, .nav-btn.disabled {
+    opacity:0.4 !important;
+    cursor:default !important;
+    pointer-events:none !important;
+    background:transparent !important;
+    border-color:transparent !important;
+    box-shadow:none !important;
+    transform:none !important;
+    text-shadow:none !important;
   }
   #nav-scene-indicator {
     color:var(--dim); font-weight:600; font-size:11px; letter-spacing:.12em;
-    padding:0 10px; border-left:1px solid rgba(255,255,255,0.12); border-right:1px solid rgba(255,255,255,0.12);
+    padding:0 12px; border-left:1px solid rgba(255,255,255,0.12); border-right:1px solid rgba(255,255,255,0.12);
+    white-space:nowrap;
+  }
+
+  /* Morph & Fade effect for Next <-> Replay content */
+  .nav-btn-content {
+    display:inline-flex; align-items:center; gap:6px;
+    transition:opacity 0.22s ease, transform 0.22s ease;
+    will-change:opacity, transform;
+  }
+  .nav-btn-content.fade-out {
+    opacity:0; transform:scale(0.85);
+  }
+
+  /* FLOATING SKIP INTRO BUTTON ABOVE NAVIGATION */
+  #skip-intro-btn {
+    position:fixed; bottom:74px; left:50%;
+    transform:translateX(-50%) translateY(10px);
+    z-index:99988;
+    font-family:var(--font-mono); font-size:11px; font-weight:700;
+    letter-spacing:.09em; text-transform:uppercase;
+    color:var(--cyan); background:rgba(11,17,33,0.82);
+    border:1px solid rgba(0,240,255,0.28); border-radius:100px;
+    padding:6px 18px; cursor:pointer; backdrop-filter:blur(18px);
+    box-shadow:0 8px 24px rgba(0,0,0,0.5), 0 0 16px rgba(0,240,255,0.1);
+    opacity:0; pointer-events:none;
+    transition:opacity 0.3s var(--ease-spring), transform 0.3s var(--ease-spring), background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  #skip-intro-btn.show {
+    opacity:1; pointer-events:auto; transform:translateX(-50%) translateY(0);
+  }
+  #skip-intro-btn:hover {
+    background:rgba(0,240,255,0.18); border-color:var(--cyan);
+    color:var(--white); transform:translateX(-50%) translateY(-2px) scale(1.04);
+    box-shadow:0 10px 28px rgba(0,240,255,0.28);
+  }
+  #skip-intro-btn:active {
+    transform:translateX(-50%) translateY(0) scale(0.96);
   }
 
   /* ══════════════════════════════════════════════════
@@ -409,26 +485,6 @@
     background:linear-gradient(90deg,var(--cyan),var(--violet));
     box-shadow:0 0 12px var(--cyan-glow);
     transition:none; will-change:width;
-  }
-
-  /* ══════════════════════════════════════════════════
-     CONTROLS
-  ══════════════════════════════════════════════════ */
-  #controls {
-    position:fixed; bottom:22px; right:28px; z-index:99991;
-    display:flex; gap:10px; pointer-events:auto;
-  }
-  .ctl-btn {
-    font-family:var(--font-mono); font-size:11px; letter-spacing:.1em;
-    color:var(--white); background:rgba(255,255,255,.07);
-    border:1px solid rgba(255,255,255,.16); border-radius:100px;
-    padding:10px 20px; cursor:pointer; backdrop-filter:blur(14px);
-    transition:all .22s ease; text-transform:uppercase; font-weight:700;
-  }
-  .ctl-btn:hover {
-    background:rgba(0,240,255,.18); border-color:var(--cyan);
-    color:var(--cyan); transform:translateY(-2px);
-    box-shadow:0 6px 22px rgba(0,240,255,.2);
   }
 
   /* ══════════════════════════════════════════════════
@@ -520,8 +576,9 @@
   /* ══════════════════════════════════════════════════
      SCENE 1 — BOOT TERMINAL
   ══════════════════════════════════════════════════ */
-  #s1 { align-items:flex-start; justify-content:center; padding-left:10vw; }
+  #s1 { align-items:center; justify-content:center; padding-left:0; text-align:left; }
   #boot-lines {
+    width:min(540px, 92vw); margin:0 auto;
     font-family:var(--font-mono); font-size:clamp(14px,1.9vw,20px);
     color:var(--cyan); line-height:2.45; text-shadow:0 0 12px var(--cyan-dim);
     background:rgba(0,0,0,0.32); padding:34px 48px; border-radius:22px;
@@ -629,7 +686,6 @@
     animation:cursorBlink 0.7s step-end infinite;
   }
 
-  /* Thumbnail with shimmer */
   .preview-card {
     display:flex; gap:20px; margin-top:24px; opacity:0; transform:translateY(14px);
     transition:all .48s var(--ease-spring);
@@ -688,7 +744,6 @@
     background:rgba(0,240,255,.14); box-shadow:0 0 18px rgba(0,240,255,.22);
   }
 
-  /* Download button + progress bar */
   .dl-progress-wrap {
     margin-top:18px; opacity:0; transform:translateY(10px);
     transition:all .45s ease;
@@ -711,7 +766,6 @@
   }
   .dl-btn:hover::after { transform:translateX(100%); }
 
-  /* Progress bar track — clean slim style */
   .dl-progress-bar {
     height:6px;
     background:rgba(255,255,255,.08);
@@ -720,7 +774,6 @@
     overflow:hidden;
     position:relative;
   }
-  /* Animated fill with glow */
   .dl-progress-fill {
     height:100%; width:0%; border-radius:100px;
     background:linear-gradient(90deg, var(--cyan) 0%, #00e8cc 50%, var(--green) 100%);
@@ -729,7 +782,6 @@
     position:relative; overflow:hidden;
   }
   .dl-progress-fill.go { width:100%; }
-  /* Shimmer sweep riding along */
   .dl-progress-fill::after {
     content:'';
     position:absolute; top:0; left:0; bottom:0; width:60px;
@@ -825,7 +877,6 @@
     font-family:var(--font-mono); font-size:clamp(1rem,2.4vw,1.8rem);
     color:var(--cyan); letter-spacing:.3em; margin-top:8px; font-weight:700;
   }
-  /* Minimal Semi-Circular Speed Gauge */
   .speed-gauge-wrap {
     margin:18px auto 0;
     width:clamp(280px,46vw,340px);
@@ -1007,25 +1058,19 @@
   }
   #s8.cta .trust-row { animation:ctaIn .55s var(--ease-spring) .18s forwards; }
 
-  /* ── SHARED KEYFRAMES ───────────────────────────── */
+  /* Keyframe Animations */
   @keyframes fadeUp {
     from { opacity:0; transform:translateY(16px); }
     to   { opacity:1; transform:translateY(0); }
   }
   @keyframes ctaIn { to { opacity:1; transform:translateY(0); } }
 
-  /* ══════════════════════════════════════════════════
-     MOBILE & RESPONSIVE DESIGN SYSTEM
-  ══════════════════════════════════════════════════ */
+  /* Responsive Design System */
   @media (max-width: 768px) {
     #hud { top:12px; left:12px; right:12px; padding:0; }
     #hud .tag { padding:4px 8px; font-size:10px; }
-    .hud-right { gap:8px; }
-    .hud-action-btn { padding:5px 12px; font-size:10px; }
-
     .scene { padding: 75px 14px 85px; }
 
-    /* Scene 1 — Terminal Box Centering on Mobile */
     #s1 { align-items:center !important; justify-content:center !important; padding-left:0 !important; }
     #boot-lines {
       width:min(520px, 92vw) !important;
@@ -1036,41 +1081,33 @@
       margin:0 auto !important;
     }
 
-    /* Scene 2 — Brand */
     .brand-tagline { font-size:1.1rem; letter-spacing:.25em; }
-
-    /* Scene 3 — App UI */
     .app-window { width:95vw; max-width:100%; }
     .input-row { flex-direction:column; gap:8px; }
     .btn-paste-mock, .btn-download-mock { width:100%; justify-content:center; }
     .quality-chips { flex-wrap:wrap; justify-content:center; gap:6px; }
 
-    /* Scene 4 — Content Grid */
     #content-grid { grid-template-columns:repeat(2, 1fr); gap:10px; width:95vw; }
     .ccard { padding:14px 10px; }
     .ccard .cicon { font-size:24px; }
 
-    /* Scene 5 — Speed Gauge */
     #speed-gauge-wrap { transform:scale(0.82); transform-origin:center center; margin:-10px auto; }
     .speed-unit-row { margin-top:-8px; }
 
-    /* Scene 6 — Queue */
     #queue-list { width:95vw; gap:8px; }
     .qitem { padding:10px 12px; font-size:12px; gap:8px; }
 
-    /* Scene 7 — Features */
     #feat-grid { grid-template-columns:repeat(2, 1fr); gap:10px; width:95vw; }
     .fcard { padding:16px 12px; }
 
-    /* Scene 8 — Hero CTA */
     #s8 .hero-actions { flex-direction:column; width:100%; max-width:320px; gap:12px; }
     .btn-primary-action, .btn-secondary-action { width:100%; justify-content:center; padding:14px 20px; font-size:14px; }
     #s8 .trust-row { gap:12px; font-size:11px; }
 
-    /* Nav Overlay */
     #nav-overlay { bottom:16px; padding:6px 10px; gap:8px; }
     .nav-btn { padding:8px 12px; min-height:42px; font-size:12px; }
     #nav-scene-indicator { font-size:11px; padding:0 8px; }
+    #skip-intro-btn { bottom:68px; padding:5px 14px; font-size:10px; }
   }
 
   @media (max-width: 480px) {
@@ -1085,83 +1122,81 @@
 </head>
 <body>
 
-<!-- Cursor Glow -->
-<div id="cursor-glow"></div>
+<!-- Cursor Glow Follower -->
+<div id="cursor-glow" aria-hidden="true"></div>
 
-<!-- Glitch Flash Layer -->
-<div id="glitch-overlay"></div>
-<div id="tx-scanline"></div>
-<div id="tx-sweep"></div>
-<div id="tx-warp"></div>
-<div id="tx-pulse"></div>
-<div id="tx-flash"></div>
+<!-- Glitch Flash & Transition Layer -->
+<div id="glitch-overlay" aria-hidden="true"></div>
+<div id="tx-scanline" aria-hidden="true"></div>
+<div id="tx-sweep" aria-hidden="true"></div>
+<div id="tx-warp" aria-hidden="true"></div>
+<div id="tx-pulse" aria-hidden="true"></div>
+<div id="tx-flash" aria-hidden="true"></div>
 
-<!-- Canvas Particles Background -->
-<canvas id="bg-canvas"></canvas>
+<!-- Canvas Particles Engine -->
+<canvas id="bg-canvas" aria-hidden="true"></canvas>
 
-<!-- Scanlines -->
-<div id="scanlines"></div>
+<!-- Scanlines & Vignette -->
+<div id="scanlines" aria-hidden="true"></div>
+<div id="vignette" aria-hidden="true"></div>
 
-<!-- Vignette -->
-<div id="vignette"></div>
+<!-- Video Backgrounds Container -->
+<div id="video-bg-container" aria-hidden="true"></div>
 
-<!-- Video Backgrounds Container (Pure Particle Canvas & Aurora Blobs Active) -->
-<div id="video-bg-container">
-</div>
-
-<!-- Background Music -->
+<!-- Background Music Audio Tag -->
 <audio id="bg-audio" loop preload="auto">
   <source src="../demo/phonk.mp3" type="audio/mpeg">
   <source src="phonk.mp3" type="audio/mpeg">
 </audio>
 
-<!-- Aurora Blobs -->
-<div id="aurora">
+<!-- Aurora Blobs & Grid -->
+<div id="aurora" aria-hidden="true">
   <div class="aurora-blob ab1"></div>
   <div class="aurora-blob ab2"></div>
   <div class="aurora-blob ab3"></div>
 </div>
-<div id="grid"></div>
-<div id="particles"></div>
+<div id="grid" aria-hidden="true"></div>
+<div id="particles" aria-hidden="true"></div>
 
 <!-- HUD Header -->
-<div id="hud">
+<header id="hud" role="banner">
   <div class="tag"><span class="dot"></span> FEL7O // OFFICIAL LAUNCH TRAILER</div>
-  <div class="hud-right">
-    <div class="tag"><span id="scene-counter">SCENE 01 / 08</span></div>
-    <button class="hud-action-btn" id="skip-btn" aria-label="Skip to end">Skip ⏭</button>
-  </div>
-</div>
+  <div class="tag"><span id="scene-counter" aria-live="polite" aria-label="Current scene counter">SCENE 01 / 08</span></div>
+</header>
 
-<!-- Floating Navigation Overlay -->
-<div id="nav-overlay">
-  <button id="nav-prev" class="nav-btn" aria-label="Previous Scene">◀ Previous</button>
-  <div id="nav-scene-indicator">Scene 01 / 08</div>
-  <button id="nav-next" class="nav-btn" aria-label="Next Scene">Next ▶</button>
-  <button id="nav-replay" class="nav-btn hidden" aria-label="Replay Trailer">Replay ↻</button>
-</div>
+<!-- Floating Skip Intro Button -->
+<button id="skip-intro-btn" class="skip-floating-btn" aria-label="Skip Intro to final scene" type="button">Skip Intro ⏭</button>
 
-<!-- Stage -->
-<div id="stage">
+<!-- Floating Navigation Overlay (Context-Aware) -->
+<nav id="nav-overlay" aria-label="Trailer navigation">
+  <button id="nav-prev" class="nav-btn disabled" aria-label="Previous Scene" type="button" disabled>◀ Previous</button>
+  <div id="nav-scene-indicator" aria-label="Current scene number">Scene 01 / 08</div>
+  <button id="nav-next" class="nav-btn" aria-label="Next Scene" type="button">
+    <span id="nav-next-content" class="nav-btn-content">Next ▶</span>
+  </button>
+</nav>
+
+<!-- Main Stage -->
+<main id="stage" role="main">
 
   <!-- SCENE 1 — BOOT TERMINAL -->
-  <div class="scene active" id="s1">
+  <section class="scene active" id="s1" aria-label="Boot Sequence Terminal">
     <div id="boot-lines">
       <div class="line" data-l="0">&gt; SYSTEM ONLINE</div>
       <div class="line" data-l="1">&gt; Searching the internet...</div>
       <div class="line" data-l="2">&gt; <span class="boot-num">10,547,832</span> media files indexed</div>
       <div class="line" data-l="3"><span class="boot-ok">✓</span> High-Speed Engine Ready<span class="boot-cursor" id="boot-cursor"></span></div>
     </div>
-  </div>
+  </section>
 
   <!-- SCENE 2 — BRAND REVEAL -->
-  <div class="scene" id="s2">
-    <div id="logo-wrap"><div id="big-logo">FEL7O</div></div>
+  <section class="scene" id="s2" aria-label="Brand Reveal">
+    <div id="logo-wrap"><h1 id="big-logo">FEL7O</h1></div>
     <div class="tagline">STOP STREAMING. <b>START OWNING.</b></div>
-  </div>
+  </section>
 
   <!-- SCENE 3 — APP UI DEMO -->
-  <div class="scene" id="s3">
+  <section class="scene" id="s3" aria-label="App UI Demonstration">
     <div class="app-window">
       <div class="app-titlebar">
         <div class="app-dot r"></div><div class="app-dot y"></div><div class="app-dot g"></div>
@@ -1169,7 +1204,7 @@
       </div>
       <div class="app-body">
         <div class="url-row">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
             <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
           </svg>
@@ -1196,7 +1231,7 @@
           <div class="qchip">MP3 320k</div>
         </div>
         <div class="dl-progress-wrap" id="dl-btn-wrap">
-          <button class="dl-btn" id="dl-btn">⚡ Download Now</button>
+          <button class="dl-btn" id="dl-btn" type="button">⚡ Download Now</button>
           <div class="dl-progress-bar">
             <div class="dl-progress-fill" id="dl-progress-fill"></div>
           </div>
@@ -1207,30 +1242,30 @@
         </div>
       </div>
     </div>
-  </div>
+  </section>
 
   <!-- SCENE 4 — SUPPORTED CONTENT -->
-  <div class="scene" id="s4">
-    <div class="headline">Anything. Anywhere.</div>
+  <section class="scene" id="s4" aria-label="Supported Content Types">
+    <h2 class="headline">Anything. Anywhere.</h2>
     <div class="content-grid" id="content-grid">
-      <div class="ccard"><span class="cicon">🎬</span><div class="clabel">Video 4K</div></div>
-      <div class="ccard"><span class="cicon">🎵</span><div class="clabel">Audio MP3</div></div>
-      <div class="ccard"><span class="cicon">📋</span><div class="clabel">Playlist</div></div>
-      <div class="ccard"><span class="cicon">📡</span><div class="clabel">Channel</div></div>
-      <div class="ccard"><span class="cicon">🎙️</span><div class="clabel">Podcast</div></div>
-      <div class="ccard"><span class="cicon">🎞️</span><div class="clabel">Reels</div></div>
-      <div class="ccard"><span class="cicon">⚡</span><div class="clabel">Shorts</div></div>
+      <div class="ccard"><span class="cicon" aria-hidden="true">🎬</span><div class="clabel">Video 4K</div></div>
+      <div class="ccard"><span class="cicon" aria-hidden="true">🎵</span><div class="clabel">Audio MP3</div></div>
+      <div class="ccard"><span class="cicon" aria-hidden="true">📋</span><div class="clabel">Playlist</div></div>
+      <div class="ccard"><span class="cicon" aria-hidden="true">📡</span><div class="clabel">Channel</div></div>
+      <div class="ccard"><span class="cicon" aria-hidden="true">🎙️</span><div class="clabel">Podcast</div></div>
+      <div class="ccard"><span class="cicon" aria-hidden="true">🎞️</span><div class="clabel">Reels</div></div>
+      <div class="ccard"><span class="cicon" aria-hidden="true">⚡</span><div class="clabel">Shorts</div></div>
     </div>
-  </div>
+  </section>
 
   <!-- SCENE 5 — EXTREME SPEED -->
-  <div class="scene" id="s5">
+  <section class="scene" id="s5" aria-label="Extreme Download Speed Showcase">
     <div class="speed-core">
       <div class="speed-label-top">DOWNLOAD SPEED</div>
       <div id="speed-num">0</div>
       <div id="speed-unit">MB/S</div>
       <div class="speed-gauge-wrap" id="speed-gauge-wrap">
-        <svg viewBox="0 0 320 170" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 320 170" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <defs>
             <linearGradient id="gaugeArcGrad" x1="0%" y1="0%" x2="100%" y2="0%">
               <stop offset="0%"   stop-color="#00F0FF"/>
@@ -1238,24 +1273,20 @@
               <stop offset="100%" stop-color="#8B5CF6"/>
             </linearGradient>
           </defs>
-          <!-- Background Track Arc (Radius 130, Center 160,150) -->
           <path class="gauge-track" d="M 30,150 A 130,130 0 0,1 290,150"/>
-          <!-- Active Filling Arc -->
           <path class="gauge-active" id="gauge-active-path" d="M 30,150 A 130,130 0 0,1 290,150"/>
-          <!-- Traveling Glow Dot at Arc Tip -->
           <circle class="gauge-dot" id="gauge-dot" cx="30" cy="150" r="5"/>
-          <!-- MIN / MAX subtle labels -->
           <text x="25" y="166" font-family="var(--font-mono)" font-size="10" fill="var(--dim)" letter-spacing="0.1em" opacity="0.6">MIN</text>
           <text x="273" y="166" font-family="var(--font-mono)" font-size="10" fill="var(--dim)" letter-spacing="0.1em" opacity="0.6">MAX</text>
         </svg>
       </div>
       <div class="speed-done" id="speed-done">✓ Peak Performance</div>
     </div>
-  </div>
+  </section>
 
   <!-- SCENE 6 — SMART QUEUE -->
-  <div class="scene" id="s6">
-    <div class="headline">One queue. Zero waiting.</div>
+  <section class="scene" id="s6" aria-label="Smart Queue Showcase">
+    <h2 class="headline">One queue. Zero waiting.</h2>
     <div class="queue-list" id="queue-list">
       <div class="qitem">
         <div class="qcheck">✓</div>
@@ -1282,56 +1313,56 @@
         <div class="qbar"><div class="qbar-fill"></div></div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <!-- SCENE 7 — FEATURE SHOWCASE -->
-  <div class="scene" id="s7">
-    <div class="feat-headline">Everything You Need.</div>
+  <!-- SCENE 7 — FEATURE CARDS -->
+  <section class="scene" id="s7" aria-label="Feature Showcase">
+    <h2 class="feat-headline">Everything You Need.</h2>
     <div class="feat-grid" id="feat-grid">
-      <div class="fcard"><span class="ficon">🚫</span><div class="flabel">No Ads</div></div>
-      <div class="fcard"><span class="ficon">🧠</span><div class="flabel">Smart Queue</div></div>
-      <div class="fcard"><span class="ficon">🔗</span><div class="flabel">Auto Detect</div></div>
-      <div class="fcard"><span class="ficon">⚡</span><div class="flabel">Extreme Speed</div></div>
-      <div class="fcard"><span class="ficon">💎</span><div class="flabel">Best Quality</div></div>
-      <div class="fcard"><span class="ficon">📦</span><div class="flabel">Batch Download</div></div>
-      <div class="fcard"><span class="ficon">🔊</span><div class="flabel">Audio Normalize</div></div>
-      <div class="fcard"><span class="ficon">🔒</span><div class="flabel">100% Free</div></div>
+      <div class="fcard"><span class="ficon" aria-hidden="true">🚫</span><div class="flabel">No Ads</div></div>
+      <div class="fcard"><span class="ficon" aria-hidden="true">🧠</span><div class="flabel">Smart Queue</div></div>
+      <div class="fcard"><span class="ficon" aria-hidden="true">🔗</span><div class="flabel">Auto Detect</div></div>
+      <div class="fcard"><span class="ficon" aria-hidden="true">⚡</span><div class="flabel">Extreme Speed</div></div>
+      <div class="fcard"><span class="ficon" aria-hidden="true">💎</span><div class="flabel">Best Quality</div></div>
+      <div class="fcard"><span class="ficon" aria-hidden="true">📦</span><div class="flabel">Batch Download</div></div>
+      <div class="fcard"><span class="ficon" aria-hidden="true">🔊</span><div class="flabel">Audio Normalize</div></div>
+      <div class="fcard"><span class="ficon" aria-hidden="true">🔒</span><div class="flabel">100% Free</div></div>
     </div>
-  </div>
+  </section>
 
   <!-- SCENE 8 — FINAL HERO CTA -->
-  <div class="scene" id="s8">
+  <section class="scene" id="s8" aria-label="Download Call To Action">
     <div class="final-logo">FEL7O</div>
     <div class="final-sub">Download anything. Keep it forever.</div>
     <div class="final-words">
       <span>FAST</span><span>POWERFUL</span><span>FREE</span>
     </div>
     <div class="hero-actions">
-      <button class="btn-primary-action" id="cta-btn-hero" aria-label="Download Fel7o for Windows">⚡ Download Fel7o (.exe)</button>
-      <button class="btn-secondary-action" id="readme-btn-hero" aria-label="Open Fel7o GitHub repository">📖 View GitHub / README</button>
+      <button class="btn-primary-action" id="cta-btn-hero" aria-label="Download Fel7o for Windows" type="button">⚡ Download Fel7o (.exe)</button>
+      <button class="btn-secondary-action" id="readme-btn-hero" aria-label="Open Fel7o GitHub repository" type="button">📖 View GitHub / README</button>
     </div>
     <div class="trust-row">
       <span>🪟 Windows 10/11</span>
       <span>🆓 100% Free — No Card Needed</span>
       <span>⭐ Open Source</span>
     </div>
-  </div>
+  </section>
 
-</div><!-- /stage -->
+</main>
 
-<!-- Progress Bar -->
-<div id="progress-track"><div id="progress-fill"></div></div>
+<!-- Timeline Progress Bar -->
+<div id="progress-track" aria-hidden="true"><div id="progress-fill"></div></div>
 
 <!-- Replay Overlay Screen -->
-<div id="replay-screen">
+<div id="replay-screen" aria-label="Replay overlay screen">
   <div class="rp-logo">FEL7O</div>
   <div class="rp-tagline">FAST • POWERFUL • FREE</div>
   <div class="rp-subtitle">Free Media Downloader for Windows</div>
   <div class="action-buttons-group">
-    <button class="btn-primary-action" id="cta-btn-overlay" aria-label="Download Fel7o for Windows">⚡ Download Fel7o (.exe)</button>
-    <button class="btn-secondary-action" id="readme-btn-overlay" aria-label="Open Fel7o GitHub repository">📖 View Project / README</button>
+    <button class="btn-primary-action" id="cta-btn-overlay" aria-label="Download Fel7o for Windows" type="button">⚡ Download Fel7o (.exe)</button>
+    <button class="btn-secondary-action" id="readme-btn-overlay" aria-label="Open Fel7o GitHub repository" type="button">📖 View Project / README</button>
   </div>
-  <button class="btn-replay-action" id="replay-btn" aria-label="Replay the trailer">▶ Replay Trailer</button>
+  <button class="btn-replay-action" id="replay-btn" aria-label="Replay trailer from start" type="button">▶ Replay Trailer</button>
 </div>
 
 <script>
@@ -1339,7 +1370,7 @@
   'use strict';
 
   /* ════════════════════════════════════════════════
-     CURSOR GLOW — smooth trailing
+     CURSOR GLOW FOLLOWER
   ════════════════════════════════════════════════ */
   const cursorGlow = document.getElementById('cursor-glow');
   let glowTargetX = window.innerWidth/2, glowTargetY = window.innerHeight/2;
@@ -1349,16 +1380,18 @@
   window.addEventListener('mousemove', e => {
     glowTargetX = e.clientX;
     glowTargetY = e.clientY;
-    if(!glowActive){ glowActive = true; cursorGlow.classList.add('active'); }
-  });
-  window.addEventListener('mouseleave', () => { glowActive = false; cursorGlow.classList.remove('active'); });
-  window.addEventListener('blur',       () => { glowActive = false; cursorGlow.classList.remove('active'); });
-  document.addEventListener('mouseenter',() => { if(!glowActive){ glowActive=true; cursorGlow.classList.add('active'); } });
+    if(!glowActive){ glowActive = true; if(cursorGlow) cursorGlow.classList.add('active'); }
+  }, { passive: true });
+
+  window.addEventListener('mouseleave', () => { glowActive = false; if(cursorGlow) cursorGlow.classList.remove('active'); }, { passive: true });
+  window.addEventListener('blur',       () => { glowActive = false; if(cursorGlow) cursorGlow.classList.remove('active'); }, { passive: true });
 
   (function animateGlow(){
-    glowX += (glowTargetX - glowX) * 0.12;
-    glowY += (glowTargetY - glowY) * 0.12;
-    cursorGlow.style.transform = `translate(${glowX}px,${glowY}px) translate(-50%,-50%)`;
+    if(cursorGlow && glowActive){
+      glowX += (glowTargetX - glowX) * 0.12;
+      glowY += (glowTargetY - glowY) * 0.12;
+      cursorGlow.style.transform = `translate(${glowX}px,${glowY}px) translate(-50%,-50%)`;
+    }
     requestAnimationFrame(animateGlow);
   })();
 
@@ -1366,18 +1399,22 @@
      CANVAS BACKGROUND ENGINE
   ════════════════════════════════════════════════ */
   const canvas = document.getElementById('bg-canvas');
-  const ctx    = canvas.getContext('2d');
+  const ctx    = canvas ? canvas.getContext('2d') : null;
   let w, h;
 
-  function resize(){ w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
-  window.addEventListener('resize', resize);
+  function resize(){
+    if(!canvas) return;
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resize, { passive: true });
   resize();
 
   const isMobile = window.innerWidth <= 768;
   const particleCount = isMobile ? 24 : 52;
 
   const pts = Array.from({length: particleCount}, () => ({
-    x: Math.random() * w, y: Math.random() * h,
+    x: Math.random() * (w || 1000), y: Math.random() * (h || 1000),
     size: Math.random() * 2.2 + 0.8,
     vx: (Math.random()-0.5)*0.85, vy: (Math.random()-0.5)*0.85,
     color: Math.random() > 0.5 ? '#00f0ff' : '#8b5cf6'
@@ -1387,7 +1424,7 @@
   let canvasRafId = null;
 
   function drawCanvas(){
-    if(document.hidden){
+    if(document.hidden || !ctx){
       canvasRafId = null;
       return;
     }
@@ -1449,27 +1486,29 @@
   const pField  = document.getElementById('particles');
   const pColors = ['#00f0ff','#8b5cf6','#eef2f6','#3ce89b'];
   const domParticleCount = isMobile ? 14 : 32;
-  for(let i = 0; i < domParticleCount; i++){
-    const p = document.createElement('div');
-    p.className = 'particle';
-    const sz = Math.random()*2.2+0.8;
-    p.style.cssText = `
-      width:${sz}px; height:${sz}px;
-      left:${Math.random()*100}vw;
-      background:${pColors[Math.floor(Math.random()*pColors.length)]};
-      animation-duration:${Math.random()*13+10}s;
-      animation-delay:${Math.random()*9}s;
-    `;
-    pField.appendChild(p);
+  if(pField){
+    for(let i = 0; i < domParticleCount; i++){
+      const p = document.createElement('div');
+      p.className = 'particle';
+      const sz = Math.random()*2.2+0.8;
+      p.style.cssText = `
+        width:${sz}px; height:${sz}px;
+        left:${Math.random()*100}vw;
+        background:${pColors[Math.floor(Math.random()*pColors.length)]};
+        animation-duration:${Math.random()*13+10}s;
+        animation-delay:${Math.random()*9}s;
+      `;
+      pField.appendChild(p);
+    }
   }
 
   /* ════════════════════════════════════════════════
      AUDIO
   ════════════════════════════════════════════════ */
   const bgAudio = document.getElementById('bg-audio');
-  bgAudio.volume = 0.62;
+  if(bgAudio) bgAudio.volume = 0.62;
   function playAudio(){
-    if(!isPaused) bgAudio.play().catch(()=>{});
+    if(!isPaused && bgAudio) bgAudio.play().catch(()=>{});
   }
 
   /* ════════════════════════════════════════════════
@@ -1477,14 +1516,14 @@
   ════════════════════════════════════════════════ */
   const glitchOverlay = document.getElementById('glitch-overlay');
   function triggerGlitch(){
-    glitchOverlay.classList.add('flash');
-    setTimeout(() => glitchOverlay.classList.remove('flash'), 145);
+    if(glitchOverlay){
+      glitchOverlay.classList.add('flash');
+      setTimeout(() => glitchOverlay.classList.remove('flash'), 145);
+    }
   }
 
   /* ════════════════════════════════════════════════
-     CINEMATIC TRANSITION ENGINE v2
-     Injected immediately before / after scene switch.
-     Reuses: glitch-overlay, canvas particles (pts), stage.
+     CINEMATIC TRANSITION ENGINE
   ════════════════════════════════════════════════ */
   const TransitionEngine = (() => {
     const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1560,7 +1599,7 @@
       ALL_CLASSES.forEach(c => sceneEl.classList.remove(c,'tx-out','tx-in'));
       if(reduceMotion){ sceneEl.classList.add(styleClass); return; }
       sceneEl.classList.add(styleClass, 'tx-out');
-      void sceneEl.offsetWidth; // Force paint reflow for PC high refresh rate displays
+      void sceneEl.offsetWidth;
 
       setTimeout(() => {
         sceneEl.classList.remove('tx-out');
@@ -1611,6 +1650,76 @@
     });
   }
 
+  /* ════════════════════════════════════════════════
+     FLOATING NAVIGATION & CONTEXT-AWARE ENGINE
+  ════════════════════════════════════════════════ */
+  const navOverlay     = document.getElementById('nav-overlay');
+  const navPrevBtn     = document.getElementById('nav-prev');
+  const navNextBtn     = document.getElementById('nav-next');
+  const navNextContent = document.getElementById('nav-next-content');
+  const navIndicator   = document.getElementById('nav-scene-indicator');
+  const skipIntroBtn   = document.getElementById('skip-intro-btn');
+  let navOverlayTimer  = null;
+  let isNavMorphing    = false;
+
+  function updateNavigationUI(idx){
+    if(navIndicator) navIndicator.textContent = `Scene ${String(idx+1).padStart(2,'0')} / 08`;
+
+    // LEFT: Previous Button State (Disabled on Scene 01)
+    if(navPrevBtn){
+      if(idx === 0){
+        navPrevBtn.disabled = true;
+        navPrevBtn.classList.add('disabled');
+        navPrevBtn.setAttribute('aria-disabled', 'true');
+      } else {
+        navPrevBtn.disabled = false;
+        navPrevBtn.classList.remove('disabled');
+        navPrevBtn.setAttribute('aria-disabled', 'false');
+      }
+    }
+
+    // RIGHT: Next vs Replay Morph (Replay ONLY on Scene 08)
+    if(navNextContent && !isNavMorphing){
+      const isFinalScene = (idx === 7);
+      const targetText = isFinalScene ? 'Replay ↻' : 'Next ▶';
+      const targetLabel = isFinalScene ? 'Replay Trailer' : 'Next Scene';
+
+      if(navNextContent.textContent.trim() !== targetText){
+        isNavMorphing = true;
+        navNextContent.classList.add('fade-out');
+        setTimeout(() => {
+          navNextContent.textContent = targetText;
+          if(navNextBtn) navNextBtn.setAttribute('aria-label', targetLabel);
+          navNextContent.classList.remove('fade-out');
+          setTimeout(() => { isNavMorphing = false; }, 220);
+        }, 150);
+      }
+    }
+
+    // SKIP INTRO BUTTON: If scene > 3, hide it immediately
+    if(skipIntroBtn && idx > 3){
+      skipIntroBtn.classList.remove('show');
+    }
+  }
+
+  function hideNavOverlay(){
+    if(navOverlay) navOverlay.classList.remove('show');
+    if(skipIntroBtn) skipIntroBtn.classList.remove('show');
+  }
+
+  function showNavOverlay(){
+    if(!navOverlay) return;
+    updateNavigationUI(currentSceneIdx);
+    navOverlay.classList.add('show');
+    if(skipIntroBtn && currentSceneIdx <= 3){
+      skipIntroBtn.classList.add('show');
+    }
+    if(navOverlayTimer) clearTimeout(navOverlayTimer);
+    navOverlayTimer = setTimeout(() => {
+      hideNavOverlay();
+    }, 1400);
+  }
+
   function showScene(idx){
     triggerGlitch();
     scenes.forEach((s, i) => {
@@ -1630,46 +1739,71 @@
     currentSceneIdx = idx;
     setBgVideo(idx);
     setCounter(idx+1);
+    updateNavigationUI(idx);
+  }
 
-    const skipBtn = document.getElementById('skip-btn');
-    const navNextBtn = document.getElementById('nav-next');
-    const navReplayBtn = document.getElementById('nav-replay');
+  /* ── SKIP INTRO ACTION ─ */
+  function skipIntroToFinal(){
+    if(isTransitioning || currentSceneIdx >= 7) return;
+    isTransitioning = true;
+    clearTimers();
+    if(rafId) cancelAnimationFrame(rafId);
 
-    if(idx === 7){
-      if(skipBtn) skipBtn.classList.add('hidden');
-      if(navNextBtn) navNextBtn.classList.add('hidden');
-      if(navReplayBtn) navReplayBtn.classList.remove('hidden');
-    } else {
-      if(skipBtn) skipBtn.classList.remove('hidden');
-      if(navNextBtn) navNextBtn.classList.remove('hidden');
-      if(navReplayBtn) navReplayBtn.classList.add('hidden');
+    const oldScene = scenes[currentSceneIdx];
+    if(oldScene){
+      oldScene.classList.remove('active');
+      oldScene.classList.add('exit-left');
     }
+    triggerGlitch();
+
+    setTimeout(() => {
+      showScene(7);
+      const s8 = document.getElementById('s8');
+      if(s8){
+        s8.classList.add('in', 'sub', 'words', 'cta');
+      }
+      progressFill.style.width = '100%';
+      rescheduleCuesFrom(7);
+      isTransitioning = false;
+    }, 320);
   }
 
-  /* ════════════════════════════════════════════════
-     FLOATING NAVIGATION OVERLAY
-  ════════════════════════════════════════════════ */
-  const navOverlay = document.getElementById('nav-overlay');
-  const navPrevBtn = document.getElementById('nav-prev');
-  const navNextBtn = document.getElementById('nav-next');
-  const navReplayBtn = document.getElementById('nav-replay');
-  const navIndicator = document.getElementById('nav-scene-indicator');
-  let navOverlayTimer = null;
+  /* ── FULL CINEMATIC REPLAY ACTION ─ */
+  function replayTrailer(){
+    if(isTransitioning) return;
+    isTransitioning = true;
 
-  function showNavOverlay(){
-    if(!navOverlay) return;
-    if(navIndicator) navIndicator.textContent = `Scene ${String(currentSceneIdx+1).padStart(2,'0')} / 08`;
-    navOverlay.classList.add('show');
-    if(navOverlayTimer) clearTimeout(navOverlayTimer);
-    navOverlayTimer = setTimeout(() => {
-      navOverlay.classList.remove('show');
-    }, 700);
+    const elFlash = document.getElementById('tx-flash');
+    if(elFlash){
+      elFlash.classList.add('run');
+    }
+
+    setTimeout(() => {
+      play();
+      isTransitioning = false;
+    }, 280);
   }
 
-  if(navPrevBtn) navPrevBtn.addEventListener('click', () => navigateScene(-1));
-  if(navNextBtn) navNextBtn.addEventListener('click', () => navigateScene(1));
-  if(navReplayBtn) navReplayBtn.addEventListener('click', play);
-  window.addEventListener('mousemove', showNavOverlay);
+  if(navPrevBtn){
+    navPrevBtn.addEventListener('click', () => {
+      if(currentSceneIdx > 0){
+        navigateScene(-1);
+      }
+    });
+  }
+  if(navNextBtn){
+    navNextBtn.addEventListener('click', () => {
+      if(currentSceneIdx === 7){
+        replayTrailer();
+      } else {
+        navigateScene(1);
+      }
+    });
+  }
+  if(skipIntroBtn){
+    skipIntroBtn.addEventListener('click', skipIntroToFinal);
+  }
+  window.addEventListener('mousemove', showNavOverlay, { passive: true });
 
   /* ════════════════════════════════════════════════
      BOOT SEQUENCE
@@ -1680,7 +1814,7 @@
     lines.forEach((l,i) => {
       setTimeout(() => {
         l.classList.add('show');
-        if(i === lines.length-1) cursor.classList.add('active');
+        if(i === lines.length-1 && cursor) cursor.classList.add('active');
       }, i * 540);
     });
   }
@@ -1693,12 +1827,12 @@
     const cur  = document.getElementById('url-cursor');
     const full = 'youtube.com/watch?v=studio-session-live';
     let i = 0;
-    cur.style.display = 'inline-block';
+    if(cur) cur.style.display = 'inline-block';
     const iv = setInterval(() => {
       if(isPaused) return;
-      el.textContent = full.slice(0,i);
+      if(el) el.textContent = full.slice(0,i);
       i++;
-      if(i > full.length){ clearInterval(iv); cur.style.display='none'; }
+      if(i > full.length){ clearInterval(iv); if(cur) cur.style.display='none'; }
     }, 20);
   }
 
@@ -1719,13 +1853,15 @@
     if(dlProgressRafId) cancelAnimationFrame(dlProgressRafId);
     if(dlCompleteTimeoutId) clearTimeout(dlCompleteTimeoutId);
 
-    wrap.classList.add('show');
-    strip.classList.add('show');
-    strip.classList.remove('completed');
-    fill.classList.remove('completed');
+    if(wrap) wrap.classList.add('show');
+    if(strip){
+      strip.classList.add('show');
+      strip.classList.remove('completed');
+    }
+    if(fill) fill.classList.remove('completed');
     if(stripText) stripText.textContent = '✓ Added to queue — starting download…';
 
-    const DURATION = 2600; // ~2.6s natural download duration
+    const DURATION = 2600;
     let startTime = performance.now();
     let lastPct = -1;
 
@@ -1741,7 +1877,7 @@
 
       if(pct !== lastPct){
         lastPct = pct;
-        fill.style.width = pct + '%';
+        if(fill) fill.style.width = pct + '%';
         if(pctEl) pctEl.textContent = pct + '%';
         if(etaEl){
           const remSec = Math.max(0, Math.ceil(14 * (1 - pct / 100)));
@@ -1752,23 +1888,19 @@
       if(t < 1){
         dlProgressRafId = requestAnimationFrame(step);
       } else {
-        fill.style.width = '100%';
+        if(fill) fill.style.width = '100%';
         if(pctEl) pctEl.textContent = '100%';
         if(etaEl) etaEl.textContent = '0:00';
 
         dlCompleteTimeoutId = setTimeout(() => {
           if(stripText) stripText.textContent = '✓ Download Complete';
-          strip.classList.add('completed');
-          fill.classList.add('completed');
+          if(strip) strip.classList.add('completed');
+          if(fill) fill.classList.add('completed');
         }, 300);
       }
     }
 
     dlProgressRafId = requestAnimationFrame(step);
-  }
-
-  function animateDownloadStats(){
-    /* Handled synchronously inside animateDlProgress */
   }
 
   /* ════════════════════════════════════════════════
@@ -1787,9 +1919,9 @@
     if(speedRafId) cancelAnimationFrame(speedRafId);
     if(speedTimeoutId) clearTimeout(speedTimeoutId);
 
-    const TARGET   = 124;   // final speed value
-    const DURATION = 2600;  // ms — matches scene duration
-    const ARC_LEN  = 409;   // PI * 130 radius ≈ 408.4
+    const TARGET   = 124;
+    const DURATION = 2600;
+    const ARC_LEN  = 409;
     let startTime  = performance.now();
 
     if(wrap) wrap.classList.remove('pulse-once');
@@ -1807,11 +1939,9 @@
       const t       = Math.min(1, elapsed / DURATION);
       const ease    = easeOut(t);
 
-      // Number count-up (0 -> 12 -> 27 -> 43 -> 61 -> 84 -> 103 -> 118 -> 124)
       const current = Math.round(ease * TARGET);
-      numEl.textContent = current;
+      if(numEl) numEl.textContent = current;
 
-      // Arc dashoffset fill
       const offset = ARC_LEN * (1 - ease);
       if(arcPath){
         arcPath.style.strokeDashoffset = offset;
@@ -1820,9 +1950,8 @@
         arcPath.style.filter = `drop-shadow(0 0 ${glowBlur}px rgba(0,240,255,${glowAlpha}))`;
       }
 
-      // Dot positioning along semi-circle arc (Radius=130, Center=160,150)
       if(dot){
-        const angle = Math.PI * (1 - ease); // PI (left) to 0 (right)
+        const angle = Math.PI * (1 - ease);
         const dotX = (160 + 130 * Math.cos(angle)).toFixed(1);
         const dotY = (150 - 130 * Math.sin(angle)).toFixed(1);
         dot.setAttribute('cx', dotX);
@@ -1832,14 +1961,12 @@
       if(t < 1){
         speedRafId = requestAnimationFrame(step);
       } else {
-        numEl.textContent = TARGET;
+        if(numEl) numEl.textContent = TARGET;
         if(arcPath) arcPath.style.strokeDashoffset = '0';
         if(dot){ dot.setAttribute('cx', '290'); dot.setAttribute('cy', '150'); }
 
-        // Single pulse on gauge when reaching 124
         if(wrap) wrap.classList.add('pulse-once');
 
-        // Pause 300ms before showing ✓ Peak Performance
         speedTimeoutId = setTimeout(() => {
           if(doneEl){
             doneEl.textContent = '✓ Peak Performance';
@@ -1874,23 +2001,23 @@
   const cues = [
     { t:0.0,  sceneIdx:0, fn: () => { showScene(0); typeBoot(); playAudio(); } },
     { t:3.2,  sceneIdx:1, fn: () => { showScene(1); } },
-    { t:4.4,  fn: () => { document.getElementById('s2').classList.add('reveal-tag'); } },
+    { t:4.4,  fn: () => { const s2 = document.getElementById('s2'); if(s2) s2.classList.add('reveal-tag'); } },
     { t:6.5,  sceneIdx:2, fn: () => { showScene(2); } },
     { t:7.1,  fn: () => { typeUrl(); } },
-    { t:8.2,  fn: () => { document.getElementById('preview-card').classList.add('show'); } },
-    { t:8.8,  fn: () => { document.getElementById('quality-row').classList.add('show'); } },
+    { t:8.2,  fn: () => { const pc = document.getElementById('preview-card'); if(pc) pc.classList.add('show'); } },
+    { t:8.8,  fn: () => { const qr = document.getElementById('quality-row'); if(qr) qr.classList.add('show'); } },
     { t:9.4,  fn: () => { animateDlProgress(); } },
-    { t:12.5, sceneIdx:3, fn: () => { showScene(3); document.getElementById('s4').classList.add('in'); } },
+    { t:12.5, sceneIdx:3, fn: () => { showScene(3); const s4 = document.getElementById('s4'); if(s4) s4.classList.add('in'); } },
     { t:12.9, fn: () => { staggerShow('#content-grid .ccard', 100); } },
     { t:15.5, sceneIdx:4, fn: () => { showScene(4); animateSpeed(); } },
-    { t:19.5, sceneIdx:5, fn: () => { showScene(5); document.getElementById('s6').classList.add('in'); } },
+    { t:19.5, sceneIdx:5, fn: () => { showScene(5); const s6 = document.getElementById('s6'); if(s6) s6.classList.add('in'); } },
     { t:20.0, fn: () => { staggerShow('#queue-list .qitem', 220, true); } },
-    { t:23.5, sceneIdx:6, fn: () => { showScene(6); document.getElementById('s7').classList.add('in'); } },
+    { t:23.5, sceneIdx:6, fn: () => { showScene(6); const s7 = document.getElementById('s7'); if(s7) s7.classList.add('in'); } },
     { t:23.9, fn: () => { staggerShow('#feat-grid .fcard', 120); } },
-    { t:26.5, sceneIdx:7, fn: () => { showScene(7); document.getElementById('s8').classList.add('in'); } },
-    { t:27.3, fn: () => { document.getElementById('s8').classList.add('sub'); } },
-    { t:27.9, fn: () => { document.getElementById('s8').classList.add('words'); } },
-    { t:28.5, fn: () => { document.getElementById('s8').classList.add('cta'); } },
+    { t:26.5, sceneIdx:7, fn: () => { showScene(7); const s8 = document.getElementById('s8'); if(s8) s8.classList.add('in'); } },
+    { t:27.3, fn: () => { const s8 = document.getElementById('s8'); if(s8) s8.classList.add('sub'); } },
+    { t:27.9, fn: () => { const s8 = document.getElementById('s8'); if(s8) s8.classList.add('words'); } },
+    { t:28.5, fn: () => { const s8 = document.getElementById('s8'); if(s8) s8.classList.add('cta'); } },
     { t:30.5, fn: () => { endTrailer(); } }
   ];
 
@@ -1918,7 +2045,7 @@
 
   function progressLoop(){
     if(ended) return;
-    if(!isPaused){
+    if(!isPaused && progressFill){
       const elapsed = (performance.now() - startTime) / 1000;
       progressFill.style.width = Math.min(100, (elapsed/TOTAL)*100) + '%';
     }
@@ -1927,7 +2054,7 @@
 
   function endTrailer(){
     ended = true;
-    progressFill.style.width = '100%';
+    if(progressFill) progressFill.style.width = '100%';
   }
 
   /* ── NAVIGATION ENGINE ── */
@@ -1943,19 +2070,21 @@
     const exitClass  = direction > 0 ? 'exit-left' : 'exit-right';
     const enterClass = direction > 0 ? 'enter-right' : 'enter-left';
 
-    scenes.forEach(s => s.classList.remove('exit-left', 'exit-right', 'enter-left', 'enter-right'));
+    scenes.forEach(s => { if(s) s.classList.remove('exit-left', 'exit-right', 'enter-left', 'enter-right'); });
 
-    oldScene.classList.remove('active');
-    oldScene.classList.add(exitClass);
+    if(oldScene){
+      oldScene.classList.remove('active');
+      oldScene.classList.add(exitClass);
+    }
 
-    newScene.classList.add(enterClass);
-    void newScene.offsetWidth; // Reflow trigger
+    if(newScene){
+      newScene.classList.add(enterClass);
+      void newScene.offsetWidth;
+    }
 
     setTimeout(() => {
       showScene(newIdx);
-      scenes.forEach(s => s.classList.remove('exit-left', 'exit-right', 'enter-left', 'enter-right'));
-      showNavOverlay();
-
+      scenes.forEach(s => { if(s) s.classList.remove('exit-left', 'exit-right', 'enter-left', 'enter-right'); });
       rescheduleCuesFrom(newIdx);
 
       setTimeout(() => {
@@ -1968,7 +2097,6 @@
     clearTimers();
     if(ended) ended = false;
 
-    // Reset RAF animation loops when switching scenes manually
     if(speedRafId) cancelAnimationFrame(speedRafId);
     if(speedTimeoutId) clearTimeout(speedTimeoutId);
     if(dlProgressRafId) cancelAnimationFrame(dlProgressRafId);
@@ -1977,15 +2105,12 @@
     const primaryCue = cues.find(c => c.sceneIdx === sceneIdx);
     const targetCueTime = primaryCue ? primaryCue.t : 0;
 
-    // Synchronize global timeline start time
     startTime = performance.now() - (targetCueTime * 1000);
 
-    // Immediately trigger primary entrance function for the selected scene
     if(primaryCue && typeof primaryCue.fn === 'function'){
       primaryCue.fn();
     }
 
-    // Schedule remaining timeline cues after targetCueTime
     cues.forEach(c => {
       if(c.t > targetCueTime){
         const delayMs = (c.t - targetCueTime) * 1000;
@@ -2032,21 +2157,26 @@
     isPaused = false;
     isTransitioning = false;
     clearTimers();
+    hideNavOverlay();
     if(rafId) cancelAnimationFrame(rafId);
-    document.getElementById('replay-screen').classList.remove('show');
-    document.getElementById('boot-cursor').classList.remove('active');
+    const rpScreen = document.getElementById('replay-screen');
+    if(rpScreen) rpScreen.classList.remove('show');
+    const bootCur = document.getElementById('boot-cursor');
+    if(bootCur) bootCur.classList.remove('active');
 
-    /* Reset scene classes */
     const allClasses = ['active','in','reveal-logo','reveal-tag','sub','words','cta','exit-left','exit-right','enter-left','enter-right'];
-    scenes.forEach(s => s.classList.remove(...allClasses));
+    scenes.forEach(s => { if(s) s.classList.remove(...allClasses); });
 
-    /* Reset element states */
     document.querySelectorAll('.show, .done').forEach(el => el.classList.remove('show','done'));
     document.querySelectorAll('#boot-lines .line').forEach(l => l.classList.remove('show'));
-    document.getElementById('url-text').textContent = '';
-    document.getElementById('url-cursor').style.display = 'none';
-    document.getElementById('speed-num').textContent = '0';
-    document.getElementById('speed-unit').textContent = 'MB/S';
+    const urlTxt = document.getElementById('url-text');
+    if(urlTxt) urlTxt.textContent = '';
+    const urlCur = document.getElementById('url-cursor');
+    if(urlCur) urlCur.style.display = 'none';
+    const spdNum = document.getElementById('speed-num');
+    if(spdNum) spdNum.textContent = '0';
+    const spdUnit = document.getElementById('speed-unit');
+    if(spdUnit) spdUnit.textContent = 'MB/S';
 
     if(speedRafId) cancelAnimationFrame(speedRafId);
     if(speedTimeoutId) clearTimeout(speedTimeoutId);
@@ -2068,17 +2198,15 @@
       dlFill.style.width = '0%';
       dlFill.classList.remove('go', 'completed');
     }
-    if(queueStrip){
-      queueStrip.classList.remove('completed');
-    }
-    if(queueText){
-      queueText.textContent = '✓ Added to queue — starting download…';
-    }
-    document.getElementById('queue-pct').textContent = '0%';
-    document.getElementById('queue-eta').textContent = '0:14';
-    progressFill.style.width = '0%';
+    if(queueStrip) queueStrip.classList.remove('completed');
+    if(queueText) queueText.textContent = '✓ Added to queue — starting download…';
 
-    /* Videos off */
+    const qPct = document.getElementById('queue-pct');
+    if(qPct) qPct.textContent = '0%';
+    const qEta = document.getElementById('queue-eta');
+    if(qEta) qEta.textContent = '0:14';
+    if(progressFill) progressFill.style.width = '0%';
+
     bgVideos.forEach(v => { if(v) v.classList.remove('active-video'); });
 
     startTime = performance.now();
@@ -2089,45 +2217,65 @@
   /* ════════════════════════════════════════════════
      CONTROLS & LISTENERS
   ════════════════════════════════════════════════ */
-  document.getElementById('skip-btn').addEventListener('click', () => {
-    clearTimers();
-    if(rafId) cancelAnimationFrame(rafId);
-    showScene(7);
-    const s8 = document.getElementById('s8');
-    s8.classList.add('in','sub','words','cta');
-    progressFill.style.width = '100%';
-    setTimeout(() => endTrailer(), 600);
-  });
+  const replayBtn = document.getElementById('replay-btn');
+  if(replayBtn) replayBtn.addEventListener('click', replayTrailer);
 
-  document.getElementById('replay-btn').addEventListener('click', play);
-  document.getElementById('replay-inline-btn').addEventListener('click', play);
+  const ctaHero = document.getElementById('cta-btn-hero');
+  if(ctaHero) ctaHero.addEventListener('click', openDownload);
+  const ctaOverlay = document.getElementById('cta-btn-overlay');
+  if(ctaOverlay) ctaOverlay.addEventListener('click', openDownload);
+  const readmeHero = document.getElementById('readme-btn-hero');
+  if(readmeHero) readmeHero.addEventListener('click', openReadme);
+  const readmeOverlay = document.getElementById('readme-btn-overlay');
+  if(readmeOverlay) readmeOverlay.addEventListener('click', openReadme);
 
-  document.getElementById('cta-btn-hero').addEventListener('click', openDownload);
-  document.getElementById('cta-btn-overlay').addEventListener('click', openDownload);
-  document.getElementById('readme-btn-hero').addEventListener('click', openReadme);
-  document.getElementById('readme-btn-overlay').addEventListener('click', openReadme);
-
-  /* Keyboard Navigation & Shortcuts */
+  /* Keyboard Navigation */
   window.addEventListener('keydown', e => {
-    if(e.repeat) return; // Ignore repeat keys
+    if(e.repeat) return;
 
     if(e.code === 'ArrowRight'){
       e.preventDefault();
-      showNavOverlay();
-      navigateScene(1);
+      if(currentSceneIdx === 7){
+        replayTrailer();
+      } else {
+        navigateScene(1);
+      }
     } else if(e.code === 'ArrowLeft'){
       e.preventDefault();
-      showNavOverlay();
-      navigateScene(-1);
+      if(currentSceneIdx > 0){
+        navigateScene(-1);
+      }
     } else if(e.code === 'Space'){
       e.preventDefault();
       togglePause();
     } else if(e.code === 'KeyR'){
-      play();
+      e.preventDefault();
+      replayTrailer();
+    } else if(e.code === 'KeyS'){
+      e.preventDefault();
+      if(currentSceneIdx <= 3){
+        skipIntroToFinal();
+      }
     }
   });
 
-  /* Pause when tab hidden & resume canvas animation when visible */
+  /* OS Detection for CTA */
+  try {
+    const ua = navigator.userAgent || '';
+    const isWin = /Windows/i.test(ua);
+    if(!isWin){
+      ['cta-btn-hero','cta-btn-overlay'].forEach(id => {
+        const b = document.getElementById(id);
+        if(!b) return;
+        b.title = 'Windows build only — macOS/Linux coming soon';
+        b.insertAdjacentHTML('afterend',
+          '<div style="font-size:11px;color:var(--dim);margin-top:6px;text-align:center">' +
+          'Windows build only — macOS &amp; Linux coming soon</div>');
+      });
+    }
+  } catch(_){}
+
+  /* Visibility Change Handler (Pause RAF when hidden) */
   document.addEventListener('visibilitychange', () => {
     if(document.hidden){
       if(bgAudio) bgAudio.pause();
@@ -2138,9 +2286,9 @@
       const active = bgVideos[currentSceneIdx];
       if(active && !isPaused) active.play().catch(()=>{});
     }
-  });
+  }, { passive: true });
 
-  /* ── INIT ─ */
+  /* Init */
   play();
 
 })();
