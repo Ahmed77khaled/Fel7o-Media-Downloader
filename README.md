@@ -6,6 +6,7 @@
 ### Download Anything. Keep It Forever.
 
 [![Live Web Trailer](https://img.shields.io/badge/⚡_Live_Trailer-Interactive-00F0FF?style=for-the-badge&logo=googlechrome&logoColor=white)](https://Ahmed77khaled.github.io/Fel7o-Media-Downloader/)
+[![YouTube Trailer](https://img.shields.io/badge/🎬_Watch_Trailer-YouTube_4K-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/EvoN_8lZY4k)
 [![Download Windows](https://img.shields.io/badge/📥_Download_Executable-.exe_v5.0.1-8B5CF6?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/Ahmed77khaled/Fel7o-Media-Downloader/releases/latest)
 
 [![Version](https://img.shields.io/badge/version-5.0.1-00d4ff?style=flat-square)](https://github.com/Ahmed77khaled/Fel7o-Media-Downloader/releases)
@@ -15,7 +16,9 @@
 
 A production-ready, ultra-fast media downloader for Windows. Download 4K videos and high-bitrate MP3 audio from 1000+ sites with zero ads and zero tracking.
 
-[🌐 Open Live Trailer Website](https://ahmed77khaled.github.io/Fel7o-Media-Downloader/) · [📥 Download Installer (.exe)](https://github.com/Ahmed77khaled/Fel7o-Media-Downloader/releases/latest) · [📋 Changelog](CHANGELOG.md)
+[🎬 Watch Official Trailer on YouTube](https://youtu.be/EvoN_8lZY4k) · [🌐 Open Live Web Trailer](https://ahmed77khaled.github.io/Fel7o-Media-Downloader/) · [📥 Download Installer (.exe)](https://github.com/Ahmed77khaled/Fel7o-Media-Downloader/releases/latest) · [📋 Changelog](CHANGELOG.md)
+
+[![Fel7o Official Launch Trailer](assets/fel7o_youtube_4k_thumbnail.jpg)](https://youtu.be/EvoN_8lZY4k)
 
 </div>
 
