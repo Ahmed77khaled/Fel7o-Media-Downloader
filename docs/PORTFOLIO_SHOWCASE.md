@@ -1,6 +1,12 @@
 # 💼 Fel7o Media Downloader — Full Portfolio Showcase Case Study
 
-![Fel7o 4K Showcase Banner](assets/fel7o_youtube_4k_thumbnail.jpg)
+![Fel7o 4K Showcase Banner](../assets/fel7o_youtube_4k_thumbnail.jpg)
+
+<div align="center">
+  <img src="../assets/logo.png" alt="Fel7o Official Logo" width="160" />
+  <h2>Fel7o Media Downloader v5.0.1</h2>
+  <p><b>Download Anything. Keep It Forever.</b></p>
+</div>
 
 ---
 
@@ -27,7 +33,26 @@
 
 ---
 
-## 🛠️ 3. التقنيات المعمارية المستخدمة (Tech Stack & Architecture)
+## 🖼️ 3. معرض الصور والأصول البصرية للمشروع (Visual Assets Gallery)
+
+### 🌟 1. الغلاف الرسمي والشعار (Official 4K Banner & Logo)
+![Official 4K Banner](../assets/fel7o_youtube_4k_thumbnail.jpg)
+
+### 🖥️ 2. المشهد الأول — واجهة الترمينال السريعة (Terminal Boot Sequence UI)
+![Terminal Boot UI](../assets/screenshots/media__1785121523959.png)
+
+### 💎 3. المشهد الثاني — ظهور الشعار والتصميم الزجاجي (Brand Reveal & Glassmorphic UI)
+![Glass Reveal UI](../assets/screenshots/media__1785122574356.png)
+
+### 🎬 4. المشهد الثالث — استعراض محاكي الواجهة وتحديد الجودة (App UI Demonstration)
+![App UI Demonstration](../assets/screenshots/media__1785124138136.jpg)
+
+### ⚡ 5. المشهد الرابع — شريط قوائم التحميل والتريلر (Queue Strip & Interactive Scenes)
+![Queue & Interactive Trailer](../assets/screenshots/media__1785124553273.png)
+
+---
+
+## 🛠️ 4. التقنيات المعمارية المستخدمة (Tech Stack & Architecture)
 
 * **واجهة المستخدم (Frontend / UI-UX):** Electron.js, Vanilla JavaScript (ES6+), HTML5, CSS Custom Design Tokens, WebGL/Canvas Animation Engine.
 * **المحرك الخلفي (Backend & Core Engine):** Node.js, Asynchronous Process Queue, IPC Inter-Process Communication, `yt-dlp` CLI Integration, `FFmpeg` Native Stream Merging & EBU R128 Audio Normalizer.
@@ -35,7 +60,7 @@
 
 ---
 
-## 💡 4. أبرز التحديات الهندسية والحلول (Engineering Challenges & Key Solutions)
+## 💡 5. أبرز التحديات الهندسية والحلول (Engineering Challenges & Key Solutions)
 
 1. **التحميل عالي السرعة وبدون استهلاك للذاكرة (High-Speed & Memory Optimization):**
    * **الحل:** بناء نظام أسنكرونوس يستقبل البيانات كتدفقات (Streams) موازية وعزل عمليات التجميع والدمج داخل بروسيس منفصل لضمان عدم استهلاك أكثر من 150MB من ذاكرة الجهاز (RAM).
@@ -43,19 +68,6 @@
    * **الحل:** الاعتماد على pure CSS keyframes مع `requestAnimationFrame` وتجميع عناصر الواجهة في طبقات مستقلة لضمان أعلى أداء حركي بدون الاعتماد على مكتبات خارجية ثقيلة.
 3. **معالجة موازية لقوائم التشغيل (Parallel Batch Queue):**
    * **الحل:** تصميم Queue خوارزمي يتيح التوقف المؤقت (Pause)، الاستئناف (Resume)، وإعادة المحاولة التلقائية عند حدوث أي انقطاع في الشبكة.
-
----
-
-## 🖼️ 5. معرض الصور والأصول البصرية (Visual Assets Gallery)
-
-| نوع الأصل البصري | الرابط أو المسار المباشر | المعاينة |
-| :--- | :--- | :--- |
-| **غلاف المشروع بدقة 4K (Showcase Banner)** | [assets/fel7o_youtube_4k_thumbnail.jpg](file:///d:/program%20projects/Fel7o%20app%20relase/%D9%87%D9%8A%D8%AA%D8%B9%D9%85%D9%84%20exe/assets/fel7o_youtube_4k_thumbnail.jpg) | صورة غلاف 3D فاخرة بدقة 3840x2160 |
-| **شعار البرنامج الرسمي (Official Logo)** | [assets/logo.png](file:///d:/program%20projects/Fel7o%20app%20relase/%D9%87%D9%8A%D8%AA%D8%B9%D9%85%D9%84%20exe/assets/logo.png) | الشعار بدقة عالية مع خلفية شفافة |
-| **صورة واجهة الترمينال (Terminal Boot UI)** | `media__1785121523959.png` | لقطة سريعة للمشهد الأول والسرعة |
-| **صورة الشعار والكروت الزجاجية (Glass Reveal)** | `media__1785122574356.png` | لقطة كروت الـ Glassmorphic |
-| **صورة الواجهة وتحديد الجودات (App UI Demo)** | `media__1785124138136.jpg` | لقطة استعراض المحتوى والتحميل |
-| **صورة شريط قائمة التحميل والتريلر (Trailer Scenes)** | `media__1785124553273.png` | لقطة مشاهد التريلر التفاعلي |
 
 ---
 
